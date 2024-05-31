@@ -311,6 +311,7 @@
         font-weight: bold;
     }
 
+    /*main CSS*/
     #main_noLogin {
         background-color: var(--lemoncolor);
         display: flex;
@@ -361,6 +362,7 @@
         flex-wrap: wrap;
         justify-content: space-between;
         margin-left: 5%;
+        margin-top: 4%;
     }
 
     .image-container {
@@ -415,4 +417,104 @@
     .title {
         color: var(--maincolor);
     }
+
+    /*search CSS*/
+    #searchBar {
+        width: 80%;
+        margin-left: 10%;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid black;
+        padding-bottom: 5px;
+    }
+
+    #searchBar > img {
+        width: 10%;
+    }
+
+    #searchBar > img:first-child {
+        rotate: 180deg;
+    }
+
+    .search {
+        border: none;
+        margin: 1px;
+        width: 100%;
+        font-size: var(--mainfontsize);
+    }
+
+    .search-options {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin-left: 10%;
+        margin-top: 15px;
+    }
+
+    .search-options div {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .search-option {
+        width: 45%;
+        padding: 13px 20px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .recent-searches {
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+        width: 80%;
+        margin-left: 10%;
+    }
+
+    .recent-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .clear-all {
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: dimgray;
+    }
+
+    .recent-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .recent-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .recent-item div {
+        display: flex;
+        gap: 5px;
+    }
+
+    .date, .clear-item {
+        color: dimgray;
+    }
+
+    .recent-item img {
+        width: 7%;
+    }
+
+    .clear-item {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
 }

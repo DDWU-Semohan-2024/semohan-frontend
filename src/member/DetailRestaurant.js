@@ -15,6 +15,22 @@ function DetailRestaurant() {
                 <img src={logoImage} alt="logo"/>
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
+            <section>
+                <div>
+
+                </div>
+                <div>
+                    <button>
+
+                    </button>
+                    <article>
+
+                    </article>
+                </div>
+            </section>
+            <section>
+
+            </section>
         </div>
     );
 }
