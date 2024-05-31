@@ -1,0 +1,110 @@
+@media (max-width: 500px) {
+    :root {
+        --lemoncolor: #FFFACDFF;
+        --graycolor: #D3D3D3FF;
+        --mainfontsize: 18px;
+        --mainwidth: 98%;
+        --shortwidth: 70%;
+        --radius: 15px;
+        --btnheight: 50px;
+    }
+
+    #root {
+        display: flex;
+        justify-content: center;
+    }
+
+    #body {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-size: var(--mainfontsize);
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    header > img {
+        width: 150px;
+        height: fit-content;
+        align-items: center;
+    }
+
+    caption,
+    #caption {
+        text-decoration: underline;
+        font-size: var(--mainfontsize);
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    .blank {
+        background-color: var(--graycolor);
+        border: none;
+        width: var(--mainwidth);
+        height: 30px;
+    }
+
+    .submit {
+        border: none;
+        font-weight: bold;
+        font-size: var(--mainfontsize);
+        background-color: var(--lemoncolor);
+        border-radius: var(--radius);
+        margin-top: 30px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        padding: 15px 30px;
+    }
+
+    form {
+        margin-top: 30px;
+    }
+
+    #login, #findId, #resultId
+     {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    div, label, input {
+        margin-bottom: 8px;
+    }
+
+    .mainLink {
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+    }
+
+    .mainLink > a {
+        width: var(--mainwidth);
+        color: black;
+        text-decoration: none;
+        font-size: var(--mainfontsize);
+        font-weight: bold;
+        border-radius: var(--radius);
+        height: 60px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .gray {
+        background-color: var(--graycolor);
+    }
+
+    .lemon {
+        background-color: var(--lemoncolor);
+    }
+
+}
