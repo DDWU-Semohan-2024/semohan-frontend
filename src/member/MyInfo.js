@@ -34,7 +34,7 @@ function MyInfoPage() {
                 </tr>
                 </tbody>
             </table>
-            <input className="submit" type="button" value="정보 수정" />
+            <Link className="submit" to="/updateInfo">정보수정</Link>
         </div>
     );
 }

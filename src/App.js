@@ -7,9 +7,10 @@ import ResultId from "./member/ResultId";
 import MyPage from "./member/MyPage";
 import MyInfo from "./member/MyInfo";
 import Search from "./member/Search";
-import DetailSearch from "./member/DetailSearch";
 import DetailRestaurant from "./member/DetailRestaurant";
 import ResultSearch from "./member/ResultSearch";
+import ScrapRestaurant from "./member/ScrapRestaurant";
+import GeneratePassword from "./member/GeneratePassword";
 
 
 class App extends Component {
@@ -23,9 +24,10 @@ class App extends Component {
             <Route exact path="/myPage" element={<MyPage />} />
             <Route exact path="/myInfo" element={<MyInfo />} />
             <Route exact path="/search" element={<Search />} />
-            <Route exact path="/detailSearch" element={<DetailSearch />} />
             <Route exact path="/detailRestaurant" element={<DetailRestaurant />} />
             <Route exact path="/resultSearch" element={<ResultSearch />} />
+            <Route exact path="/scrapRestaurant" element={<ScrapRestaurant />} />
+            <Route exact path="/generatePassword" element={<GeneratePassword />} />
 
 
             {/*<Route path="/" element={<Login />} /> /!* 기본적으로 /login으로 이동 *!/*/}
