@@ -1,19 +1,20 @@
 import React from 'react';
 import './Style.css'; // CSS 파일을 import
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import my from '../img/profile-user.png';
 import search from "../img/search.png";
+import ProfileImage from "../img/profile-user.png";
+import searchImage from "../img/search.png";
 
 function ScrapRestaurant() {
-
-    let restaurantImage;
+    const navigate = useNavigate();
     return (
         <div id="body">
-            <header>
-                <img src={my} alt="toMyPage"/>
+            <header id="newHeader">
+                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/login')} alt="profile"/>
                 <img src={logoImage} alt="logo"/>
-                <img src={search} alt="searchBtn"/>
+                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
             <section className="pinned-restaurant">
                 <h2>내가 핀한 식당</h2>
