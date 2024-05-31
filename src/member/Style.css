@@ -2,6 +2,7 @@
     :root {
         --lemoncolor: #FFFACDFF;
         --graycolor: #D3D3D3FF;
+        --maincolor: #8B4513;
         --mainfontsize: 18px;
         --mainwidth: 98%;
         --shortwidth: 70%;
@@ -12,10 +13,16 @@
     #root {
         display: flex;
         justify-content: center;
+        margin: 0;
     }
 
     #body {
         width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #newBody {
         display: flex;
         flex-direction: column;
     }
@@ -31,10 +38,22 @@
         margin-bottom: 20px;
     }
 
+    #newHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+
     header > img {
         width: 150px;
         height: fit-content;
         align-items: center;
+    }
+
+    .headerImg {
+        width: 40px;
+        height: fit-content;
     }
 
     caption,
@@ -70,8 +89,8 @@
         margin-top: 30px;
     }
 
-    #login, #findId, #resultId
-     {
+    #login, #findId, #resultId,
+    #newPassword, #updateInfo {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -79,6 +98,47 @@
 
     div, label, input {
         margin-bottom: 8px;
+    }
+
+    #containImg {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /*자물쇠, 체크버튼 이미지*/
+    #newPassword > div > img,
+    #updateInfo > div > img{
+        width:fit-content;
+        height:23px;
+        position: absolute;
+        z-index : 1;
+        margin-top: 4px;
+        margin-right: 4px;
+    }
+
+    #phoneNumOriginal {
+        width: var(--mainwidth);
+    }
+
+    select {
+        border: 1px solid black;
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        width: 100%;
+    }
+
+    select > option {
+        font-size: 10px;
+    }
+
+    #dateSelect {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #dateSelect > select {
+        width: 85px;
     }
 
     .mainLink {
@@ -220,4 +280,139 @@
         width:70px;
     }
 
+    .loginLink {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .loginLink > a {
+        color: black;
+        font-size: 13px;
+    }
+
+    .pin {
+        font-size: var(--mainfontsize);
+        border: none;
+        background-color: var(--graycolor);
+        border-radius: var(--radius);
+        margin-top: 30px;
+        margin-bottom: 30px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        width: 60%;
+        padding: 10px 10px;
+        margin-left: 18%;
+    }
+
+    .pin > span {
+        color: var(--maincolor);
+        font-weight: bold;
+    }
+
+    #main_noLogin {
+        background-color: var(--lemoncolor);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .loc {
+        display: flex;
+        align-items: center;
+    }
+
+    .loc > p {
+        font-size: 15px;
+        margin-left: 15px;
+        width: 220%;
+    }
+
+    .loc > p > span {
+        color: var(--maincolor);
+        font-size: var(--mainfontsize);
+        font-weight: bold;
+    }
+
+    .setLoc {
+        display: flex;
+        align-items: center;
+        margin: 3%;
+        width: 75%;
+        border: none;
+        background-color: var(--lemoncolor);
+
+    }
+
+    .locationText {
+        margin-bottom: 0;
+    }
+
+    .locImg {
+        width: 20%;
+        height: fit-content;
+    }
+
+    .image-grid {
+        width: 90%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-left: 5%;
+    }
+
+    .image-container {
+        margin-bottom: 15px;
+        padding-top: 4%;
+        background-color: white;
+        flex: 1 1 calc(50% - 10px); /* 2개씩 한 줄에 배치, 간격 보정 */
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative; /* 북마크 아이콘 위치 조정을 위해 필요 */
+        flex-grow: unset;
+    }
+
+    .resImg {
+        width: 130px;
+        height: auto;
+    }
+
+    .bookmark-image {
+        width: 10%;
+        position: absolute;
+        top: 15px; /* 원하는 위치로 조정 */
+        right: 15px; /* 원하는 위치로 조정 */
+    }
+
+    .image-caption {
+        margin: 5px 0;
+    }
+
+    #menu {
+        padding: 6%;
+        width: 60%;
+        border-radius: var(--radius);
+        background-color: var(--graycolor);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 30px;
+        margin-left: 14%;
+    }
+
+    #menu > span {
+        border: 1px solid black;
+        width: 84%;
+        margin-left: 8%;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        color: var(--maincolor);
+    }
 }

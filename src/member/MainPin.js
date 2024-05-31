@@ -29,51 +29,41 @@ function MainPin() {
     //     return <div>Loading...</div>;
     // }
 
-
     return (
-        <div id="body">
-            <header>
-                <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}
-                        onClick={() => navigate('/login')}>
-                    <img src={ProfileImage} alt="logo" style={{width: '50%'}}/>
-                </button>
-
-                <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                    <img src={logoImage} alt="login" style={{width: '90%'}}/>
-                </button>
-
-                <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                    <img src={searchImage} alt="search" style={{width: '45%'}}/>
-                </button>
+        <div id="newBody">
+            <header id="newHeader">
+                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/login')} alt="profile"/>
+                <img src={logoImage} alt="logo"/>
+                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
 
-            <div id="resultId" style={{
-                // alignItems: 'center',
-                // marginLeft: '0px',
-                // marginRight: '0px',
-                height: "auto"
-            }}> {/*일단 css 바꾸면 에러날까봐 기존의 resultId css 사용! 추후 변경예정*/}
+            <div id="menu">
                 <div>
-                    restaurant.name - restaurant.mealType
-                    <hr style={{
-                        border: 'none',
-                        borderTop: '3px solid black',
-                        width: '50%',
-                        marginLeft: '0px',
-                        marginRight: '0px'
-                    }}/>
+                    식당 이름 - 점심{/*{restaurant.name} - {restaurant.mealType}*/}
                 </div>
-                <div>
+                <span></span>
+                <div className='title'>
                     메인 메뉴
                 </div>
-                <div>
-                    restaurant.mainMenu
+                {/*메인 개수 따라서 늘어남*/}
+                <div className='menuName'>
+                    고등어조림{/*{restaurant.mainMenu}*/}
                 </div>
-                <div>
+                <div className='title'>
                     반찬
                 </div>
-                <div>
-                    restaurant.subMenu
+                {/*반찬 개수 따라서 늘어남*/}
+                <div className='menuName'>
+                    계란말이{/*{restaurant.subMenu}*/}
+                </div>
+                <div className='menuName'>
+                    계란말이{/*{restaurant.subMenu}*/}
+                </div>
+                <div className='menuName'>
+                    계란말이{/*{restaurant.subMenu}*/}
+                </div>
+                <div className='menuName'>
+                    계란말이{/*{restaurant.subMenu}*/}
                 </div>
 
             </div>
@@ -81,75 +71,43 @@ function MainPin() {
 
             {/*(식당 개수 받아와서) 동적으로 띄울 수 있게 구현할 것*/}
 
-            <div id="main_noLogin" style={{backgroundColor: "lemonchiffon", width: '100%'}}>
-                {/* 첫 번째 줄 */}
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <span style={{marginRight: '20%'}}>(위치) 인근 한식 뷔페</span>
-                    <input className="setLocation" type="button" value="위치설정" style={{
-                        border: 'none',
-                        background: 'none',
-                        padding: 0,
-                        cursor: 'pointer',
-                        marginRight: '10px'
-                    }}/>
-                    <img src={addressImage} alt="search" style={{width: '5%'}}/>
+            <div id="main_noLogin">
+                <div className="loc">
+                    <p><span>{/*위치*/}강남역</span> 인근 한식 뷔페</p>
+                    {/*위치권한 물어보기*/}
+                    <button className="setLoc">
+                        <div className="locationText">위치 설정</div>
+                        <img className="locImg" src={addressImage} alt="search"/>
+                    </button>
                 </div>
 
-                {/* 두 번째 줄 */}
-                <div
-                    style={{marginTop: '50px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <div style={{backgroundColor: "white", flex: 1, marginRight: '10px', marginLeft: '10px'}}>
-                        {/* 첫 번째 블록의 내용 */}
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={example} alt="search" style={{width: '90%', height: '90%', alignSelf: 'center'}}/>
-                        </button>
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={bookmarkImage}
-                                 style={{width: "5%", marginLeft: '-30px', marginTop: '-100px', position: "absolute"}}/>
-                        </button>
-                        <span style={{marginTop: '50%', marginLeft: '0%'}}>뷔페1</span>
+                <div className="image-grid">
+                    {/*식당 수만큼*/}
+                    <div className="image-container">
+                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
+                        <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
+                        <span className="image-caption">뷔페1</span>
                     </div>
-                    <div style={{backgroundColor: "white", flex: 1, marginRight: '10px', marginLeft: '10px'}}>
-                        {/* 두 번째 블록의 내용 */}
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={example} alt="search" style={{width: '90%', height: '90%', alignSelf: 'center'}}/>
-                        </button>
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={bookmarkImage}
-                                 style={{width: "5%", marginLeft: '-30px', marginTop: '-100px', position: "absolute"}}/>
-                        </button>
-                        <span style={{marginTop: '50%', marginLeft: '0%'}}>뷔페2</span>
+                    <div className="image-container">
+                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
+                        <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
+                        <span className="image-caption">뷔페1</span>
                     </div>
-                </div>
-
-                {/* 세 번째 줄 */}
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <div style={{backgroundColor: "white", flex: 1, marginRight: '10px', marginLeft: '10px'}}>
-                        {/* 첫 번째 블록의 내용 */}
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={example} alt="search" style={{width: '90%', height: '90%', alignSelf: 'center'}}/>
-                        </button>
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={bookmarkImage}
-                                 style={{width: "5%", marginLeft: '-30px', marginTop: '-100px', position: "absolute"}}/>
-                        </button>
-                        <span style={{marginTop: '50%', marginLeft: '0%'}}>뷔페3</span>
-                    </div>
-                    <div style={{backgroundColor: "white", flex: 1, marginRight: '10px', marginLeft: '10px'}}>
-                        {/* 두 번째 블록의 내용 */}
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={example} alt="search" style={{width: '90%', height: '90%', alignSelf: 'center'}}/>
-                        </button>
-                        <button style={{border: 'none', background: 'none', padding: 0, cursor: 'pointer'}}>
-                            <img src={bookmarkImage}
-                                 style={{width: "5%", marginLeft: '-30px', marginTop: '-100px', position: "absolute"}}/>
-                        </button>
-                        <span style={{marginTop: '50%', marginLeft: '0%'}}>뷔페4</span>
-                    </div>
+                    {/*<div className="image-container">*/}
+                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
+                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
+                    {/*    <span className="image-caption">뷔페1</span>*/}
+                    {/*</div><div className="image-container">*/}
+                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
+                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
+                    {/*    <span className="image-caption">뷔페1</span>*/}
+                    {/*</div><div className="image-container">*/}
+                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
+                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
+                    {/*    <span className="image-caption">뷔페1</span>*/}
+                    {/*</div>*/}
                 </div>
             </div>
-
-
         </div>
     )
 
