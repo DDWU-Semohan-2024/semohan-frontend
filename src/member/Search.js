@@ -31,18 +31,14 @@ function Search() {
                     <span>최근 검색어</span>
                     <button className="clear-all">모두 지우기</button>
                 </div>
-                <ul className="recent-list">
-                    <li className="recent-item">
-                        <span>최근 검색어</span>
-                        <span className="date">04.04</span>
-                        <button className="clear-item">X</button>
-                    </li>
-                    <li className="recent-item">
-                        <span>최근 검색어</span>
-                        <span className="date">04.02</span>
-                        <button className="clear-item">X</button>
-                    </li>
-                </ul>
+                {/*검색어 있을 경우*/}
+                {/*<ul className="recent-list">*/}
+                {/*    <li className="recent-item">*/}
+                {/*        <span>최근 검색어</span>*/}
+                {/*        <span className="date">04.04</span>*/}
+                {/*        <button className="clear-item">X</button>*/}
+                {/*    </li>*/}
+                {/*</ul>*/}
             </section>
 
         </div>
