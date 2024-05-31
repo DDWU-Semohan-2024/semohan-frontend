@@ -43,6 +43,7 @@
         font-size: var(--mainfontsize);
         margin-bottom: 30px;
         margin-top: 30px;
+        text-align: center;
     }
 
     .blank {
@@ -105,6 +106,118 @@
 
     .lemon {
         background-color: var(--lemoncolor);
+    }
+
+    table {
+        border-collapse: collapse; /*이중선 제거*/
+        font-size: var(--mainfontsize);
+    }
+
+    caption {
+        text-decoration: underline;
+        font-size: var(--mainfontsize);
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    tr {
+        width: var(--mainwidth);
+        height: 40px;
+    }
+
+    td {
+        border-top: 1px solid black;
+        width: 180px;
+        padding-left: 10px;
+    }
+
+    th {
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+    tr:last-child > th,
+    tr:last-child > td {
+        border-bottom: 1px solid black;
+    }
+
+    #result {
+        margin-top: 30px;
+        font-size: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    #resultId {
+        margin-top: 30px;
+        background-color: var(--graycolor);
+        height: 150px;
+        text-align: left;
+        padding-left: 60px;
+    }
+
+    .btn {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .certification {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0;
+    }
+
+    #phoneNum {
+        width: var(--shortwidth);
+    }
+
+    .certi {
+        background-color: var(--lemoncolor);
+        border: none;
+        border-radius: var(--radius);
+    }
+
+    #certiPhone {
+        width: 80%;
+    }
+
+    .find {
+        background-color: var(--lemoncolor);
+        width: var(--mainwidth);
+        height: var(--btnheight);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .find > a {
+        color: black;
+        text-decoration: none;
+        font-size: var(--mainfontsize);
+        font-weight: bold;
+    }
+
+    .btn {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .btn > a {
+        padding : 10px;
+        border-radius: var(--radius);
+        color: black;
+        text-decoration: none;
+        font-size: var(--mainfontsize);
+        background-color: var(--lemoncolor);
+        text-align: center;
+    }
+
+    .btn > a:first-child {
+        width:70px;
     }
 
 }
