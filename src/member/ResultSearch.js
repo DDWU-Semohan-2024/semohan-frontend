@@ -20,7 +20,7 @@ function ResultSearch() {
                 <input type="text"
                        name="search"
                        className="search"
-                       placeholder="지역, 음식 또는 식당 입력"
+                       // value={검색어}
                 />
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/resultSearch')} alt="search"/>
             </div>

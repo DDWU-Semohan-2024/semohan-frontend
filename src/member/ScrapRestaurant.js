@@ -13,22 +13,20 @@ function ScrapRestaurant() {
     return (
         <div id="newBody">
             <header id="newHeader">
-                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/login')} alt="profile"/>
+                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/myPage')} alt="profile"/>
                 <img src={logoImage} alt="logo"/>
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
 
-            <div id="pinned">
+            <div id="main_noLogin">
                 <h4>내가 핀한 식당</h4>
-                <div id="image-grid">
-                    {/*있을 경우*/}
+                <div className="image-grid">
                     <div className="image-container">
                         <img className="resImg" src={example/*식당사진*/} alt="search"/>
                         <img className="bookmark-image" src={pin} onClick={{/*클릭마다 사진 바뀜, 핀 등록+취소*/}}/>
                         <span className="image-caption">뷔페1</span>
                     </div>
                 </div>
-                <span></span>
                 <h4>내가 스크랩한 식당</h4>
                 <div className="image-grid">
                     <div className="image-container">
@@ -41,6 +39,16 @@ function ScrapRestaurant() {
                         <img className="bookmark-image" src={noPin} onClick={{/*클릭마다 사진 바뀜, 핀 등록+취소*/}}/>
                         <span className="image-caption">뷔페1</span>
                     </div>
+                    <div className="image-container">
+                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
+                        <img className="bookmark-image" src={noPin} onClick={{/*클릭마다 사진 바뀜, 핀 등록+취소*/}}/>
+                        <span className="image-caption">뷔페1</span>
+                    </div>
+                    {/*<div className="image-container">*/}
+                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
+                    {/*    <img className="bookmark-image" src={noPin} onClick={/!*클릭마다 사진 바뀜, 핀 등록+취소*!/}/>*/}
+                    {/*    <span className="image-caption">뷔페1</span>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>
