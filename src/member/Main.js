@@ -16,6 +16,39 @@ function Main() {
     const [address, setAddress] = useState(null);
     const navigate = useNavigate();
 
+    const handleLocationSetting = () => {
+        // 위치 설정 로직
+        navigator.geolocation.getCurrentPosition(alterAddress, doSomethingError);
+        console.log('위치 설정 버튼 클릭됨');
+    };
+
+
+    const alterAddress = (position) => {
+
+        let x = position.coords.longitude;
+        let y = position.coords.latitude;
+        if (x && y) {
+            axios.get(
+                `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` } }
+            ).then((result) => {
+                // 행정구역의 구 부분만 가져옵니다
+                let location = result.data.documents[0].address.region_2depth_name;
+                console.log("location: " + location);
+                setAddress(location);
+            }).catch(error => {
+                console.error("There was an error fetching the address data!", error);
+            });
+        }
+    };
+
+    const doSomethingError = (error) => {
+        console.log('location error', error);
+    }
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(alterAddress, doSomethingError);
+    }, []);
     // useEffect(() => {
     //     axios.get("/location/set/", {
     //         withCredentials: true
@@ -80,9 +113,9 @@ function Main() {
             {/*로그인 안했을 경우 + 기본*/}
             <div id="main_noLogin">
                 <div className="loc">
-                    <p><span>{/*위치*/}강남역</span> 인근 한식 뷔페</p>
+                    <p><span>{address}</span> 인근 한식 뷔페</p>
                     {/*위치권한 물어보기*/}
-                    <button className="setLoc">
+                    <button className="setLoc" onClick={handleLocationSetting}>
                         <div className="locationText">위치 설정</div>
                         <img className="locImg" src={addressImage} alt="search"/>
                     </button>
