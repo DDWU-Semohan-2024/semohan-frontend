@@ -9,7 +9,7 @@ import example from '../img/buffetjpg.jpg';
 import bookmarkImage from '../img/bookmark-white.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import profileImg from "../img/profile-user.png";
+// import profileImg from "../img/profile-user.png";
 
 function Main() {
 

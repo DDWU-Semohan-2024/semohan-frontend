@@ -25,6 +25,7 @@
     #newBody {
         display: flex;
         flex-direction: column;
+        width: 500px;
     }
 
     label {
@@ -519,8 +520,109 @@
     }
 
     /*scrapRestaurant CSS*/
-
-
+    h4 {
+        margin-left: 20px;
+    }
 
     /*detailRestaurant CSS*/
+    #content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #top {
+        display: flex;
+        height: fit-content;
+        justify-content: space-around;
+
+    }
+
+    #menuBox {
+        padding: 3%;
+        width: 50%;
+        border-radius: var(--radius);
+        background-color: var(--graycolor);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 10px;
+        margin-left: 6%;
+    }
+
+    #menuBox > div:first-child {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #menuBox > div:first-child > div {
+        margin: 0 15px;
+    }
+
+    .last {
+        width: 15px;
+        height: 15px;
+        rotate: 270deg;
+    }
+
+    .next {
+        width: 15px;
+        height: 15px;
+        rotate: 90deg;
+    }
+
+
+    #menuBox > span {
+        border: 1px solid black;
+        width: 84%;
+        margin-left: 8%;
+        margin-bottom: 10px;
+    }
+
+    #right {
+        width:50%;
+        margin-left: 3%;
+    }
+
+    #reviewBox {
+        border: none;
+        font-weight: bold;
+        font-size: var(--mainfontsize);
+        background-color: var(--lemoncolor);
+        border-radius: var(--radius);
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        padding: 30px 30px;
+        width: 92%;
+    }
+
+    #likeBox {
+        text-align: left;
+        padding: 30px 10px;
+        border-radius: var(--radius);
+        margin-top: 15px;
+        width: 80%;
+        background-color: var(--graycolor);
+    }
+
+    p {
+        margin: 0;
+    }
+
+    p > img {
+        width: 13%;
+        height: 13%;
+    }
+
+    #bottom > .image-grid {
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .detail {
+        font-weight: bold;
+    }
 }
