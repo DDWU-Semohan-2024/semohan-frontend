@@ -1,13 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Style.css'; // CSS 파일을 import
 import {Link, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import toMain from '../img/toMain.png';
 import searchBtn from '../img/search.png';
 import searchImage from "../img/search.png";
+import axios from "axios";
 
 function Search() {
     const navigate = useNavigate();
+
+    const [searchTerm, setSearchTerm] = useState('');
+    //const [searchResults, setSearchResults] = useState([]);
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+
+    const handleSearchClick = () => {
+        console.log('Searching for:', searchTerm);  // 콘솔 로그 추가
+        axios.get('/restaurant/search', {
+            params: {
+                location: searchTerm,
+                menu: searchTerm,
+                name: searchTerm
+            }
+        })
+            .then(response => {
+                console.log('Response Data :', response.data);  // 응답 데이터 로그 추가
+                console.log('Response  :', response);  // 응답 데이터 로그 추가
+                if (response.data && response.data.length > 0) {
+                    navigate('/resultSearch', { state: { results: response.data } });
+                } else {
+                    console.log('No results found.');
+                }
+            })
+            .catch(error => {
+                console.error('There was an error fetching the search data!', error);
+            });
+    };
+
     return (
         <div id="newBody">
             <header>
@@ -19,8 +52,10 @@ function Search() {
                        name="search"
                        className="search"
                        placeholder="지역, 음식 또는 식당 입력"
+                       value={searchTerm}
+                       onChange={handleSearchChange}
                 />
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/resultSearch')} alt="search"/>
+                <img className="headerImg" src={searchImage} onClick={handleSearchClick} alt="search"/>
             </div>
             <div className="search-options">
                 <div>
