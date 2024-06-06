@@ -16,6 +16,7 @@ import Main from './member/Main';
 import UpdateInfo from './member/UpdateInfo';
 import NewPassword from './member/NewPassword';
 import Register from './member/Register';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   render() {

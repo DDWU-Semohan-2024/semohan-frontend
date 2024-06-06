@@ -625,4 +625,43 @@
     .detail {
         font-weight: bold;
     }
+
+    /*hotMenu*/
+    #hot {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-top: 250px;
+        text-align: center;
+        height: 150px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    #hot > p {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #hot > hr {
+        color: black;
+    }
+
+    #hot div {
+        font-size: var(--mainfontsize);
+    }
+
+    #hot img {
+        width: 25px;
+        height: 25px;
+    }
+
+    #hot button {
+        display: none;
+    }
+
+    #hot > h5 {
+        margin-top: 20px;
+    }
+
 }
