@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Style.css'; // CSS 파일을 import
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import toMain from "../img/toMain.png";
 import searchBtn from "../img/search.png";
@@ -8,14 +8,46 @@ import searchImage from "../img/search.png";
 import example from "../img/buffetjpg.jpg";
 import noScrap from "../img/bookmark-white.png";
 import scrap from "../img/bookmark-black.png";
+import bookmarkImage from "../img/bookmark-white.png";
+import axios from "axios";
 
 function ResultSearch() {
     const navigate = useNavigate();
-    const [scrapImage, setScrapImage] = useState(noScrap);
 
+    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [scrapImage, setScrapImage] = useState(noScrap);
     const handelScrap = () => {
         setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
     }
+
+    useEffect(() => {
+        if (location.state && location.state.results) {
+            setSearchResults(location.state.results);
+        }
+    }, [location.state]);
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleSearchClick = () => {
+        axios.get('/restaurant/search', {
+            params: {
+                location: searchTerm,
+                menu: searchTerm,
+                name: searchTerm
+            }
+        })
+            .then(response => {
+                setSearchResults(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the search data!', error);
+            });
+    };
+
     return (
         <div id="newBody">
             <header>
@@ -27,18 +59,28 @@ function ResultSearch() {
                        name="search"
                        className="search"
                        // value={검색어}
+                       value={searchTerm}
+                       onChange={handleSearchChange}
                 />
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/resultSearch')} alt="search"/>
+                <img className="headerImg" src={searchImage} onClick={handleSearchClick} alt="search"/>
             </div>
 
             <div id="main_noLogin">
                 <div className="image-grid">
                     {/*식당 수만큼*/}
+                    {searchResults.map((restaurant, index) => (
                     <div className="image-container">
+]
                         <img className="resImg" src={example/*식당사진*/} alt="search"/>
                         <img className="bookmark-image" src={scrapImage} onClick={handelScrap}/>
                         <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페1</span>
+
+                        <img className="resImg" src={restaurant.image} alt="search"/>
+                        <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
+                        <span className="image-caption">{restaurant.name}</span>
+
                     </div>
+                    ))}
                     {/*<div className="image-container">*/}
                     {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
                     {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}

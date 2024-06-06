@@ -12,24 +12,38 @@ import axios from 'axios';
 
 function Search() {
     const navigate = useNavigate();
-    const [restaurant, setRestaurant] = useState(null);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        axios.get("/restaurant/menu", {
-            withCredentials: true
-        }).then(response => {
-            setRestaurant(response.data);
-            setLoading(false);
-        }).catch(error => {
-            console.error("There was an error fetching the restaurant data!", error);
-            setLoading(false);
-        });
-    }, []);
+    const [searchTerm, setSearchTerm] = useState('');
+    //const [searchResults, setSearchResults] = useState([]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+
+    const handleSearchClick = () => {
+        console.log('Searching for:', searchTerm);  // 콘솔 로그 추가
+        axios.get('/restaurant/search', {
+            params: {
+                location: searchTerm,
+                menu: searchTerm,
+                name: searchTerm
+            }
+        })
+            .then(response => {
+                console.log('Response Data :', response.data);  // 응답 데이터 로그 추가
+                console.log('Response  :', response);  // 응답 데이터 로그 추가
+                if (response.data && response.data.length > 0) {
+                    navigate('/resultSearch', { state: { results: response.data } });
+                } else {
+                    console.log('No results found.');
+                }
+            })
+            .catch(error => {
+                console.error('There was an error fetching the search data!', error);
+            });
+    };
+
 
     return (
         <div id="newBody">
@@ -43,8 +57,12 @@ function Search() {
                        name="search"
                        className="search"
                        placeholder="지역, 음식 또는 식당 입력"
+                       value={searchTerm}
+                       onChange={handleSearchChange}
                 />
-                <img className="headerImg" src={searchBtn} onClick={() => navigate('/resultSearch')} alt="search"/>
+
+                <img className="headerImg" src={searchBtn} onClick={handleSearchClick} alt="search"/>
+
             </div>
             <div className="search-options">
                 <div>
