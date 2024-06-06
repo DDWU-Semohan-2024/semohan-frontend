@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
 import './Style.css'; // CSS 파일을 import
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import logoImage from '../img/semohan-logo.png';
 import toMain from '../img/toMain.png';
 import searchBtn from '../img/search.png';
 import one from '../img/1.png';
 import two from '../img/2.png';
 import three from '../img/3.png';
-import searchImage from "../img/search.png";
 import { Carousel } from 'react-bootstrap';
-import axios from "axios";
+import axios from 'axios';
 
 function Search() {
     const navigate = useNavigate();
@@ -45,6 +44,7 @@ function Search() {
             });
     };
 
+
     return (
         <div id="newBody">
             <header>
@@ -52,7 +52,7 @@ function Search() {
             </header>
 
             <div id="searchBar">
-                <img src={toMain} alt="toMain" onClick={() => navigate('/mainNoLogin')}/>
+                <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
                 <input type="text"
                        name="search"
                        className="search"
@@ -60,7 +60,9 @@ function Search() {
                        value={searchTerm}
                        onChange={handleSearchChange}
                 />
-                <img className="headerImg" src={searchImage} onClick={handleSearchClick} alt="search"/>
+
+                <img className="headerImg" src={searchBtn} onClick={handleSearchClick} alt="search"/>
+
             </div>
             <div className="search-options">
                 <div>

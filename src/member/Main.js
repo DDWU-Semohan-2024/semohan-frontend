@@ -6,17 +6,24 @@ import noLoginImage from '../img/add.png';
 import searchImage from '../img/search.png';
 import addressImage from '../img/gps.png';
 import example from '../img/buffetjpg.jpg';
-import bookmarkImage from '../img/bookmark-white.png';
+import noScrap from '../img/bookmark-white.png';
+import scrap from '../img/bookmark-black.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../img/profile-user.png";
 
 function Main() {
-
     const [address, setAddress] = useState(null);
     const [restaurants, setRestaurants] = useState([]);
 
     const navigate = useNavigate();
+    const [scrapImages, setScrapImages] = useState([noScrap, noScrap]); // 각 핀의 스크랩 이미지를 배열로 관리
+
+    const handleScrap = (index) => {
+        setScrapImages(prevImages =>
+            prevImages.map((img, i) => (i === index ? (img === noScrap ? scrap : noScrap) : img))
+        );
+    }
 
     const handleLocationSetting = () => {
         // 위치 설정 로직
@@ -141,10 +148,23 @@ function Main() {
 
                 <div className="image-grid">
                     {/*식당 수만큼*/}
+                    {scrapImages.map((img, index) => (
+                        <div className="image-container" key={index}>
+                            <img className="resImg" src={example/*식당사진*/} alt="search"/>
+                            <img
+                                className="bookmark-image"
+                                src={img}
+                                onClick={() => handleScrap(index)}
+                                alt="bookmark"
+                            />
+                            <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페{index + 1}</span>
+                        </div>
+                    ))}
+
                     {restaurants.map((restaurant, index) => (
                         <div className="image-container" key={index}>
                             <img className="resImg" src={restaurant.s3Url} alt="search"/>
-                            <img className="bookmark-image" src={bookmarkImage} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */}}/>
+                            <img className="bookmark-image" src={scrapImages} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */}}/>
                             <span className="image-caption">{restaurant.name}</span>
                         </div>
                     ))}
@@ -174,8 +194,6 @@ function Main() {
                     {/*</div>*/}
                 </div>
             </div>
-
-
         </div>
     )
 

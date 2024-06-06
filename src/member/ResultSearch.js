@@ -6,6 +6,8 @@ import toMain from "../img/toMain.png";
 import searchBtn from "../img/search.png";
 import searchImage from "../img/search.png";
 import example from "../img/buffetjpg.jpg";
+import noScrap from "../img/bookmark-white.png";
+import scrap from "../img/bookmark-black.png";
 import bookmarkImage from "../img/bookmark-white.png";
 import axios from "axios";
 
@@ -15,6 +17,10 @@ function ResultSearch() {
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [scrapImage, setScrapImage] = useState(noScrap);
+    const handelScrap = () => {
+        setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
+    }
 
     useEffect(() => {
         if (location.state && location.state.results) {
@@ -64,9 +70,15 @@ function ResultSearch() {
                     {/*식당 수만큼*/}
                     {searchResults.map((restaurant, index) => (
                     <div className="image-container">
+]
+                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
+                        <img className="bookmark-image" src={scrapImage} onClick={handelScrap}/>
+                        <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페1</span>
+
                         <img className="resImg" src={restaurant.image} alt="search"/>
                         <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
                         <span className="image-caption">{restaurant.name}</span>
+
                     </div>
                     ))}
                     {/*<div className="image-container">*/}
