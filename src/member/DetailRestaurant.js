@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Style.css'; // CSS 파일을 import
 import {Link, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
@@ -6,12 +6,18 @@ import ProfileImage from "../img/profile-user.png";
 import searchImage from "../img/search.png";
 import like from "../img/like.png";
 import example from "../img/buffetjpg.jpg";
-import bookmarkImage from "../img/bookmark-white.png";
 import triangle from "../img/triangle.png";
+import noScrap from "../img/bookmark-white.png";
+import scrap from "../img/bookmark-black.png";
 
 function DetailRestaurant() {
 
     const navigate = useNavigate();
+    const [scrapImage, setScrapImage] = useState(noScrap);
+
+    const handelScrap = () => {
+        setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
+    }
     return (
         <div id="newBody">
             <header id="newHeader">
@@ -23,34 +29,45 @@ function DetailRestaurant() {
                 <section id="top">
                     <div id="menuBox">
                         <div>
-                            <img className="last" src={triangle} alt="저번주" onClick={() => console.log('저번주 버튼 클릭')}/>
-                            <div>점심{/*{restaurant.mealType}*/}</div>
-                            <img className="next" src={triangle} alt="다음주" onClick={() => console.log('다음주 버튼 클릭')}/>
+                            <img className="last" src={triangle} alt="어제" onClick={() => console.log('어제 버튼 클릭')}/>
+                            <div>24.06.06{/*{오늘 날짜}*/}</div>
+                            <img className="next" src={triangle} alt="내일" onClick={() => console.log('내일 버튼 클릭')}/>
                         </div>
                         <span></span>
-                        <div className='title'>
-                            메인 메뉴
+                        <div>
+                            <div id='meal'>점심</div>
+                            <div className='title'>
+                                메인 메뉴
+                            </div>
+                            {/*메인 개수 따라서 늘어남*/}
+                            <div className='menuName'>
+                                고등어조림{/*{restaurant.mainMenu}*/}
+                            </div>
+                            <div className='title'>
+                                반찬
+                            </div>
+                            {/*반찬 개수 따라서 늘어남*/}
+                            <div className='menuName'>
+                                계란말이{/*{restaurant.subMenu}*/}
+                            </div>
                         </div>
-                        {/*메인 개수 따라서 늘어남*/}
-                        <div className='menuName'>
-                            고등어조림{/*{restaurant.mainMenu}*/}
+                        <div>
+                            <div id='meal'>저녁</div>
+                            <div className='title'>
+                                메인 메뉴
+                            </div>
+                            {/*메인 개수 따라서 늘어남*/}
+                            <div className='menuName'>
+                                고등어조림{/*{restaurant.mainMenu}*/}
+                            </div>
+                            <div className='title'>
+                                반찬
+                            </div>
+                            {/*반찬 개수 따라서 늘어남*/}
+                            <div className='menuName'>
+                                계란말이{/*{restaurant.subMenu}*/}
+                            </div>
                         </div>
-                        <div className='title'>
-                            반찬
-                        </div>
-                        {/*반찬 개수 따라서 늘어남*/}
-                        <div className='menuName'>
-                            계란말이{/*{restaurant.subMenu}*/}
-                        </div>
-                        {/*<div className='menuName'>*/}
-                        {/*    계란말이/!*{restaurant.subMenu}*!/*/}
-                        {/*</div>*/}
-                        {/*<div className='menuName'>*/}
-                        {/*    계란말이/!*{restaurant.subMenu}*!/*/}
-                        {/*</div>*/}
-                        {/*<div className='menuName'>*/}
-                        {/*    계란말이/!*{restaurant.subMenu}*!/*/}
-                        {/*</div>*/}
 
                     </div>
                     <div id="right">
@@ -67,7 +84,7 @@ function DetailRestaurant() {
                     <div className="image-grid">
                         <div className="image-container">
                             <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                            <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
+                            <img className="bookmark-image" src={scrapImage} onClick={handelScrap}/>
                         </div>
                         <span>
                             <div className="detail">식당 이름{/*{restaurant.name}*/}</div>

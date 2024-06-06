@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Style.css'; // CSS 파일을 import
 import {Link, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
@@ -6,10 +6,16 @@ import toMain from "../img/toMain.png";
 import searchBtn from "../img/search.png";
 import searchImage from "../img/search.png";
 import example from "../img/buffetjpg.jpg";
-import bookmarkImage from "../img/bookmark-white.png";
+import noScrap from "../img/bookmark-white.png";
+import scrap from "../img/bookmark-black.png";
 
 function ResultSearch() {
     const navigate = useNavigate();
+    const [scrapImage, setScrapImage] = useState(noScrap);
+
+    const handelScrap = () => {
+        setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
+    }
     return (
         <div id="newBody">
             <header>
@@ -30,8 +36,8 @@ function ResultSearch() {
                     {/*식당 수만큼*/}
                     <div className="image-container">
                         <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                        <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
-                        <span className="image-caption">뷔페1</span>
+                        <img className="bookmark-image" src={scrapImage} onClick={handelScrap}/>
+                        <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페1</span>
                     </div>
                     {/*<div className="image-container">*/}
                     {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}

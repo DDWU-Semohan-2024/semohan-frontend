@@ -538,6 +538,10 @@
 
     }
 
+    #meal {
+        font-weight: bold;
+    }
+
     #menuBox {
         padding: 3%;
         width: 50%;
@@ -620,6 +624,14 @@
     #bottom > .image-grid {
         flex-wrap: nowrap;
         align-items: center;
+        background-color: var(--graycolor);
+        border-radius: var(--radius);
+        padding-bottom: 3%;
+    }
+
+    #bottom .image-container{
+        margin: 0;
+        padding: 0;
     }
 
     .detail {
@@ -633,7 +645,7 @@
         justify-content: flex-end;
         margin-top: 250px;
         text-align: center;
-        height: 150px;
+        height: 130px;
         padding: 10px;
         width: 100%;
     }
