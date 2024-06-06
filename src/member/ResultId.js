@@ -14,7 +14,6 @@ function FindIdResult() {
             </div>
             <div id="resultId">
                 <div>아이디: semohan123</div>
-                <div>가입일: 2024.04.01</div>
             </div>
             <div className="btn">
                 <Link to="/login">확인</Link>
