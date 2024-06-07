@@ -13,7 +13,7 @@ function MyPage() {
             <div id="caption">마이페이지</div>
             <div className="mainLink">
                 <Link className="lemon" to="/myInfo">나의 정보</Link>
-                <Link className="lemon" to="/">리뷰</Link>
+                <Link className="lemon" to="/comingSoon">리뷰</Link>
                 <Link className="lemon" to="/scrapRestaurant">식당 핀/스크랩</Link>
                 <Link className="lemon" to="/login">로그아웃</Link>
             </div>

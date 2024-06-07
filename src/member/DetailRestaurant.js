@@ -72,7 +72,7 @@ function DetailRestaurant() {
                     </div>
                     <div id="right">
                         <button id="reviewBox">
-                            리뷰
+                            <Link to="/comingSoon">리뷰</Link>
                         </button>
                         <article id="likeBox">
                             <p>식당 <img src={like}/> {/*좋아요 개수*/}N개</p>
