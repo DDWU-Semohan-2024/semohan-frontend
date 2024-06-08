@@ -596,11 +596,14 @@
         font-size: var(--mainfontsize);
         background-color: var(--lemoncolor);
         border-radius: var(--radius);
-        text-decoration: none;
-        color: black;
         text-align: center;
         padding: 30px 30px;
         width: 92%;
+    }
+
+    #reviewBox > a {
+        text-decoration: none;
+        color: black;
     }
 
     #likeBox {
