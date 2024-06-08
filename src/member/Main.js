@@ -34,8 +34,8 @@ function Main() {
 
     const alterAddress = (position) => {
 
-        let x = 127.04742793253544 ; //position.coords.longitude; //테스트를 위해 성북구로 지정
-        let y = 37.60422583406296; //position.coords.latitude; //테스트를 위해 성북구로 지정
+        let x = position.coords.longitude; //테스트를 위해 성북구로 지정 127.04742793253544 ; //
+        let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
         if (x && y) {
             axios.get(
                 `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,

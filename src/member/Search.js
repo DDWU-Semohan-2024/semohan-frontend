@@ -1,6 +1,6 @@
+import React, {useEffect, useState} from 'react';
 import './Style.css'; // CSS 파일을 import
-import {useNavigate} from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import toMain from '../img/toMain.png';
 import searchBtn from '../img/search.png';
@@ -8,33 +8,89 @@ import one from '../img/1.png';
 import two from '../img/2.png';
 import three from '../img/3.png';
 import { Carousel } from 'react-bootstrap';
-import axios from 'axios';
+import axios from "axios";
+import qs from "qs";
 
 function Search() {
     const navigate = useNavigate();
 
     const [searchTerm, setSearchTerm] = useState('');
     //const [searchResults, setSearchResults] = useState([]);
+    const [searchType, setSearchType] = useState(''); // 검색 타입 추가
+    const [todayDate, setTodayDate] = useState('');
+    const [tomorrowDate, setTomorrowDate] = useState('');
+
+    //const [restaurant, setRestaurant] = useState([]);
+    useEffect(() => {
+        const today = new Date();
+        const tomorrow = new Date();
+
+        tomorrow.setDate(today.getDate() + 1);
+
+        const todayFormatted = `${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`;
+        const tomorrowFormatted = `${tomorrow.getFullYear()}.${tomorrow.getMonth() + 1}.${tomorrow.getDate()}`;
+
+        setTodayDate(todayFormatted);
+        setTomorrowDate(tomorrowFormatted);
+    }, []);
+
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
+        console.log(e.target.value);
     };
 
 
-    const handleSearchClick = () => {
-        console.log('Searching for:', searchTerm);  // 콘솔 로그 추가
-        axios.get('/restaurant/search', {
-            params: {
+    const handleSearchClick = (type, date) => {
+        let searchTypeValue = searchType;
+        if (type) {
+            searchTypeValue = type;
+        }
+        console.log('Searching for:', searchTerm, 'with type:', searchTypeValue, 'on date:', date);  // 콘솔 로그 추가
+
+        let params = {date: todayDate};
+        if (searchType === 'name') {
+            params = {...params, name: searchTerm};
+            console.log("search type: name")
+        } else if (searchType === 'location') {
+            params = {...params, location: searchTerm};
+            console.log("search type: location")
+        } else if (searchType === 'menu') {
+            params = {...params, menu: searchTerm};
+            console.log("search type: menu")
+        } else {
+            params = {
+                ...params,
                 location: searchTerm,
                 menu: searchTerm,
                 name: searchTerm
-            }
-        })
+            };
+        }
+        // else {
+        //     params = {
+        //         location: searchTerm,
+        //         menu: searchTerm,
+        //         name: searchTerm
+        //     };
+        // }
+        axios.defaults.paramsSerializer = params => {
+            return qs.stringify(params);
+        }
+
+
+        axios.get('/restaurant/search', {params})
             .then(response => {
                 console.log('Response Data :', response.data);  // 응답 데이터 로그 추가
-                console.log('Response  :', response);  // 응답 데이터 로그 추가
+                console.log('Response :', response);  // 응답 데이터 로그 추가
+
                 if (response.data && response.data.length > 0) {
-                    navigate('/resultSearch', { state: { results: response.data } });
+
+                    // response.data.forEach(item => {
+                    //     if (item.id) {
+                    //         console.log('Item ID:', item.id);
+                    //     }
+                    // });
+                    navigate('/resultSearch', {state: {results: response.data}});
                 } else {
                     console.log('No results found.');
                 }
@@ -43,7 +99,6 @@ function Search() {
                 console.error('There was an error fetching the search data!', error);
             });
     };
-
 
     return (
         <div id="newBody">
@@ -60,18 +115,24 @@ function Search() {
                        value={searchTerm}
                        onChange={handleSearchChange}
                 />
+                <img className="headerImg" src={searchImage} onClick={() => handleSearchClick()} alt="search"/>
 
                 <img className="headerImg" src={searchBtn} onClick={handleSearchClick} alt="search"/>
 
             </div>
             <div className="search-options">
                 <div>
-                    <button className="search-option lemon">오늘 메뉴 검색</button>
-                    <button className="search-option gray">내일 메뉴 검색</button>
+                    <button className="search-option lemon" onClick={() => setSearchType('menu', todayDate)}>오늘 메뉴 검색</button>
+                    <button className="search-option gray" onClick={() => setSearchType('menu', tomorrowDate)}>내일 메뉴 검색</button>
                 </div>
                 <div>
-                    <button className="search-option gray">지역명 검색</button>
-                    <button className="search-option gray">식당명 검색</button>
+                    <button className="search-option gray"
+                            onClick={() => setSearchType('location')}
+                    >지역명 검색</button>
+                    <button className="search-option gray"
+                            onClick={() => {
+                        setSearchType('name')
+                    }}>식당명 검색</button>
                 </div>
             </div>
 
