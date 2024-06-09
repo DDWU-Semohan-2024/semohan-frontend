@@ -6,15 +6,24 @@ import noLoginImage from '../img/add.png';
 import searchImage from '../img/search.png';
 import addressImage from '../img/gps.png';
 import example from '../img/buffetjpg.jpg';
-import bookmarkImage from '../img/bookmark-white.png';
+import noScrap from '../img/bookmark-white.png';
+import scrap from '../img/bookmark-black.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../img/profile-user.png";
 
 function Main() {
-
     const [address, setAddress] = useState(null);
+    const [restaurants, setRestaurants] = useState([]);
+
     const navigate = useNavigate();
+    const [scrapImages, setScrapImages] = useState([noScrap, noScrap]); // 각 핀의 스크랩 이미지를 배열로 관리
+
+    const handleScrap = (index) => {
+        setScrapImages(prevImages =>
+            prevImages.map((img, i) => (i === index ? (img === noScrap ? scrap : noScrap) : img))
+        );
+    }
 
     const handleLocationSetting = () => {
         // 위치 설정 로직
@@ -25,8 +34,8 @@ function Main() {
 
     const alterAddress = (position) => {
 
-        let x = position.coords.longitude;
-        let y = position.coords.latitude;
+        let x = position.coords.longitude; //테스트를 위해 성북구로 지정 127.04742793253544 ; //
+        let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
         if (x && y) {
             axios.get(
                 `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
@@ -36,6 +45,13 @@ function Main() {
                 let location = result.data.documents[0].address.region_2depth_name;
                 console.log("location: " + location);
                 setAddress(location);
+                axios.get(`/location/set/${encodeURIComponent(location)}`, {
+                    // withCredentials: true
+                }).then(() => {
+                    fetchRestaurants(); // Fetch restaurants after setting address
+                }).catch(error => {
+                    console.error("There was an error setting the location!", error);
+                });
             }).catch(error => {
                 console.error("There was an error fetching the address data!", error);
             });
@@ -59,10 +75,19 @@ function Main() {
     //     });
     // }, []);
 
-    // if (!address) {
-    //     return <div>Loading...</div>;
-    // }
+    const fetchRestaurants = () => {
+        axios.get(`/restaurant/nearby`, {
+            //withCredentials: true
+        }).then((response) => {
+            setRestaurants(response.data);
+        }).catch((error) => {
+            console.error("There was an error fetching the restaurant data!", error);
+        });
+    };
 
+    if (!restaurants) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div id="newBody">
@@ -123,16 +148,37 @@ function Main() {
 
                 <div className="image-grid">
                     {/*식당 수만큼*/}
-                    <div className="image-container">
-                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                        <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
-                        <span className="image-caption">뷔페1</span>
-                    </div>
-                    <div className="image-container">
-                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                        <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
-                        <span className="image-caption">뷔페1</span>
-                    </div>
+                    {scrapImages.map((img, index) => (
+                        <div className="image-container" key={index}>
+                            <img className="resImg" src={example/*식당사진*/} alt="search"/>
+                            <img
+                                className="bookmark-image"
+                                src={img}
+                                onClick={() => handleScrap(index)}
+                                alt="bookmark"
+                            />
+                            <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페{index + 1}</span>
+                        </div>
+                    ))}
+
+                    {restaurants.map((restaurant, index) => (
+                        <div className="image-container" key={index}>
+                            <img className="resImg" src={restaurant.s3Url} alt="search"/>
+                            <img className="bookmark-image" src={scrapImages} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */}}/>
+                            <span className="image-caption">{restaurant.name}</span>
+                        </div>
+                    ))}
+                    {/*<div className="image-container">*/}
+                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
+                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
+                    {/*    <span className="image-caption">뷔페1</span>*/}
+                    {/*</div>*/}
+                    {/*<div className="image-container">*/}
+                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
+                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
+                    {/*    <span className="image-caption">뷔페1</span>*/}
+                    {/*</div>*/}
+
                     {/*<div className="image-container">*/}
                     {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
                     {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
@@ -148,8 +194,6 @@ function Main() {
                     {/*</div>*/}
                 </div>
             </div>
-
-
         </div>
     )
 

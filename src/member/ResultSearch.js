@@ -1,38 +1,126 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './Style.css'; // CSS 파일을 import
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import toMain from "../img/toMain.png";
 import searchBtn from "../img/search.png";
 import searchImage from "../img/search.png";
 import example from "../img/buffetjpg.jpg";
+import noScrap from "../img/bookmark-white.png";
+import scrap from "../img/bookmark-black.png";
 import bookmarkImage from "../img/bookmark-white.png";
+import axios from "axios";
+import qs from "qs";
 
 function ResultSearch() {
     const navigate = useNavigate();
+
+    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [scrapImage, setScrapImage] = useState(noScrap);
+    const handelScrap = () => {
+        setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
+    }
+    const [searchType, setSearchType] = useState(''); // 검색 타입 추가
+
+    useEffect(() => {
+        if (location.state && location.state.results) {
+            setSearchResults(location.state.results);
+        }
+    }, [location.state]);
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleSearchClick = () => {
+        // axios.get('/restaurant/search', {
+        //     params: {
+        //         location: searchTerm,
+        //         menu: searchTerm,
+        //         name: searchTerm
+        //     }
+        // })
+        //     .then(response => {
+        //         setSearchResults(response.data);
+        //     })
+        //     .catch(error => {
+        //         console.error('There was an error fetching the search data!', error);
+        //     });
+
+        console.log('Searching for:', searchTerm);  // 콘솔 로그 추가
+        navigate('/ResultSearch', { state: { searchTerm: searchTerm } });
+        // let params = {};
+        // if (searchType === 'name') {
+        //     params = { name: searchTerm };
+        //     console.log("search type: name")
+        // } else if (searchType === 'location') {
+        //     params = { location: searchTerm };
+        //     console.log("search type: location")
+        // } else if (searchType === 'menu') {
+        //     params = { menu: searchTerm };
+        //     console.log("search type: menu")
+        // } else {
+        //     params = {
+        //         location: searchTerm,
+        //         menu: searchTerm,
+        //         name: searchTerm
+        //     };
+        // }
+        // else {
+        //     params = {
+        //         location: searchTerm,
+        //         menu: searchTerm,
+        //         name: searchTerm
+        //     };
+        // }
+        // axios.defaults.paramsSerializer = params => {
+        //     return qs.stringify(params);
+        // }
+        //
+        // axios.get('/restaurant/search', {params})
+        //     .then(response => {
+        //         console.log('Response Data :', response.data);  // 응답 데이터 로그 추가
+        //         console.log('Response :', response);  // 응답 데이터 로그 추가
+        //         if (response.data && response.data.length > 0) {
+        //             navigate('/resultSearch', { state: { results: response.data } });
+        //         } else {
+        //             console.log('No results found.');
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('There was an error fetching the search data!', error);
+        //     });
+    };
+
     return (
         <div id="newBody">
             <header>
                 <img src={logoImage} alt="logo"/>
             </header>
             <div id="searchBar">
-                <img src={toMain} alt="toMain" onClick={() => navigate('/mainNoLogin')}/>
+                <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
                 <input type="text"
                        name="search"
                        className="search"
-                       placeholder="지역, 음식 또는 식당 입력"
+                       // value={검색어}
+                       value={searchTerm}
+                       onChange={handleSearchChange}
                 />
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/resultSearch')} alt="search"/>
+                <img className="headerImg" src={searchImage} onClick={handleSearchClick} alt="search"/>
             </div>
 
             <div id="main_noLogin">
                 <div className="image-grid">
                     {/*식당 수만큼*/}
-                    <div className="image-container">
-                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
+                    {searchResults.map((restaurant, index) => (
+                    <div className="image-container" key={index}>
+                        <img className="resImg" src={restaurant.s3Url} alt="search"/>
                         <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
-                        <span className="image-caption">뷔페1</span>
+                        <span className="image-caption">{restaurant.name}</span>
                     </div>
+                    ))}
                     {/*<div className="image-container">*/}
                     {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
                     {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}

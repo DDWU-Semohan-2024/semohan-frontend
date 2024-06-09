@@ -16,6 +16,8 @@ import Main from './member/Main';
 import UpdateInfo from './member/UpdateInfo';
 import NewPassword from './member/NewPassword';
 import Register from './member/Register';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ComingSoon from "./member/ComingSoon";
 
 class App extends Component {
   render() {
@@ -39,6 +41,7 @@ class App extends Component {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/newPassword" element={<NewPassword />} />
             <Route exact path="/updateInfo" element={<UpdateInfo />} />
+            <Route exact path="/comingSoon" element={<ComingSoon />} />
 
             {/*<Route path="/" element={<Login />} /> /!* 기본적으로 /login으로 이동 *!/*/}
           </Routes>
