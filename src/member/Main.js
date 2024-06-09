@@ -92,7 +92,7 @@ function Main() {
     return (
         <div id="newBody">
             <header id="newHeader">
-                <img className="headerImg" src={noLoginImage} onClick={() => navigate('/register')} alt="profile"/>
+                <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
                 {/*로그인 했을 경우/!*<img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>*!/*/}
                 <img src={logoImage} alt="logo"/>
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
@@ -152,7 +152,7 @@ function Main() {
                         <div className="image-container" key={index}>
                             <img className="resImg" src={example/*식당사진*/} alt="search"/>
                             <img
-                                className="bookmark-image"
+                                className="bookmark-image2"
                                 src={img}
                                 onClick={() => handleScrap(index)}
                                 alt="bookmark"
@@ -164,7 +164,7 @@ function Main() {
                     {restaurants.map((restaurant, index) => (
                         <div className="image-container" key={index}>
                             <img className="resImg" src={restaurant.s3Url} alt="search"/>
-                            <img className="bookmark-image" src={scrapImages} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */}}/>
+                            <img className="bookmark-image2" src={scrapImages} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */}}/>
                             <span className="image-caption">{restaurant.name}</span>
                         </div>
                     ))}
