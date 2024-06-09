@@ -8,6 +8,7 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -29,18 +30,32 @@ function Login() {
             password,
         };
 
-        const response = axios.post("/auth/sign-in", data, {
-            withCredentials: true
-        });
+        try {
+            const response = await axios.post("/auth/sign-in", data, {
+                withCredentials: true
+            });
 
+            console.log(response);
+            
+            //로그인 버튼 클릭시 입력창 reset
+            setUsername("");
+            setPassword("");
 
-        console.log(response);
-
-        return response;
-
-        // 로그인 버튼 클릭시 입력창 reset
-        // setUsername("");
-        // setPassword("");
+            // 로그인 성공 시 홈으로 리디렉션 (예: /main)
+            if (response.status === 200) {
+                window.location.href = "/main";
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                setError(error.response.data.message); // 백엔드에서 온 오류 메시지 설정
+                alert(error.response.data.message);  // 오류 메시지를 팝업으로 띄우기
+            } else {
+                // 기타 오류 처리
+                setError('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
+                alert('로그인 중 오류가 발생했습니다. 다시 시도해주세요.'); // 오류 메시지를 팝업으로 띄우기
+            }
+            console.error('Error during login:', error);
+        }
     };
 
     return (
