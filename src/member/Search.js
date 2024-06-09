@@ -115,7 +115,7 @@ function Search() {
                        value={searchTerm}
                        onChange={handleSearchChange}
                 />
-                <img className="headerImg" src={searchImage} onClick={() => handleSearchClick()} alt="search"/>
+                <img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>
 
                 <img className="headerImg" src={searchBtn} onClick={handleSearchClick} alt="search"/>
 
