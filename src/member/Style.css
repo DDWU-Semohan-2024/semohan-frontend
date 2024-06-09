@@ -385,8 +385,15 @@
         height: auto;
     }
 
-    .bookmark-image {
+    .bookmark-image1 {
         width: 10%;
+        position: absolute;
+        top: 17px; /* 원하는 위치로 조정 */
+        right: 40px; /* 원하는 위치로 조정 */
+    }
+
+    .bookmark-image2 {
+        width: 15%;
         position: absolute;
         top: 15px; /* 원하는 위치로 조정 */
         right: 15px; /* 원하는 위치로 조정 */
