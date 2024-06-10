@@ -117,8 +117,6 @@ function Search() {
                 />
                 <img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>
 
-                <img className="headerImg" src={searchBtn} onClick={handleSearchClick} alt="search"/>
-
             </div>
             <div className="search-options">
                 <div>
