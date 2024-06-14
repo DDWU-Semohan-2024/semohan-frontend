@@ -213,7 +213,7 @@ function Main() {
                         <div className="image-container" key={index}>
                             <img className="resImg" src={example/*식당사진*/} alt="search"/>
                             <img
-                                className="bookmark-image"
+                                className="bookmark-image2"
                                 src={img}
                                 onClick={() => handleScrap(index)}
                                 alt="bookmark"
@@ -222,7 +222,13 @@ function Main() {
                         </div>
                     ))}
 
-
+                    {restaurants.map((restaurant, index) => (
+                        <div className="image-container" key={index}>
+                            <img className="resImg" src={restaurant.s3Url} alt="search"/>
+                            <img className="bookmark-image2" src={scrapImages} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */}}/>
+                            <span className="image-caption">{restaurant.name}</span>
+                        </div>
+                    ))}
                     {/*<div className="image-container">*/}
                     {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
                     {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
