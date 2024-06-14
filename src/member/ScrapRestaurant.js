@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import './Style.css'; // CSS 파일을 import
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Style.css';
+import { useNavigate } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import ProfileImage from "../img/profile-user.png";
 import searchImage from "../img/search.png";
-import example from "../img/buffetjpg.jpg";
 import pin from "../img/pin.png";
 import noPin from "../img/noPin.png";
 import noScrap from "../img/bookmark-white.png";
@@ -12,88 +12,117 @@ import scrap from "../img/bookmark-black.png";
 
 function ScrapRestaurant() {
     const navigate = useNavigate();
-    const [pinImages, setPinImages] = useState([noPin, noPin]); // 각 핀의 스크랩 이미지를 배열로 관리
-    const [scrapImages, setScrapImages] = useState([noScrap, noScrap]); // 각 핀의 스크랩 이미지를 배열로 관리
-    const [pinImage, setPinImage] = useState(pin);
     const [scrapImage, setScrapImage] = useState(scrap);
+    const [pinImage, setPinImage] = useState(pin);
+    const [pinnedRestaurant, setPinnedRestaurant] = useState(null);
+    const [scrappedRestaurants, setScrappedRestaurants] = useState([]);
 
-    const handelNoScrap = () => {
-        setScrapImage((prevSrc) => (prevSrc === scrap ? noScrap : scrap));
-    }
+    useEffect(() => {
+        axios.get('/restaurant/scrap-pin')
+            .then(response => {
+                const data = response.data;
+                setPinnedRestaurant(data.pinnedRestaurnat);
+                setScrappedRestaurants(data.scrappedRestaurnats.map(restaurant => ({
+                    ...restaurant,
+                    scrapped: true,
+                    pinned: data.pinnedRestaurnat && data.pinnedRestaurnat.id === restaurant.id
+                })));
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
 
-    const [imageStates, setImageStates] = useState([
-        {pin: noPin, scrap: noScrap},
-        {pin: noPin, scrap: noScrap}
-    ]);
-
-    const handleScrap = (index) => {
-        setImageStates(prevStates =>
-            prevStates.map((state, i) => (
-                i === index ? {...state, scrap: state.scrap === noScrap ? scrap : noScrap} : state
-            ))
-        );
-    }
-
-    const handlePin = (index) => {
-        setImageStates(prevStates =>
-            prevStates.map((state, i) => (
-                i === index ? {...state, pin: state.pin === noPin ? pin : noPin} : state
-            ))
-        );
-    }
+    const handleNoScrap = () => {
+        setScrapImage(prevSrc => (prevSrc === scrap ? noScrap : scrap));
+    };
 
     const handleNoPin = () => {
-        setPinImage((prevSrc) => (prevSrc === pin ? noPin : pin));
-    }
+        setPinImage(prevSrc => (prevSrc === pin ? noPin : pin));
+    };
+
+    const handleScrap = index => {
+        setScrappedRestaurants(prevStates =>
+            prevStates.map((restaurant, i) => (
+                i === index ? { ...restaurant, scrapped: !restaurant.scrapped } : restaurant
+            ))
+        );
+    };
+
+    const handlePin = index => {
+        setScrappedRestaurants(prevStates =>
+            prevStates.map((restaurant, i) => (
+                i === index ? { ...restaurant, pinned: !restaurant.pinned } : restaurant
+            ))
+        );
+    };
+
+    const handleSave = () => {
+        const pinnedRestaurantId = pinnedRestaurant ? pinnedRestaurant.id : null;
+        const scrappedRestaurantIdList = scrappedRestaurants
+            .filter(restaurant => restaurant.scrapped)
+            .map(restaurant => restaurant.id);
+
+        const requestData = {
+            pinnedRestaurantId,
+            scrappedRestaurantIdList
+        };
+
+        axios.post('/restaurant/scrap-pin/update', requestData)
+            .then(response => {
+                console.log('Update successful:', response.data);
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
+    };
 
     return (
         <div id="newBody">
             <header id="newHeader">
-                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/myPage')} alt="profile"/>
-                <img src={logoImage} alt="logo"/>
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
+                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/myPage')} alt="profile" />
+                <img src={logoImage} alt="logo" />
+                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
             </header>
 
             <div id="main_noLogin">
                 <h4>내가 핀한 식당</h4>
-                {/*있을 경우*/}
                 <div className="image-grid">
-                    <div className="image-container">
-                        <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                        <img className="bookmark-image1" src={scrapImage} onClick={handelNoScrap}/>
-                        <img className="bookmark-image2" src={pinImage} onClick={handleNoPin}/>
-                        <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페1</span>
-                    </div>
-                </div>
-                {/*없을 경우*/}
-                <div className="pin">
-                    단골 식당을 <span>PIN</span> 해주세요
+                    {pinnedRestaurant && (
+                        <div className="image-container">
+                            <img className="resImg" src={pinnedRestaurant.s3Url} alt="search" />
+                            <img className="bookmark-image2"
+                                 src={pinImage}
+                                 onClick={handleNoPin}
+                                 alt="pin" />
+                            <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>{pinnedRestaurant.name}</span>
+                        </div>
+                    )}
                 </div>
 
                 <h4>내가 스크랩한 식당</h4>
                 <div className="image-grid">
-                    {imageStates.map((state, index) => (
-                        <div className="image-container" key={index}>
-                            <img className="resImg" src={example} alt="search"/>
+                    {scrappedRestaurants.map((restaurant, index) => (
+                        <div className="image-container" key={restaurant.id}>
+                            <img className="resImg" src={restaurant.s3Url} alt="search" />
                             <img
                                 className="bookmark-image1"
-                                src={state.scrap}
+                                src={restaurant.scrapped ? scrap : noScrap}
                                 onClick={() => handleScrap(index)}
                                 alt="scrap"
                             />
                             <img
                                 className="bookmark-image2"
-                                src={state.pin}
+                                src={restaurant.pinned ? pin : noPin}
                                 onClick={() => handlePin(index)}
                                 alt="pin"
                             />
-                            <span className="image-caption"
-                                  onClick={() => navigate('/detailRestaurant')}>뷔페{index + 1}</span>
+                            <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>{restaurant.name}</span>
                         </div>
                     ))}
                 </div>
-                <button className='submit gray' >저장</button>
-
+                <button className='submit gray' onClick={handleSave}>저장</button>
             </div>
         </div>
     );
