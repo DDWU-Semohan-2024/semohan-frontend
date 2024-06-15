@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import "./Style.css"; // CSS 파일을 import
 import { Link } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
@@ -19,11 +19,58 @@ function Main() {
     const navigate = useNavigate();
     const [scrapImages, setScrapImages] = useState([noScrap, noScrap]); // 각 핀의 스크랩 이미지를 배열로 관리
 
+    const [loggedIn, setLoggedIn] = useState(false); // 로그인 여부 상태
+    const [pinnedRestaurant, setPinnedRestaurant] = useState(null); // 핀한 식당 목록 상태
+
+   const [restaurantName, setRestaurantName] = useState(''); // 핀된 식당 이름 상태
+
     const handleScrap = (index) => {
         setScrapImages(prevImages =>
             prevImages.map((img, i) => (i === index ? (img === noScrap ? scrap : noScrap) : img))
         );
     }
+
+    const checkLoginStatus = useCallback(() => {
+        axios.get('/member/info', { withCredentials: true })
+            .then(response => {
+                if (response.data) {
+                    setLoggedIn(true);
+                    fetchPinnedRestaurantMenu ();
+                }
+            }).catch(error => {
+            console.error("There was an error checking login status!", error);
+        });
+    }, []);
+
+    const fetchPinnedRestaurantMenu  = () => {
+        axios.get('/menu/pin', { withCredentials: true })
+            .then(response => {
+                console.log(response.data);
+                setPinnedRestaurant(response.data);
+
+                // response.data의 구조를 확인하여 올바른 경로로 restaurantId 추출
+                const restaurantId = response.data.restaurantId || response.data.restaurant_id || response.data.restaurant?.id;
+
+                if (restaurantId) {
+                    fetchRestaurantName(restaurantId); // 식당 이름 가져오기
+                } else {
+                    console.error("restaurantId not found in response", response.data);
+                }
+
+            }).catch(error => {
+            console.error("There was an error fetching pinned restaurants!", error);
+        });
+    };
+
+    const fetchRestaurantName = (restaurantId) => {
+        axios.get(`/menu/${restaurantId}`, { withCredentials: true })
+            .then(response => {
+                setRestaurantName(response.data.name);
+                console.log(response.data.name);
+            }).catch(error => {
+            console.error("There was an error fetching the restaurant name!", error);
+        });
+    };
 
     const handleLocationSetting = () => {
         // 위치 설정 로직
@@ -32,23 +79,26 @@ function Main() {
     };
 
 
-    const alterAddress = (position) => {
+    const alterAddress = useCallback((position) => {
 
         let x = position.coords.longitude; //테스트를 위해 성북구로 지정 127.04742793253544 ; //
         let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
+
+        console.log(x,y)
         if (x && y) {
             axios.get(
                 `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
-                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` } }
+                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` }}
             ).then((result) => {
-                // 행정구역의 구 부분만 가져옵니다
+                // 행정구역의 구 부분만 가져옵니다'
+                console.log(result)
                 let location = result.data.documents[0].address.region_2depth_name;
                 console.log("location: " + location);
                 setAddress(location);
                 axios.get(`/location/set/${encodeURIComponent(location)}`, {
-                    // withCredentials: true
+                    withCredentials: true
                 }).then(() => {
-                    fetchRestaurants(); // Fetch restaurants after setting address
+                    fetchRestaurants(location); // Fetch restaurants after setting address
                 }).catch(error => {
                     console.error("There was an error setting the location!", error);
                 });
@@ -56,7 +106,7 @@ function Main() {
                 console.error("There was an error fetching the address data!", error);
             });
         }
-    };
+    },[]);
 
     const doSomethingError = (error) => {
         console.log('location error', error);
@@ -64,7 +114,7 @@ function Main() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(alterAddress, doSomethingError);
-    }, []);
+    }, [alterAddress]);
     // useEffect(() => {
     //     axios.get("/location/set/", {
     //         withCredentials: true
@@ -75,14 +125,24 @@ function Main() {
     //     });
     // }, []);
 
-    const fetchRestaurants = () => {
+    useEffect(() => {
+        fetchRestaurants(); // Initially fetch restaurants
+        checkLoginStatus(); // Check login status on component mount
+    }, [checkLoginStatus]);
+
+    const fetchRestaurants = (location) => {
         axios.get(`/restaurant/nearby`, {
-            //withCredentials: true
-        }).then((response) => {
-            setRestaurants(response.data);
-        }).catch((error) => {
+            withCredentials: true,
+            params: { location: location }
+        })
+            .then((response) => {
+                setRestaurants(response.data);
+                console.log(response.data);
+            }).catch((error) => {
             console.error("There was an error fetching the restaurant data!", error);
         });
+
+
     };
 
     if (!restaurants) {
@@ -92,49 +152,50 @@ function Main() {
     return (
         <div id="newBody">
             <header id="newHeader">
-                <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
-                {/*로그인 했을 경우/!*<img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>*!/*/}
+                {!loggedIn ? (
+                    <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
+                ) : (
+                    <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
+                )}
                 <img src={logoImage} alt="logo"/>
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
 
-            {/*Pin이 없을 경우*/}
-            <div className="pin">
-                단골 식당을 <span>PIN</span> 해주세요
-            </div>
+            {/*/!*Pin이 없을 경우*!/*/}
+            {/*<div className="pin">*/}
+            {/*    단골 식당을 <span>PIN</span> 해주세요*/}
+            {/*</div>*/}
 
             {/*Pin 있을 경우*/}
+            {loggedIn && pinnedRestaurant ? (
             <div id="menu">
-                <div>
-                    식당 이름 - 점심{/*{restaurant.name} - {restaurant.mealType}*/}
-                </div>
-                <span></span>
-                <div className='title'>
-                    메인 메뉴
-                </div>
-                {/*메인 개수 따라서 늘어남*/}
-                <div className='menuName'>
-                    고등어조림{/*{restaurant.mainMenu}*/}
-                </div>
-                <div className='title'>
-                    반찬
-                </div>
-                {/*반찬 개수 따라서 늘어남*/}
-                <div className='menuName'>
-                    계란말이{/*{restaurant.subMenu}*/}
-                </div>
-                <div className='menuName'>
-                    계란말이{/*{restaurant.subMenu}*/}
-                </div>
-                <div className='menuName'>
-                    계란말이{/*{restaurant.subMenu}*/}
-                </div>
-                <div className='menuName'>
-                    계란말이{/*{restaurant.subMenu}*/}
-                </div>
+                        <div>
+                            {restaurantName}
+                        </div>
+                        <span></span>
+                        <div className='title'>
+                            메인 메뉴
+                        </div>
+                {Array.isArray(pinnedRestaurant.mainMenu) && pinnedRestaurant.mainMenu.map((menu, idx) => (
+                            <div className='menuName' key={idx}>
+                                {menu}
+                            </div>
+                        ))}
+                        <div className='title'>
+                            반찬
+                        </div>
+                {Array.isArray(pinnedRestaurant.subMenu) && pinnedRestaurant.subMenu.map((menu, idx) => (
+                            <div className='menuName' key={idx}>
+                                {menu}
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="pin">
+                        단골 식당을 <span>PIN</span> 해주세요
+                    </div>
 
-            </div>
-
+            )}
             {/*로그인 안했을 경우 + 기본*/}
             <div id="main_noLogin">
                 <div className="loc">
