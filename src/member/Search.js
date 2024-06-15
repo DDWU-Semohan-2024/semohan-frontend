@@ -45,7 +45,7 @@ function Search() {
 
     useEffect(() => {
         // 핫 메뉴 데이터를 백엔드에서 가져오기
-        axios.get('/menu/hot-menu')
+        axios.get('menu/hot-menu')
             .then(response => {
                 setHotMenus(response.data);
             })
