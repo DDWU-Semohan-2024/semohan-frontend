@@ -106,7 +106,7 @@ function Search() {
             });
 
 
-        console.log('Searching for:', searchTerm, 'with type:', searchTypeValue, 'on date:', date);  // 콘솔 로그 추가
+        console.log('Searching for:', searchTerm, 'with type:', searchTypeValue);  // 콘솔 로그 추가
 
     };
 
@@ -128,7 +128,6 @@ function Search() {
                 {/*<img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>*/}
 
                 <img className="headerImg" src={searchBtn} onClick={handleSearchClick} alt="search"/>
-                <img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>
 
             </div>
             <div className="search-options">

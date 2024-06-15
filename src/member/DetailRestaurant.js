@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './Style.css'; // CSS 파일을 import
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import ProfileImage from "../img/profile-user.png";
 import searchImage from "../img/search.png";
@@ -21,6 +21,12 @@ function DetailRestaurant() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [menuData, setMenuData] = useState(null);
 
+    const [pinnedRestaurant, setPinnedRestaurant] = useState(null); // 핀한 식당 목록 상태
+
+    const { restaurantId } = useParams(); // Get the id from the route parameters
+
+    const [restaurantDetails, setRestaurantDetails] = useState(null); // 식당 세부 정보 상태
+
     const handelScrap = () => {
         setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
     }
@@ -37,13 +43,23 @@ function DetailRestaurant() {
     }, []);
 
     const fetchMenuData = async (date) => {
+        const formattedDate = currentDate.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
         try {
-            const formattedDate = date.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
-            const restaurantId = 1; // 실제 레스토랑 ID로 변경 필요
             const response = await axios.get(`/menu/${restaurantId}/${formattedDate}`);
             setMenuData(response.data);
+            console.log(response.data);
         } catch (error) {
-            console.error('Error fetching menu data:', error);
+            console.error('Error fetching menu details:', error);
+        }
+    };
+
+    const fetchRestaurantDetails = async () => {
+        try {
+            const response = await axios.get(`/restaurant/detail/${restaurantId}`);
+            setRestaurantDetails(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching restaurant details:', error);
         }
     };
 
@@ -51,37 +67,45 @@ function DetailRestaurant() {
         const previousDate = new Date(currentDate);
         previousDate.setDate(currentDate.getDate() - 1);
         setCurrentDate(previousDate);
+        fetchMenuData(previousDate); // Fetch menu data for the previous date
     };
 
     const handleNextDay = () => {
         const nextDate = new Date(currentDate);
         nextDate.setDate(currentDate.getDate() + 1);
         setCurrentDate(nextDate);
+        fetchMenuData(nextDate); // Fetch menu data for the next date
     };
 
     useEffect(() => {
         fetchMenuData(currentDate);
+        fetchRestaurantDetails(); // Fetch restaurant details on component mount
+    }, [restaurantId]);
+
+    useEffect(() => {
+        fetchMenuData(currentDate); // Fetch menu data on date change
     }, [currentDate]);
 
     useEffect(() => {
         checkLoginStatus(); // Check login status on component mount
     }, [checkLoginStatus]);
+
     const formattedDate = currentDate.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
 
     return (
         <div id="newBody">
             <header id="newHeader">
                 <img className="headerImg" src={ProfileImage} onClick={() => navigate('/login')} alt="profile"/>
-                <img src={logoImage} alt="logo"/>
+                <img src={logoImage} onClick={() => navigate('/main')} alt="logo" />
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
             <div id="content">
                 <section id="top">
                     <div id="menuBox">
                         <div>
-                            <img className="last" src={triangle} alt="어제" onClick={() => console.log('어제 버튼 클릭')}/>
-                            <div>24.06.06{/*{오늘 날짜}*/}</div>
-                            <img className="next" src={triangle} alt="내일" onClick={() => console.log('내일 버튼 클릭')}/>
+                            <img className="last" src={triangle} alt="어제" onClick={handlePreviousDay}/>
+                            <div>{formattedDate}</div>
+                            <img className="next" src={triangle} alt="내일" onClick={handleNextDay}/>
                         </div>
                         <span></span>
                         {menuData ? (
@@ -90,7 +114,7 @@ function DetailRestaurant() {
                                 <div className='title'>
                                     메인 메뉴
                                 </div>
-                                {menuData.lunchMainMenu.map((item, index) => (
+                                {menuData.mainMenu.map((item, index) => (
                                     <div className='menuName' key={index}>
                                         {item}
                                     </div>
@@ -98,28 +122,28 @@ function DetailRestaurant() {
                                 <div className='title'>
                                     반찬
                                 </div>
-                                {menuData.lunchSubMenu.map((item, index) => (
+                                {menuData.subMenu.map((item, index) => (
                                     <div className='menuName' key={index}>
                                         {item}
                                     </div>
                                 ))}
-                                <div id='meal'>저녁</div>
-                                <div className='title'>
-                                    메인 메뉴
-                                </div>
-                                {menuData.dinnerMainMenu.map((item, index) => (
-                                    <div className='menuName' key={index}>
-                                        {item}
-                                    </div>
-                                ))}
-                                <div className='title'>
-                                    반찬
-                                </div>
-                                {menuData.dinnerSubMenu.map((item, index) => (
-                                    <div className='menuName' key={index}>
-                                        {item}
-                                    </div>
-                                ))}
+                            {/*    <div id='meal'>저녁</div>*/}
+                            {/*    <div className='title'>*/}
+                            {/*        메인 메뉴*/}
+                            {/*    </div>*/}
+                            {/*    {menuData.mainMenu.map((item, index) => (*/}
+                            {/*        <div className='menuName' key={index}>*/}
+                            {/*            {item}*/}
+                            {/*        </div>*/}
+                            {/*    ))}*/}
+                            {/*    <div className='title'>*/}
+                            {/*        반찬*/}
+                            {/*    </div>*/}
+                            {/*    {menuData.subMenu.map((item, index) => (*/}
+                            {/*        <div className='menuName' key={index}>*/}
+                            {/*            {item}*/}
+                            {/*        </div>*/}
+                            {/*    ))}*/}
                             </div>
                         ) : (
                             <div>Loading...</div>
@@ -140,17 +164,23 @@ function DetailRestaurant() {
                     <div className="image-grid">
                         <div className="image-container">
                             <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                            <img className="bookmark-image" src={scrapImage} onClick={handelScrap}/>
+                            <img className="bookmark-image2" src={scrapImage} onClick={handelScrap}/>
                         </div>
                         <span>
-                            <div className="detail">식당 이름{/*{restaurant.name}*/}</div>
-                            주소 : 서울시 성북구 월곡동 {/*restaurant.address*/}
-                            <br/>
-                            전화번호 : 02-0000-0000 {/*restuarant.phoneNum*/}
-                            <br/>
-                            영업 시간 : 08시 - 20시 {/*restaurant.businessHours*/}
-                            <br/>
-                            가격 : 8000원 {/*restaurant.price*/}
+                             {restaurantDetails ? (
+                                 <>
+                                     <div className="detail">{restaurantDetails.name}</div>
+                                     주소 : {restaurantDetails.address}
+                                     <br/>
+                                     전화번호 : {restaurantDetails.phoneNum}
+                                     <br/>
+                                     영업 시간 : {restaurantDetails.businessHours}
+                                     <br/>
+                                     가격 : {restaurantDetails.price}
+                                 </>
+                             ) : (
+                                 <div>Loading...</div>
+                             )}
                         </span>
                     </div>
                 </section>
