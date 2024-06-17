@@ -22,6 +22,7 @@ function Search() {
     const [searchDate, setSearchDate] = useState(todayDate);
 
     const [searchResults, setSearchResults] = useState([]); // 검색 결과 저장용
+    const [hotMenus, setHotMenus] = useState([]); // 핫 메뉴 저장용
 
     const setSearchTypeAndDate = (type, date = todayDate) => {
         setSearchType(type);
@@ -42,12 +43,21 @@ function Search() {
         setTomorrowDate(tomorrowFormatted);
     }, []);
 
+    useEffect(() => {
+        // 핫 메뉴 데이터를 백엔드에서 가져오기
+        axios.get('menu/hot-menu')
+            .then(response => {
+                setHotMenus(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the hot menu data!', error);
+            });
+    }, []);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
         console.log(e.target.value);
     };
-
 
     const handleSearchClick = (type, date) => {
         let searchTypeValue = type || searchType;
@@ -81,7 +91,6 @@ function Search() {
             return qs.stringify(params);
         }
 
-
         axios.get('/restaurant/search', {params})
             .then(response => {
                 console.log('Response Data :', response.data);  // 응답 데이터 로그 추가
@@ -98,16 +107,13 @@ function Search() {
                 } else {
                     console.log('No results found.');
                     setSearchResults([]); // 검색 결과가 없으면 빈 배열로 설정
-
                 }
             })
             .catch(error => {
                 console.error('There was an error fetching the search data!', error);
             });
 
-
-        console.log('Searching for:', searchTerm, 'with type:', searchTypeValue);  // 콘솔 로그 추가
-
+        console.log('Searching for:', searchTerm, 'with type:', searchTypeValue, 'on date:', date);  // 콘솔 로그 추가
     };
 
     return (
@@ -156,18 +162,19 @@ function Search() {
                 <hr/>
                 <p>오늘의 Hot 한 메뉴</p>
                 <Carousel interval={2000}> {/* interval은 슬라이드 전환 간격을 밀리초 단위로 설정 */}
-                    <Carousel.Item>
-                        <img src={one}/>
-                        <div className="d-block w-100">닭갈비</div>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img src={two}/>
-                        <div className="d-block w-100">닭볶음탕</div>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img src={three}/>
-                        <div className="d-block w-100">짜장면</div>
-                    </Carousel.Item>
+                    {hotMenus.length > 0 ? (
+                        hotMenus.map((menu, index) => (
+                            <Carousel.Item key={index}>
+                                <img src={index === 0 ? one : index === 1 ? two : three} alt={`Menu ${index + 1}`}/>
+                                <div className="d-block w-100">{menu}</div>
+                            </Carousel.Item>
+                        ))
+                    ) : (
+                        <Carousel.Item>
+                            <img src={one} alt="Placeholder"/>
+                            <div className="d-block w-100">데이터 없음</div>
+                        </Carousel.Item>
+                    )}
                 </Carousel>
             </div>
 
