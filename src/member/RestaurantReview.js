@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Style.css'; // CSS 파일을 import
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
+import noLoginImage from '../img/add.png';
 import profileImg from '../img/profile-user.png';
 import searchImage from '../img/search.png';
 
-const Review = ({ id, nickname, likeRestaurant, likeMenu, content, writeTime, onDelete }) => (
+const Review = ({ nickname, likeRestaurant, likeMenu, content, writeTime }) => (
   <div className="review">
     <div className="review-header">
       <span className="nickname">{nickname}</span>
@@ -15,54 +16,57 @@ const Review = ({ id, nickname, likeRestaurant, likeMenu, content, writeTime, on
       {likeMenu && <span className="menu">오늘 메뉴👍</span>}
     </div>
     <div className="content">{content}</div>
-    <div className="delete" onClick={() => onDelete(id)}>삭제</div>
   </div>
 );
 
-function MyReview() {
+function RestaurantReview() {
+  const [loggedIn, setLoggedIn] = useState(false); // 로그인 여부 상태
   const navigate = useNavigate();
+  const { restaurantId } = useParams();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    axios.get('/review/my-reviews', { withCredentials: true })
+    // 로그인 상태 확인 API 호출
+    axios.get('/member/info', { withCredentials: true })
+      .then(response => {
+        // 응답 데이터가 존재하면 로그인 상태로 간주
+        if (response.data && response.data.username) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+        }
+      })
+      .catch(error => {
+        console.error('로그인 상태 확인 중 오류 발생:', error);
+        setLoggedIn(false);
+      });
+
+    // 레스토랑 리뷰 데이터 가져오기
+    axios.get(`/restaurant/${restaurantId}`, { withCredentials: true })
       .then(response => {
         setReviews(response.data);
       })
       .catch(error => {
         console.error('리뷰 데이터를 가져오는 중 오류 발생:', error);
       });
-  }, []);
-
-  const handleDelete = (id) => {
-    if (window.confirm('삭제하시겠습니까?')) {
-      axios.delete(`/review/${id}`, { withCredentials: true })
-        .then(response => {
-          if (response.data) {
-            setReviews(reviews.filter(review => review.id !== id));
-          } else {
-            alert('리뷰 삭제에 실패했습니다.');
-          }
-        })
-        .catch(error => {
-          console.error('리뷰 삭제 중 오류 발생:', error);
-          alert('리뷰 삭제 중 오류가 발생했습니다.');
-        });
-    }
-  };
+  }, [restaurantId]);
 
   return (
     <div id="body">
       <header>
-        <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
-        <img className="logoImg" src={logoImage} alt="logo" />
-        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
+        {!loggedIn ? (
+          <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
+        ) : (
+          <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
+        )}
+        <img src={logoImage} alt="logo"/>
+        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
       </header>
       <div id="caption">리뷰 {reviews.length}개</div>
       <div className="reviews">
         {reviews.map((review) => (
           <Review
             key={review.id}
-            id={review.id}
             nickname={review.nickname}
             likeRestaurant={review.likeRestaurant}
             likeMenu={review.likeMenu}
@@ -72,7 +76,6 @@ function MyReview() {
               month: '2-digit',
               day: '2-digit'
             })}
-            onDelete={handleDelete}
           />
         ))}
       </div>
@@ -80,4 +83,4 @@ function MyReview() {
   );
 }
 
-export default MyReview;
+export default RestaurantReview;
