@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './Style.css'; // CSS 파일을 import
 import {Link, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
@@ -9,15 +9,65 @@ import example from "../img/buffetjpg.jpg";
 import triangle from "../img/triangle.png";
 import noScrap from "../img/bookmark-white.png";
 import scrap from "../img/bookmark-black.png";
+import axios from "axios";
 
 function DetailRestaurant() {
 
     const navigate = useNavigate();
     const [scrapImage, setScrapImage] = useState(noScrap);
 
+    const [loggedIn, setLoggedIn] = useState(false); // 로그인 여부 상태
+
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [menuData, setMenuData] = useState(null);
+
     const handelScrap = () => {
         setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
     }
+
+    const checkLoginStatus = useCallback(() => {
+        axios.get('/member/info', { withCredentials: true })
+            .then(response => {
+                if (response.data) {
+                    setLoggedIn(true);
+                }
+            }).catch(error => {
+            console.error("There was an error checking login status!", error);
+        });
+    }, []);
+
+    const fetchMenuData = async (date) => {
+        try {
+            const formattedDate = date.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
+            const restaurantId = 1; // 실제 레스토랑 ID로 변경 필요
+            const response = await axios.get(`/menu/${restaurantId}/${formattedDate}`);
+            setMenuData(response.data);
+        } catch (error) {
+            console.error('Error fetching menu data:', error);
+        }
+    };
+
+    const handlePreviousDay = () => {
+        const previousDate = new Date(currentDate);
+        previousDate.setDate(currentDate.getDate() - 1);
+        setCurrentDate(previousDate);
+    };
+
+    const handleNextDay = () => {
+        const nextDate = new Date(currentDate);
+        nextDate.setDate(currentDate.getDate() + 1);
+        setCurrentDate(nextDate);
+    };
+
+    useEffect(() => {
+        fetchMenuData(currentDate);
+    }, [currentDate]);
+
+    useEffect(() => {
+        checkLoginStatus(); // Check login status on component mount
+    }, [checkLoginStatus]);
+    const formattedDate = currentDate.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
+
     return (
         <div id="newBody">
             <header id="newHeader">
@@ -34,40 +84,46 @@ function DetailRestaurant() {
                             <img className="next" src={triangle} alt="내일" onClick={() => console.log('내일 버튼 클릭')}/>
                         </div>
                         <span></span>
-                        <div>
-                            <div id='meal'>점심</div>
-                            <div className='title'>
-                                메인 메뉴
+                        {menuData ? (
+                            <div>
+                                <div id='meal'>점심</div>
+                                <div className='title'>
+                                    메인 메뉴
+                                </div>
+                                {menuData.lunchMainMenu.map((item, index) => (
+                                    <div className='menuName' key={index}>
+                                        {item}
+                                    </div>
+                                ))}
+                                <div className='title'>
+                                    반찬
+                                </div>
+                                {menuData.lunchSubMenu.map((item, index) => (
+                                    <div className='menuName' key={index}>
+                                        {item}
+                                    </div>
+                                ))}
+                                <div id='meal'>저녁</div>
+                                <div className='title'>
+                                    메인 메뉴
+                                </div>
+                                {menuData.dinnerMainMenu.map((item, index) => (
+                                    <div className='menuName' key={index}>
+                                        {item}
+                                    </div>
+                                ))}
+                                <div className='title'>
+                                    반찬
+                                </div>
+                                {menuData.dinnerSubMenu.map((item, index) => (
+                                    <div className='menuName' key={index}>
+                                        {item}
+                                    </div>
+                                ))}
                             </div>
-                            {/*메인 개수 따라서 늘어남*/}
-                            <div className='menuName'>
-                                고등어조림{/*{restaurant.mainMenu}*/}
-                            </div>
-                            <div className='title'>
-                                반찬
-                            </div>
-                            {/*반찬 개수 따라서 늘어남*/}
-                            <div className='menuName'>
-                                계란말이{/*{restaurant.subMenu}*/}
-                            </div>
-                        </div>
-                        <div>
-                            <div id='meal'>저녁</div>
-                            <div className='title'>
-                                메인 메뉴
-                            </div>
-                            {/*메인 개수 따라서 늘어남*/}
-                            <div className='menuName'>
-                                고등어조림{/*{restaurant.mainMenu}*/}
-                            </div>
-                            <div className='title'>
-                                반찬
-                            </div>
-                            {/*반찬 개수 따라서 늘어남*/}
-                            <div className='menuName'>
-                                계란말이{/*{restaurant.subMenu}*/}
-                            </div>
-                        </div>
+                        ) : (
+                            <div>Loading...</div>
+                        )}
 
                     </div>
                     <div id="right">
