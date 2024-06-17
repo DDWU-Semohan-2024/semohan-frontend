@@ -49,28 +49,28 @@ function Main() {
                 setPinnedRestaurant(response.data);
 
                 // response.data의 구조를 확인하여 올바른 경로로 restaurantId 추출
-                const restaurantId = response.data.restaurantId || response.data.restaurant_id || response.data.restaurant?.id;
-                console.log(restaurantId);
-                if (restaurantId) {
-                    fetchRestaurantName(restaurantId); // 식당 이름 가져오기
-                } else {
-                    console.error("restaurantId not found in response", response.data);
-                }
+                // const restaurantId = response.data.restaurantId || response.data.restaurant_id || response.data.restaurant?.id;
+                // console.log(restaurantId);
+                // if (restaurantId) {
+                //     fetchRestaurantName(restaurantId); // 식당 이름 가져오기
+                // } else {
+                //     console.error("restaurantId not found in response", response.data);
+                // }
 
             }).catch(error => {
             console.error("There was an error fetching pinned restaurants!", error);
         });
     };
 
-    const fetchRestaurantName = (restaurantId) => {
-        axios.get(`/menu/${restaurantId}`, { withCredentials: true })
-            .then(response => {
-                setRestaurantName(response.data.name);
-                console.log(response.data.name);
-            }).catch(error => {
-            console.error("There was an error fetching the restaurant name!", error);
-        });
-    };
+    // const fetchRestaurantName = (restaurantId) => {
+    //     axios.get(`/menu/${restaurantId}`, { withCredentials: true })
+    //         .then(response => {
+    //             setRestaurantName(response.data.name);
+    //             console.log(response.data.name);
+    //         }).catch(error => {
+    //         console.error("There was an error fetching the restaurant name!", error);
+    //     });
+    // };
 
     const handleLocationSetting = () => {
         // 위치 설정 로직
@@ -174,7 +174,7 @@ function Main() {
             {loggedIn && pinnedRestaurant ? (
                 <div id="menu">
                     <div>
-                        {restaurantName}
+                        {/*{restaurantName}*/}
                     </div>
                     <span></span>
                     <div className='title'>

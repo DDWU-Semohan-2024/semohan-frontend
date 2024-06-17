@@ -50,6 +50,9 @@ function DetailRestaurant() {
             console.log(response.data);
         } catch (error) {
             console.error('Error fetching menu details:', error);
+            if (error.response.status === 404) { // 404 (메뉴가 없는 경우)
+                alert('메뉴가 준비중입니다.'); // 오류 메시지를 팝업으로 띄우기
+            }
         }
     };
 
