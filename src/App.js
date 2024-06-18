@@ -33,7 +33,7 @@ class App extends Component {
             <Route exact path="/myPage" element={<MyPage />} />
             <Route exact path="/myInfo" element={<MyInfo />} />
             <Route exact path="/search" element={<Search />} />
-            <Route exact path="/detailRestaurant" element={<DetailRestaurant />} />
+            <Route exact path="/detailRestaurant/:restaurantId" element={<DetailRestaurant />} />
             <Route exact path="/resultSearch" element={<ResultSearch />} />
 
             <Route exact path="/scrapRestaurant" element={<ScrapRestaurant />} />
