@@ -9,7 +9,8 @@ function MyInfoPage() {
         username: '',
         nickname: '',
         phoneNumber: '',
-        birthday: ''
+        birthday: '',
+        point: 0 // 포인트 초기값 추가
     });
 
     useEffect(() => {
@@ -60,6 +61,10 @@ function MyInfoPage() {
                 <tr>
                     <th>닉네임</th>
                     <td>{memberInfo.nickname}</td>
+                </tr>
+                <tr>
+                    <th>포인트</th>
+                    <td>{memberInfo.point}</td>
                 </tr>
                 </tbody>
             </table>

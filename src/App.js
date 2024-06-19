@@ -18,6 +18,9 @@ import NewPassword from './member/NewPassword';
 import Register from './member/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ComingSoon from "./member/ComingSoon";
+import WriteReview from './member/WriteReview';
+import MyReview from './member/MyReview';
+import RestaurantReview from './member/RestaurantReview';
 
 class App extends Component {
   render() {
@@ -30,7 +33,7 @@ class App extends Component {
             <Route exact path="/myPage" element={<MyPage />} />
             <Route exact path="/myInfo" element={<MyInfo />} />
             <Route exact path="/search" element={<Search />} />
-            <Route exact path="/detailRestaurant" element={<DetailRestaurant />} />
+            <Route exact path="/detailRestaurant/:restaurantId" element={<DetailRestaurant />} />
             <Route exact path="/resultSearch" element={<ResultSearch />} />
 
             <Route exact path="/scrapRestaurant" element={<ScrapRestaurant />} />
@@ -42,6 +45,9 @@ class App extends Component {
             <Route exact path="/newPassword" element={<NewPassword />} />
             <Route exact path="/updateInfo" element={<UpdateInfo />} />
             <Route exact path="/comingSoon" element={<ComingSoon />} />
+            <Route exact path="/writeReview" element={<WriteReview />} />
+            <Route exact path="/myReview" element={<MyReview/>} />
+            <Route exact path="/restaurantReview" element={<RestaurantReview/>}/>
 
             {/*<Route path="/" element={<Login />} /> /!* 기본적으로 /login으로 이동 *!/*/}
           </Routes>

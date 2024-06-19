@@ -49,28 +49,28 @@ function Main() {
                 setPinnedRestaurant(response.data);
 
                 // response.data의 구조를 확인하여 올바른 경로로 restaurantId 추출
-                const restaurantId = response.data.restaurantId || response.data.restaurant_id || response.data.restaurant?.id;
-
-                if (restaurantId) {
-                    fetchRestaurantName(restaurantId); // 식당 이름 가져오기
-                } else {
-                    console.error("restaurantId not found in response", response.data);
-                }
+                // const restaurantId = response.data.restaurantId || response.data.restaurant_id || response.data.restaurant?.id;
+                // console.log(restaurantId);
+                // if (restaurantId) {
+                //     fetchRestaurantName(restaurantId); // 식당 이름 가져오기
+                // } else {
+                //     console.error("restaurantId not found in response", response.data);
+                // }
 
             }).catch(error => {
             console.error("There was an error fetching pinned restaurants!", error);
         });
     };
 
-    const fetchRestaurantName = (restaurantId) => {
-        axios.get(`/menu/${restaurantId}`, { withCredentials: true })
-            .then(response => {
-                setRestaurantName(response.data.name);
-                console.log(response.data.name);
-            }).catch(error => {
-            console.error("There was an error fetching the restaurant name!", error);
-        });
-    };
+    // const fetchRestaurantName = (restaurantId) => {
+    //     axios.get(`/menu/${restaurantId}`, { withCredentials: true })
+    //         .then(response => {
+    //             setRestaurantName(response.data.name);
+    //             console.log(response.data.name);
+    //         }).catch(error => {
+    //         console.error("There was an error fetching the restaurant name!", error);
+    //     });
+    // };
 
     const handleLocationSetting = () => {
         // 위치 설정 로직
@@ -145,6 +145,10 @@ function Main() {
 
     };
 
+    const handleImageClick = (restaurantId) => {
+        navigate(`/detailRestaurant/${restaurantId}`);
+    };
+
     if (!restaurants) {
         return <div>Loading...</div>;
     }
@@ -168,34 +172,37 @@ function Main() {
 
             {/*Pin 있을 경우*/}
             {loggedIn && pinnedRestaurant ? (
-            <div id="menu">
-                        <div>
-                            {restaurantName}
-                        </div>
-                        <span></span>
-                        <div className='title'>
-                            메인 메뉴
-                        </div>
-                {Array.isArray(pinnedRestaurant.mainMenu) && pinnedRestaurant.mainMenu.map((menu, idx) => (
-                            <div className='menuName' key={idx}>
-                                {menu}
-                            </div>
-                        ))}
-                        <div className='title'>
-                            반찬
-                        </div>
-                {Array.isArray(pinnedRestaurant.subMenu) && pinnedRestaurant.subMenu.map((menu, idx) => (
-                            <div className='menuName' key={idx}>
-                                {menu}
-                            </div>
-                        ))}
+                <div id="menu">
+                    <div>
+                        {/*{restaurantName}*/}
                     </div>
-                ) : (
-                    <div className="pin">
-                        단골 식당을 <span>PIN</span> 해주세요
+                    <span></span>
+                    <div className='title'>
+                        메인 메뉴
                     </div>
+                    {Array.isArray(pinnedRestaurant.mainMenu) && pinnedRestaurant.mainMenu.map((menu, idx) => (
+                        <div className='menuName' key={idx}>
+                            {menu}
+                        </div>
+                    ))}
+                    <div className='title'>
+                        반찬
+                    </div>
+                    {Array.isArray(pinnedRestaurant.subMenu) && pinnedRestaurant.subMenu.map((menu, idx) => (
+                        <div className='menuName' key={idx}>
+                            {menu}
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                loggedIn && (
+                <div className="pin">
+                단골 식당을 <span>PIN</span> 해주세요
+                </div>
+                )
+                )}
 
-            )}
+
             {/*로그인 안했을 경우 + 기본*/}
             <div id="main_noLogin">
                 <div className="loc">
@@ -209,23 +216,26 @@ function Main() {
 
                 <div className="image-grid">
                     {/*식당 수만큼*/}
-                    {scrapImages.map((img, index) => (
-                        <div className="image-container" key={index}>
-                            <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                            <img
-                                className="bookmark-image2"
-                                src={img}
-                                onClick={() => handleScrap(index)}
-                                alt="bookmark"
-                            />
-                            <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페{index + 1}</span>
-                        </div>
-                    ))}
+                    {/*{scrapImages.map((img, index) => (*/}
+                    {/*    <div className="image-container" key={index}>*/}
+                    {/*        <img className="resImg" src={restaurant.s3Url/*식당사진*!/ alt="search"*/}
+                    {/*             onClick={() => handleImageClick(restaurant.id)}/>*/}
+                    {/*        <img*/}
+                    {/*            className="bookmark-image2"*/}
+                    {/*            src={img}*/}
+                    {/*            onClick={() => handleScrap(index)}*/}
+                    {/*            alt="bookmark"*/}
+                    {/*        />*/}
+                    {/*        <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페{index + 1}</span>*/}
+                    {/*    </div>*/}
+                    {/*))}*/}
 
                     {restaurants.map((restaurant, index) => (
                         <div className="image-container" key={index}>
-                            <img className="resImg" src={restaurant.s3Url} alt="search"/>
-                            <img className="bookmark-image2" src={scrapImages} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */}}/>
+                            <img className="resImg" src={restaurant.s3Url} alt="search"
+                                 onClick={() => handleImageClick(restaurant.id)}/>
+                            <img className="bookmark-image2" src={scrapImages} onClick={() => {/* 클릭마다 사진 바뀜, 스크랩 등록+취소 */
+                            }}/>
                             <span className="image-caption">{restaurant.name}</span>
                         </div>
                     ))}
