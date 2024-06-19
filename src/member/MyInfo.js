@@ -36,7 +36,7 @@ function MyInfoPage() {
     return (
         <div id="body">
             <header>
-                <img src={logoImage} alt="logo"/>
+                <Link to="/myPage"><img src={logoImage} alt="logo"/></Link>
             </header>
             <table>
                 <caption>나의 정보</caption>
