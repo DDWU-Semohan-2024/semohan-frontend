@@ -204,7 +204,7 @@ function UpdateInfo() {
     return (
         <div id="body">
             <header>
-                <Link to="/myPage"><img src={logoImage} alt="logo"/></Link>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
             </header>
 
             <form id="updateInfo" method="post" action="" onSubmit={handleSubmit}>

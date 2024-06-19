@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Style.css'; // CSS 파일을 import
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
 import profileImg from '../img/profile-user.png';
@@ -54,7 +54,7 @@ function MyReview() {
     <div id="body">
       <header>
         <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
-        <img className="logoImg" src={logoImage} alt="logo" />
+          <Link to="/main"><img src={logoImage} alt="logo"/></Link>
         <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
       </header>
       <div id="caption">리뷰 {reviews.length}개</div>

@@ -99,8 +99,7 @@ function DetailRestaurant() {
         <div id="newBody">
             <header id="newHeader">
                 <img className="headerImg" src={ProfileImage} onClick={() => navigate('/login')} alt="profile"/>
-                <Link to="/myPage"><img src={logoImage} alt="logo"/></Link>
-                <img src={logoImage} onClick={() => navigate('/main')} alt="logo" />
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
             <div id="content">

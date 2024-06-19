@@ -119,7 +119,7 @@ function Search() {
     return (
         <div id="newBody">
             <header>
-                <Link to="/myPage"><img src={logoImage} alt="logo"/></Link>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
             </header>
 
             <div id="searchBar">

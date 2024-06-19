@@ -7,7 +7,7 @@ function ComingSoon() {
     return (
         <div id="body">
             <header>
-                <Link to="/myPage"><img src={logoImage} alt="logo"/></Link>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
             </header>
             <div id="result">
                 아직 준비중인 페이지입니다.

@@ -22,7 +22,7 @@ function MyPage() {
     return (
         <div id="body">
             <header>
-                <Link to="/myPage"><img src={logoImage} alt="logo"/></Link>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
             </header>
             <div id="caption">마이페이지</div>
             <div className="mainLink">

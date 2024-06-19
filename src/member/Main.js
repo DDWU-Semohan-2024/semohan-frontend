@@ -161,7 +161,7 @@ function Main() {
                 ) : (
                     <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
                 )}
-                <Link to="/myPage"><img src={logoImage} alt="logo"/></Link>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
 
