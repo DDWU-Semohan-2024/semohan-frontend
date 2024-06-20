@@ -45,9 +45,9 @@ class App extends Component {
             <Route exact path="/newPassword" element={<NewPassword />} />
             <Route exact path="/updateInfo" element={<UpdateInfo />} />
             <Route exact path="/comingSoon" element={<ComingSoon />} />
-            <Route exact path="/writeReview" element={<WriteReview />} />
+            <Route exact path="/writeReview/:restaurantId" element={<WriteReview />} />
             <Route exact path="/myReview" element={<MyReview/>} />
-            <Route exact path="/restaurantReview" element={<RestaurantReview/>}/>
+            <Route exact path="/restaurantReview/:restaurantId" element={<RestaurantReview/>}/>
 
             {/*<Route path="/" element={<Login />} /> /!* 기본적으로 /login으로 이동 *!/*/}
           </Routes>
