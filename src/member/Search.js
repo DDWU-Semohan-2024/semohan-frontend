@@ -59,22 +59,22 @@ function Search() {
         console.log(e.target.value);
     };
 
-    const handleSearchClick = (type, date) => {
-        let searchTypeValue = type || searchType;
+    const handleSearchClick = (date = searchDate) => {
+        // let searchTypeValue = type || searchType;
         let params = {};
 
-        if (searchTypeValue === 'name') {
-            params = {...params, name: searchTerm};
+        if (searchType === 'name') {
+            params = {name: searchTerm};
             console.log("search type: name")
-        } else if (searchTypeValue === 'location') {
-            params = {...params, location: searchTerm};
+        } else if (searchType === 'location') {
+            params = {location: searchTerm};
             console.log("search type: location")
-        } else if (searchTypeValue === 'menu') {
-            params = {menu: searchTerm, date: searchDate};
+        } else if (searchType === 'menu') {
+            params = {menu: searchTerm, date: date};
             console.log("search type: menu")
         } else {
+            console.log("search: all type value");
             params = {
-                ...params,
                 location: searchTerm,
                 menu: searchTerm,
                 name: searchTerm
@@ -103,7 +103,7 @@ function Search() {
                     //         console.log('Item ID:', item.id);
                     //     }
                     // });
-                    navigate('/resultSearch', {state: {results: response.data}});
+                    navigate('/resultSearch', {state: {results: response.data, searchType, searchTerm}});
                 } else {
                     console.log('No results found.');
                     setSearchResults([]); // 검색 결과가 없으면 빈 배열로 설정
@@ -113,7 +113,7 @@ function Search() {
                 console.error('There was an error fetching the search data!', error);
             });
 
-        console.log('Searching for:', searchTerm, 'with type:', searchTypeValue, 'on date:', date);  // 콘솔 로그 추가
+        console.log('Searching for:', searchTerm, 'with type:', searchType, 'on date:', date);  // 콘솔 로그 추가
     };
 
     return (
@@ -133,16 +133,20 @@ function Search() {
                 />
                 {/*<img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>*/}
 
-                <img className="headerImg" src={searchBtn} onClick={handleSearchClick} alt="search"/>
                 <img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>
+
             </div>
             <div className="search-options">
                 <div>
                     <button className="search-option lemon"
-                            onClick={() => setSearchTypeAndDate('menu', todayDate)}>오늘 메뉴 검색
+                            onClick={() => setSearchTypeAndDate('menu', todayDate)
+
+                            }>오늘 메뉴 검색
                     </button>
                     <button className="search-option gray"
-                            onClick={() => setSearchTypeAndDate('menu', tomorrowDate)}>내일 메뉴 검색
+                            onClick={() => setSearchTypeAndDate('menu', tomorrowDate)
+
+                            }>내일 메뉴 검색
                     </button>
                 </div>
                 <div>

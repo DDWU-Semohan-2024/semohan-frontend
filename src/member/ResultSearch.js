@@ -27,6 +27,8 @@ function ResultSearch() {
     useEffect(() => {
         if (location.state && location.state.results) {
             setSearchResults(location.state.results);
+            setSearchType(location.state.searchType);
+            setSearchTerm(location.state.searchTerm);
         }
     }, [location.state]);
 
@@ -35,22 +37,42 @@ function ResultSearch() {
     };
 
     const handleSearchClick = () => {
-        // axios.get('/restaurant/search', {
-        //     params: {
-        //         location: searchTerm,
-        //         menu: searchTerm,
-        //         name: searchTerm
-        //     }
-        // })
-        //     .then(response => {
-        //         setSearchResults(response.data);
-        //     })
-        //     .catch(error => {
-        //         console.error('There was an error fetching the search data!', error);
-        //     });
+        let params = {};
+        if (searchType === 'name') {
+            params = {name: searchTerm};
+        } else if (searchType === 'location') {
+            params = {location: searchTerm};
+        } else if (searchType === 'menu') {
+            params = {menu: searchTerm};
+        } else {
+            params = {
+                location: searchTerm,
+                menu: searchTerm,
+                name: searchTerm
+            };
+        }
+
+        axios.defaults.paramsSerializer = params => {
+            return qs.stringify(params);
+        }
+
+        axios.get('/restaurant/search', {params})
+            .then(response => {
+                if (response.data && response.data.length > 0) {
+                    setSearchResults(response.data);
+                    navigate('/resultSearch', {state: {results: response.data, searchType, searchTerm}});
+                } else {
+                    setSearchResults([]);
+                }
+            })
+            .catch(error => {
+                console.error('There was an error fetching the search data!', error);
+            });
 
         console.log('Searching for:', searchTerm);  // 콘솔 로그 추가
-        navigate('/ResultSearch', { state: { searchTerm: searchTerm } });
+        // navigate('/search', { state: { searchTerm: searchTerm } });
+
+
         // let params = {};
         // if (searchType === 'name') {
         //     params = { name: searchTerm };
@@ -94,6 +116,10 @@ function ResultSearch() {
         //     });
     };
 
+    const handleImageClick = (restaurantId) => {
+        navigate(`/detailRestaurant/${restaurantId}`);
+    };
+
     return (
         <div id="newBody">
             <header>
@@ -116,8 +142,8 @@ function ResultSearch() {
                     {/*식당 수만큼*/}
                     {searchResults.map((restaurant, index) => (
                     <div className="image-container" key={index}>
-                        <img className="resImg" src={restaurant.s3Url} alt="search"/>
-                        <img className="bookmark-image" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
+                        <img className="resImg" src={restaurant.s3Url} alt="search"  onClick={() => handleImageClick(restaurant.id)}/>
+                        <img className="bookmark-image2" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
                         <span className="image-caption">{restaurant.name}</span>
                     </div>
                     ))}
