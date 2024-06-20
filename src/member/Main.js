@@ -174,7 +174,7 @@ function Main() {
             {loggedIn && pinnedRestaurant ? (
                 <div id="menu">
                     <div>
-                        {/*{restaurantName}*/}
+                        <b>❤{pinnedRestaurant.restaurantName}❤</b>
                     </div>
                     <span></span>
                     <div className='title'>
