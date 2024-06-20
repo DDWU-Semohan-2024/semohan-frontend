@@ -85,28 +85,32 @@ function Main() {
         let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
 
         console.log(x,y)
+
         if (x && y) {
             axios.get(
-                `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
-                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` }}
+                `/api/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` } }
             ).then((result) => {
                 // 행정구역의 구 부분만 가져옵니다'
-                console.log(result)
-                let location = result.data.documents[0].address.region_2depth_name;
-                console.log("location: " + location);
-                setAddress(location);
-                axios.get(`/location/set/${encodeURIComponent(location)}`, {
-                    withCredentials: true
-                }).then(() => {
-                    fetchRestaurants(location); // Fetch restaurants after setting address
-                }).catch(error => {
-                    console.error("There was an error setting the location!", error);
-                });
+                console.log(result);
+                if (result.data.documents && result.data.documents.length > 0) {
+                    let location = result.data.documents[0].address.region_2depth_name;
+                    console.log("location: " + location);
+                    setAddress(location);
+                    axios.get(`/location/set/${encodeURIComponent(location)}`)
+                    .then(() => {
+                        fetchRestaurants(location); // 주소를 설정한 후 레스토랑을 가져옴
+                    }).catch(error => {
+                        console.error("위치를 설정하는 중 오류가 발생했습니다!", error);
+                    });
+                } else {
+                    console.error("주소 데이터를 찾을 수 없습니다!");
+                }
             }).catch(error => {
-                console.error("There was an error fetching the address data!", error);
+                console.error("주소 데이터를 가져오는 중 오류가 발생했습니다!", error);
             });
         }
-    },[]);
+    }, []);
 
     const doSomethingError = (error) => {
         console.log('location error', error);
@@ -132,7 +136,7 @@ function Main() {
 
     const fetchRestaurants = (location) => {
         axios.get(`/restaurant/nearby`, {
-            withCredentials: true,
+            withCredentials: false,
             params: { location: location }
         })
             .then((response) => {
