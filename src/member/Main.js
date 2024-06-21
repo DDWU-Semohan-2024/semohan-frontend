@@ -86,16 +86,15 @@ function Main() {
         let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
 
         console.log(x,y)
-
         if (x && y) {
             axios.get(
-                `/api/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+                `/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
                 { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` } }
             ).then((result) => {
                 // 행정구역의 구 부분만 가져옵니다'
                 console.log(result);
                 if (result.data.documents && result.data.documents.length > 0) {
-                    let location = result.data.documents[0].address.region_2depth_name;
+                    let location = result.data.documents[0].region_2depth_name;
                     console.log("location: " + location);
                     setAddress(location);
                     axios.get(`/location/set/${encodeURIComponent(location)}`)
@@ -111,11 +110,36 @@ function Main() {
                 console.error("주소 데이터를 가져오는 중 오류가 발생했습니다!", error);
             });
         }
-    };       
-
+    };
+    
     const doSomethingError = (error) => {
         console.log('location error', error);
     }
+
+    const requestLocationPermission = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    alterAddress(position);
+                },
+                (error) => {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        console.error("User denied the request for Geolocation.");
+                        alert("위치 권한이 차단되었습니다. 브라우저 설정에서 위치 권한을 허용해주세요.");
+                    } else {
+                        console.error("Geolocation error: ", error);
+                    }
+                }
+            );
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    };
+    
+    // 페이지 로드 시 위치 권한 요청
+    useEffect(() => {
+        requestLocationPermission();
+    }, []);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(alterAddress, doSomethingError);
@@ -137,7 +161,7 @@ function Main() {
 
     const fetchRestaurants = (location) => {
         axios.get(`/restaurant/nearby`, {
-            withCredentials: false,
+            withCredentials: true,
             params: { location: location }
         })
             .then((response) => {
