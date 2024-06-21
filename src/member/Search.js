@@ -16,16 +16,17 @@ function Search() {
 
     const [searchTerm, setSearchTerm] = useState('');
     //const [searchResults, setSearchResults] = useState([]);
-    const [searchType, setSearchType] = useState(''); // 검색 타입 추가
+    const [searchType, setSearchType] = useState('menu'); // 검색 타입 기본값을 'menu'로 설정
     const [todayDate, setTodayDate] = useState('');
     const [tomorrowDate, setTomorrowDate] = useState('');
     const [searchDate, setSearchDate] = useState(todayDate);
-
+    const [activeButton, setActiveButton] = useState(1); // 일단 기본은 1(오늘 메뉴 검색)
     const [searchResults, setSearchResults] = useState([]); // 검색 결과 저장용
     const [hotMenus, setHotMenus] = useState([]); // 핫 메뉴 저장용
 
-    const setSearchTypeAndDate = (type, date = todayDate) => {
+    const setSearchTypeAndDate = (type, date, buttonIndex) => {
         setSearchType(type);
+        setActiveButton(buttonIndex);
         setSearchDate(date);
     };
 
@@ -36,12 +37,26 @@ function Search() {
 
         tomorrow.setDate(today.getDate() + 1);
 
-        const todayFormatted = `${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`;
-        const tomorrowFormatted = `${tomorrow.getFullYear()}.${tomorrow.getMonth() + 1}.${tomorrow.getDate()}`;
+        const formatDate = (date) => {
+            return date.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
+        };
 
-        setTodayDate(todayFormatted);
-        setTomorrowDate(tomorrowFormatted);
+        const formattedToday = formatDate(today);
+        const formattedTomorrow = formatDate(tomorrow);
+
+        setTodayDate(formattedToday);
+        setTomorrowDate(formattedTomorrow);
+        setSearchDate(formattedToday); // 기본적으로 오늘 날짜로 설정
     }, []);
+
+
+
+    useEffect(() => {
+        // if (searchType === 'menu' && !searchDate) {
+        //     setSearchDate(todayDate);
+        // }
+    }, [searchType, searchTerm]);
+
 
     useEffect(() => {
         // 핫 메뉴 데이터를 백엔드에서 가져오기
@@ -59,40 +74,33 @@ function Search() {
         console.log(e.target.value);
     };
 
-    const handleSearchClick = (date = searchDate) => {
+    const handleSearchClick = () => {
         // let searchTypeValue = type || searchType;
         let params = {};
 
-        if (searchType === 'name') {
+        if (searchType === 'menu'&& searchTerm) {
+            params = {menu: searchTerm}; //
+            console.log("search type: menu")
+        } else if (searchType === 'name' && searchTerm) {
             params = {name: searchTerm};
             console.log("search type: name")
-        } else if (searchType === 'location') {
+        } else if (searchType === 'location' && searchTerm) {
             params = {location: searchTerm};
             console.log("search type: location")
-        } else if (searchType === 'menu') {
-            params = {menu: searchTerm, date: date};
-            console.log("search type: menu")
         } else {
-            console.log("search: all type value");
-            params = {
-                location: searchTerm,
-                menu: searchTerm,
-                name: searchTerm
-            };
+            console.log('Invalid search type or missing search term/date.');
+            alert('검색어를 입력하세요!');
+            setSearchResults([]); // 검색 결과가 없으면 빈 배열로 설정
+            return;
         }
-        // else {
-        //     params = {
-        //         location: searchTerm,
-        //         menu: searchTerm,
-        //         name: searchTerm
-        //     };
-        // }
+
         axios.defaults.paramsSerializer = params => {
             return qs.stringify(params);
         }
 
         axios.get('/restaurant/search', {params})
             .then(response => {
+                console.log(params);
                 console.log('Response Data :', response.data);  // 응답 데이터 로그 추가
                 console.log('Response :', response);  // 응답 데이터 로그 추가
 
@@ -103,23 +111,25 @@ function Search() {
                     //         console.log('Item ID:', item.id);
                     //     }
                     // });
-                    navigate('/resultSearch', {state: {results: response.data, searchType, searchTerm}});
+                    navigate('/resultSearch', {state: {results: response.data, searchType, searchTerm, searchDate}}); //
+                    console.log(response.data);
                 } else {
                     console.log('No results found.');
                     setSearchResults([]); // 검색 결과가 없으면 빈 배열로 설정
+                    navigate('/resultSearch', {state: {results: response.data, searchType, searchTerm, searchDate}}); //
                 }
             })
             .catch(error => {
                 console.error('There was an error fetching the search data!', error);
             });
 
-        console.log('Searching for:', searchTerm, 'with type:', searchType, 'on date:', date);  // 콘솔 로그 추가
+        console.log('Searching for:', searchTerm, 'with type:', searchType, 'on date:', searchDate);  // 콘솔 로그 추가 , searchDate
     };
 
     return (
         <div id="newBody">
             <header>
-                <img src={logoImage} alt="logo"/>
+                <img src={logoImage} alt="logo" onClick={() => navigate('/main')}/>
             </header>
 
             <div id="searchBar">
@@ -138,25 +148,25 @@ function Search() {
             </div>
             <div className="search-options">
                 <div>
-                    <button className="search-option lemon"
-                            onClick={() => setSearchTypeAndDate('menu', todayDate)
-
-                            }>오늘 메뉴 검색
+                    <button className={`search-option ${activeButton === 1 ? 'lemon' : 'gray'}`}
+                            onClick={() =>
+                                setSearchTypeAndDate('menu', todayDate, 1)
+                        }>오늘 메뉴 검색
                     </button>
-                    <button className="search-option gray"
-                            onClick={() => setSearchTypeAndDate('menu', tomorrowDate)
-
+                    <button className={`search-option ${activeButton === 2 ? 'lemon' : 'gray'}`}
+                            onClick={() =>
+                                setSearchTypeAndDate('menu', tomorrowDate, 2)
                             }>내일 메뉴 검색
                     </button>
                 </div>
                 <div>
-                    <button className="search-option gray"
-                            onClick={() => setSearchTypeAndDate('location')}
+                    <button className={`search-option ${activeButton === 3 ? 'lemon' : 'gray'}`}
+                            onClick={() => setSearchTypeAndDate('location', null, 3)}
                     >지역명 검색
                     </button>
-                    <button className="search-option gray"
+                    <button className={`search-option ${activeButton === 4 ? 'lemon' : 'gray'}`}
                             onClick={() => {
-                                setSearchTypeAndDate('name')
+                                setSearchTypeAndDate('name', null, 4)
                             }}>식당명 검색
                     </button>
                 </div>
@@ -182,19 +192,7 @@ function Search() {
                 </Carousel>
             </div>
 
-            <div id="searchResults">
-                {searchResults.length > 0 ? (
-                    searchResults.map((result, index) => (
-                        <div key={index} className="search-result-item">
-                            <h3>{result.name}</h3>
-                            <p>위치: {result.location}</p>
-                            <p>메뉴: {result.menu}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>검색 결과가 없습니다.</p>
-                )}
-            </div>
+
             {/*/!*검색어 있을 경우*!/*/}
             {/*<section className="recent-searches">*/}
             {/*    <div className="recent-header">*/}

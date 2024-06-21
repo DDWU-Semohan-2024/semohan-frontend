@@ -79,7 +79,7 @@ function Main() {
     };
 
 
-    const alterAddress = useCallback((position) => {
+    const alterAddress = (position) => {
 
         let x = position.coords.longitude; //테스트를 위해 성북구로 지정 127.04742793253544 ; //
         let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
@@ -118,7 +118,7 @@ function Main() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(alterAddress, doSomethingError);
-    }, [alterAddress]);
+    }, []);
     // useEffect(() => {
     //     axios.get("/location/set/", {
     //         withCredentials: true
