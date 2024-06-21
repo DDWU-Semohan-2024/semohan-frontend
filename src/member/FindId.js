@@ -75,7 +75,7 @@ function FindId() {
                         value={certificationNum}
                         onChange={(e) => setCertificationNum(e.target.value)} />
                 </div>
-                <div className="find">
+                <div className='find'>
                     <button type="button" onClick={handleFindId}>아이디 찾기</button>
                 </div>
             </form>

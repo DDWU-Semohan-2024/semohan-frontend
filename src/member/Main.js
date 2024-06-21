@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import "./Style.css"; // CSS 파일을 import
 import { Link } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
-import noLoginImage from '../img/add.png';
+import noLoginImage from '../img/login.png';
 import searchImage from '../img/search.png';
 import addressImage from '../img/gps.png';
 import example from '../img/buffetjpg.jpg';

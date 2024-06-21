@@ -179,14 +179,15 @@
     table {
         border-collapse: collapse; /*이중선 제거*/
         font-size: var(--mainfontsize);
+        caption-side: top;
     }
 
-    caption {
-        text-decoration: underline;
-        font-size: var(--mainfontsize);
-        margin-bottom: 30px;
-        margin-top: 30px;
-    }
+    /*caption {*/
+    /*    text-decoration: underline;*/
+    /*    font-size: var(--mainfontsize);*/
+    /*    margin-bottom: 30px;*/
+    /*    margin-top: 30px;*/
+    /*}*/
 
     tr {
         width: var(--mainwidth);
@@ -233,7 +234,6 @@
     .certification {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 0;
     }
 
     #phoneNum {
@@ -246,26 +246,33 @@
         border-radius: var(--radius);
     }
 
-    #certiPhone {
-        width: 80%;
-    }
+    /*#certiPhone {*/
+    /*    width: 80%;*/
+    /*}*/
 
-    .find {
-        background-color: var(--lemoncolor);
-        width: var(--mainwidth);
-        height: var(--btnheight);
-        border-radius: var(--radius);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 30px;
-    }
+    /*.find {*/
+    /*    background-color: var(--lemoncolor);*/
+    /*    width: var(--mainwidth);*/
+    /*    height: var(--btnheight);*/
+    /*    border-radius: var(--radius);*/
+    /*    display: flex;*/
+    /*    align-items: center;*/
+    /*    justify-content: center;*/
+    /*    margin-top: 30px;*/
+    /*}*/
 
-    .find > a {
-        color: black;
-        text-decoration: none;
-        font-size: var(--mainfontsize);
+    .find > button {
+        border: none;
         font-weight: bold;
+        font-size: var(--mainfontsize);
+        background-color: var(--lemoncolor);
+        border-radius: var(--radius);
+        margin-top: 30px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        padding: 15px 30px;
+        width: 100%;
     }
 
     .btn {
@@ -599,8 +606,11 @@
     }
 
     #right {
-        width:50%;
-        margin-left: 3%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width:45%;
+        margin-left:5%;
     }
 
     #reviewBox {
@@ -610,8 +620,8 @@
         background-color: var(--lemoncolor);
         border-radius: var(--radius);
         text-align: center;
-        padding: 30px 30px;
-        width: 92%;
+        padding: 30px 10px;
+        width: 80%;
     }
 
     #reviewBox > a {

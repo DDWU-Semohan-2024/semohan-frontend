@@ -14,7 +14,7 @@ import axios from "axios";
 function DetailRestaurant() {
 
     const navigate = useNavigate();
-    const [scrapImage, setScrapImage] = useState(noScrap);
+    const [scrapImage, setScrapImages] = useState(noScrap);
 
     const [loggedIn, setLoggedIn] = useState(false); // 로그인 여부 상태
 
@@ -27,8 +27,10 @@ function DetailRestaurant() {
 
     const [restaurantDetails, setRestaurantDetails] = useState(null); // 식당 세부 정보 상태
 
-    const handelScrap = () => {
-        setScrapImage((prevSrc) => (prevSrc === noScrap ? scrap : noScrap));
+    const handleScrap = (index) => {
+        setScrapImages(prevImages =>
+            prevImages.map((img, i) => (i === index ? (img === noScrap ? scrap : noScrap) : img))
+        );
     }
 
     const checkLoginStatus = useCallback(() => {
@@ -167,7 +169,7 @@ function DetailRestaurant() {
                     <div className="image-grid">
                         <div className="image-container">
                             <img className="resImg" src={example/*식당사진*/} alt="search"/>
-                            <img className="bookmark-image2" src={scrapImage} onClick={handelScrap}/>
+                            <img className="bookmark-image2" src={scrapImage} onClick={handleScrap}/>
                         </div>
                         <span>
                              {restaurantDetails ? (
