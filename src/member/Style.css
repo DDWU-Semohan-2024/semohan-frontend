@@ -46,7 +46,13 @@
         margin-bottom: 20px;
     }
 
-    header > img {
+    /*header > img {*/
+    /*    width: 150px;*/
+    /*    height: fit-content;*/
+    /*    align-items: center;*/
+    /*}*/
+
+    header img {
         width: 150px;
         height: fit-content;
         align-items: center;

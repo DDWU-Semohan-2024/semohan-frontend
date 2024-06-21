@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // useNavigate 임포트
 import './Style.css';
 import logoImage from '../img/semohan-logo.png';
+import LogoHeader from './LogoHeader';
 
 function NewPassword() {
     const [username, setUsername] = useState('');
@@ -75,9 +76,7 @@ function NewPassword() {
 
     return (
         <div id="body">
-            <header>
-                <img src={logoImage} alt="logo" />
-            </header>
+            <LogoHeader/>
 
             <form id="newPassword" onSubmit={handleSubmit}>
 

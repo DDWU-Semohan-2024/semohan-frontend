@@ -2,15 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import './Style.css'; // CSS 파일을 import
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
-import profileImage from '../img/profile-user.png';
-import noLoginImage from '../img/add.png';
-import searchImage from '../img/search.png';
-import like from '../img/like.png';
-import example from '../img/buffetjpg.jpg';
-import triangle from '../img/triangle.png';
-import noScrap from '../img/bookmark-white.png';
-import scrap from '../img/bookmark-black.png';
-import axios from 'axios';
+
+import ProfileImage from "../img/profile-user.png";
+import searchImage from "../img/search.png";
+import like from "../img/like.png";
+import example from "../img/buffetjpg.jpg";
+import triangle from "../img/triangle.png";
+import noScrap from "../img/bookmark-white.png";
+import scrap from "../img/bookmark-black.png";
+import axios from "axios";
+import ProfileSearchHeader from './ProfileSearchHeader';
+
 
 function DetailRestaurant() {
 
@@ -129,15 +131,9 @@ function DetailRestaurant() {
 
     return (
         <div id="newBody">
-            <header id="newHeader">
-            {!loggedIn ? (
-                    <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
-                ) : (
-                    <img className="headerImg" src={profileImage} onClick={() => navigate('/myPage')} alt="profile"/>
-                )}
-                <img src={logoImage} onClick={() => navigate('/main')} alt="logo" />
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
-            </header>
+
+            <ProfileSearchHeader />
+
             <div id="content">
                 <section id="top">
                     <div id="menuBox">

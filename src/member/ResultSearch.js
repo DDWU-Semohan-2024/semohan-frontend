@@ -11,6 +11,7 @@ import scrap from "../img/bookmark-black.png";
 import bookmarkImage from "../img/bookmark-white.png";
 import axios from "axios";
 import qs from "qs";
+import ProfileSearchHeader from './ProfileSearchHeader';
 
 function ResultSearch() {
     const navigate = useNavigate();
@@ -123,9 +124,9 @@ function ResultSearch() {
 
     return (
         <div id="newBody">
-            <header>
-                <img src={logoImage} alt="logo" onClick={() => navigate('/main')}/>
-            </header>
+
+            <ProfileSearchHeader />
+
             <div id="searchBar">
                 <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
                 <input type="text"

@@ -10,7 +10,7 @@ import three from '../img/3.png';
 import { Carousel } from 'react-bootstrap';
 import axios from "axios";
 import qs from "qs";
-
+import ProfileSearchHeader from './ProfileSearchHeader';
 function Search() {
     const navigate = useNavigate();
 
@@ -128,9 +128,9 @@ function Search() {
 
     return (
         <div id="newBody">
-            <header>
-                <img src={logoImage} alt="logo" onClick={() => navigate('/main')}/>
-            </header>
+
+            <ProfileSearchHeader />
+
 
             <div id="searchBar">
                 <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>

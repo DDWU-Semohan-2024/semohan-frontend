@@ -3,7 +3,9 @@ import './Style.css'; // CSS 파일을 import
 import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
+import ProfileSearchHeader from './ProfileSearchHeader';
 import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+
 
 const Review = ({ nickname, likeRestaurant, likeMenu, content, writeTime }) => (
   <div className="review">
@@ -41,12 +43,13 @@ function RestaurantReview() {
 
   return (
     <div id="body">
-      <header>
-        <img src={logoImage} alt="logo" />
-      </header>
+
+        <ProfileSearchHeader />
+
       <div id="caption">리뷰 {reviews.length}개 
         <button onClick={handleWriteReview} className="write-review-button-inline">리뷰 쓰기</button>
       </div>
+
       <div className="reviews">
         {reviews.map((review) => (
           <Review

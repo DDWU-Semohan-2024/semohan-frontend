@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Style.css'; // CSS 파일을 import
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import logoImage from '../img/semohan-logo.png';
+import ProfileSearchHeader from './ProfileSearchHeader';
+
 
 function WriteReview() {
   const navigate = useNavigate();
@@ -49,9 +50,8 @@ function WriteReview() {
 
   return (
     <div className="body">
-      <header>
-        <img className="logoImg" src={logoImage} alt="logo" />
-      </header>
+      <ProfileSearchHeader />
+
       <div className="review-container">
         <div className="date">
           <span>{todayDate}</span>
