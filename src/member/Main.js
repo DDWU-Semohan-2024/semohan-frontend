@@ -79,7 +79,7 @@ function Main() {
     };
 
 
-    const alterAddress = useCallback((position) => {
+    const alterAddress = (position) => {
 
         let x = position.coords.longitude; //테스트를 위해 성북구로 지정 127.04742793253544 ; //
         let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
@@ -88,15 +88,15 @@ function Main() {
         if (x && y) {
             axios.get(
                 `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
-                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` }}
+                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` } }
             ).then((result) => {
                 // 행정구역의 구 부분만 가져옵니다'
-                console.log(result)
+                console.log(result.data)
                 let location = result.data.documents[0].address.region_2depth_name;
                 console.log("location: " + location);
                 setAddress(location);
                 axios.get(`/location/set/${encodeURIComponent(location)}`, {
-                    withCredentials: true
+                    // withCredentials: true
                 }).then(() => {
                     fetchRestaurants(location); // Fetch restaurants after setting address
                 }).catch(error => {
@@ -106,7 +106,7 @@ function Main() {
                 console.error("There was an error fetching the address data!", error);
             });
         }
-    },[]);
+    };
 
     const doSomethingError = (error) => {
         console.log('location error', error);
@@ -114,7 +114,7 @@ function Main() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(alterAddress, doSomethingError);
-    }, [alterAddress]);
+    }, []);
     // useEffect(() => {
     //     axios.get("/location/set/", {
     //         withCredentials: true
