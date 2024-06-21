@@ -111,7 +111,7 @@ function Main() {
                 console.error("주소 데이터를 가져오는 중 오류가 발생했습니다!", error);
             });
         }
-    }, []);
+    };       
 
     const doSomethingError = (error) => {
         console.log('location error', error);
