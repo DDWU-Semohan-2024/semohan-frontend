@@ -61,6 +61,7 @@ function ResultSearch() {
             .then(response => {
                 if (response.data && response.data.length > 0) {
                     setSearchResults(response.data);
+                    console.log(response.data);
                     navigate('/resultSearch', {state: {results: response.data, searchType, searchTerm}});
                 } else {
                     setSearchResults([]);
@@ -123,7 +124,9 @@ function ResultSearch() {
 
     return (
         <div id="newBody">
+
             <ProfileSearchHeader />
+
             <div id="searchBar">
                 <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
                 <input type="text"
@@ -138,14 +141,19 @@ function ResultSearch() {
 
             <div id="main_noLogin">
                 <div className="image-grid">
-                    {/*식당 수만큼*/}
-                    {searchResults.map((restaurant, index) => (
+                    {searchResults.length > 0 ? (
+                            searchResults.map((restaurant, index) => (
+
                     <div className="image-container" key={index}>
+                        {searchResults.data}
                         <img className="resImg" src={restaurant.s3Url} alt="search"  onClick={() => handleImageClick(restaurant.id)}/>
                         <img className="bookmark-image2" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
                         <span className="image-caption">{restaurant.name}</span>
                     </div>
-                    ))}
+                        ))
+                     ) : (
+                        <div>검색 결과가 없습니다.</div>
+                    )}
                     {/*<div className="image-container">*/}
                     {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
                     {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}

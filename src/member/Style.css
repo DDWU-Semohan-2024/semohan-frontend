@@ -733,4 +733,19 @@
         color: red;
         text-align: right;
       }
+
+      .write-review-button-inline {
+        margin-left: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      
+      .write-review-button-inline:hover {
+        background-color: #0056b3;
+      }
 }

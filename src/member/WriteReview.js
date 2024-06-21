@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import './Style.css'; // CSS 파일을 import
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import logoImage from '../img/semohan-logo.png';
-import profileImg from '../img/profile-user.png';
-import searchImage from '../img/search.png';
 import ProfileSearchHeader from './ProfileSearchHeader';
+
 
 function WriteReview() {
   const navigate = useNavigate();
@@ -14,6 +12,7 @@ function WriteReview() {
   const [mealType, setMealType] = useState(1); // 기본값을 점심으로 설정
   const [likeRestaurant, setLikeRestaurant] = useState(false);
   const [likeMenu, setLikeMenu] = useState(false);
+  const [error, setError] = useState('');
 
   const todayDate = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
@@ -33,24 +32,26 @@ function WriteReview() {
       likeMenu,
     };
 
-    axios.post(`/review/${restaurantId}/write`, reviewData, { withCredentials: true })
+    axios.post(`/review/write/${restaurantId}`, reviewData, { withCredentials: true })
       .then(response => {
         if (response.data) {
           alert('리뷰가 등록되었습니다!');
-          navigate(`/restaurant/detail/${restaurantId}`);
+          navigate(`/restaurantReview/${restaurantId}`);
         } else {
           alert('리뷰 등록에 실패했습니다.');
         }
       })
       .catch(error => {
-        console.error('리뷰 등록 중 오류 발생:', error);
-        alert('리뷰 등록 중 오류가 발생했습니다.');
+        setError(error.response.data.message); // 백엔드에서 온 오류 메시지 설정
+        console.error(error.response.data.message, error);
+        alert(error.response.data.message);  // 오류 메시지를 팝업으로 띄우기
       });
   };
 
   return (
     <div className="body">
       <ProfileSearchHeader />
+
       <div className="review-container">
         <div className="date">
           <span>{todayDate}</span>
