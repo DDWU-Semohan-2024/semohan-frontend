@@ -69,6 +69,7 @@
         font-size: var(--mainfontsize);
         margin-bottom: 30px;
         margin-top: 30px;
+        caption-side: top;
         text-align: center;
     }
 
@@ -91,6 +92,7 @@
         text-align: center;
         padding: 15px 30px;
     }
+
 
     form {
         margin-top: 30px;
@@ -179,35 +181,44 @@
     table {
         border-collapse: collapse; /*이중선 제거*/
         font-size: var(--mainfontsize);
-        caption-side: top;
     }
 
-    /*caption {*/
-    /*    text-decoration: underline;*/
-    /*    font-size: var(--mainfontsize);*/
-    /*    margin-bottom: 30px;*/
-    /*    margin-top: 30px;*/
+    /*tr {*/
+    /*    width: 96%;*/
+    /*    height: 40px;*/
+    /*    !*border-top: 1px solid black;*!*/
+    /*}*/
+
+    /*td {*/
+    /*    border-top: 1px solid black;*/
+    /*    width: 180px;*/
+    /*    padding-left: 10px;*/
+    /*}*/
+
+    /*th {*/
+    /*    border-top: 1px solid black;*/
+    /*    border-right: 1px solid black;*/
+    /*}*/
+
+    /*tr:last-child > th,*/
+    /*tr:last-child > td {*/
+    /*    border-bottom: 1px solid black;*/
     /*}*/
 
     tr {
-        width: var(--mainwidth);
-        height: 40px;
-    }
-
-    td {
-        border-top: 1px solid black;
-        width: 180px;
-        padding-left: 10px;
+        border-top: 1px solid black; /* tr 위쪽에만 border */
     }
 
     th {
-        border-top: 1px solid black;
-        border-right: 1px solid black;
+        border-right: 1px solid black; /* th 오른쪽에만 border */
     }
 
-    tr:last-child > th,
-    tr:last-child > td {
-        border-bottom: 1px solid black;
+    th:last-child {
+        border-right: none; /* 마지막 th의 오른쪽 border 제거 */
+    }
+
+    td {
+        border: none; /* td는 별도의 border 없음 */
     }
 
     #result {

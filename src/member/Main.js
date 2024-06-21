@@ -7,7 +7,7 @@ import searchImage from '../img/search.png';
 import addressImage from '../img/gps.png';
 import example from '../img/buffetjpg.jpg';
 import noScrap from '../img/bookmark-white.png';
-import scrap from '../img/bookmark-black.png';
+import scrap from '../img/bookmark.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../img/profile-user.png";

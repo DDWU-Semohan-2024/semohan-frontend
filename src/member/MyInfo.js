@@ -40,7 +40,7 @@ function MyInfoPage() {
                 <Link to="/main"><img src={logoImage} alt="logo"/></Link>
             </header>
             <table>
-                <caption>나의 정보</caption>
+                <caption id='caption'>나의 정보</caption>
                 <tbody>
                 <tr>
                     <th>이름</th>
