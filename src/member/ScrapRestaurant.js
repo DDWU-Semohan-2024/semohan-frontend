@@ -9,6 +9,7 @@ import pin from "../img/pin.png";
 import noPin from "../img/noPin.png";
 import noScrap from "../img/bookmark-white.png";
 import scrap from "../img/bookmark-black.png";
+import LogoHeader from './LogoHeader';
 
 function ScrapRestaurant() {
     const navigate = useNavigate();
@@ -37,10 +38,6 @@ function ScrapRestaurant() {
         setScrapImage(prevSrc => (prevSrc === scrap ? noScrap : scrap));
     };
 
-    const handleNoPin = () => {
-        setPinImage(prevSrc => (prevSrc === pin ? noPin : pin));
-    };
-
     const handleScrap = index => {
         setScrappedRestaurants(prevStates =>
             prevStates.map((restaurant, i) => (
@@ -50,11 +47,37 @@ function ScrapRestaurant() {
     };
 
     const handlePin = index => {
+        alert("Pin 식당을 수정합니다.");
+
+        const newPinnedRestaurant = scrappedRestaurants[index];
+        console.log(newPinnedRestaurant)
+
+        setPinnedRestaurant(newPinnedRestaurant);
         setScrappedRestaurants(prevStates =>
             prevStates.map((restaurant, i) => (
-                i === index ? { ...restaurant, pinned: !restaurant.pinned } : restaurant
+                { ...restaurant, pinned: i === index }
             ))
         );
+
+        setTimeout(() => {
+            const pinnedRestaurantId = newPinnedRestaurant ? newPinnedRestaurant.id : null;
+            const scrappedRestaurantIdList = scrappedRestaurants
+                .filter(restaurant => restaurant.scrapped)
+                .map(restaurant => restaurant.id);
+
+            const requestData = {
+                pinnedRestaurantId,
+                scrappedRestaurantIdList
+            };
+
+            axios.post('/restaurant/scrap-pin/update', requestData)
+                .then(response => {
+                    console.log('Update successful:', response.data);
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                });
+        }, 0);
     };
 
     const handleSave = () => {
@@ -80,22 +103,14 @@ function ScrapRestaurant() {
 
     return (
         <div id="newBody">
-            <header id="newHeader">
-                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/myPage')} alt="profile" />
-                <img src={logoImage} alt="logo" />
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
-            </header>
-
+            <LogoHeader/>
+            
             <div id="main_noLogin">
                 <h4>내가 핀한 식당</h4>
                 <div className="image-grid">
                     {pinnedRestaurant && (
                         <div className="image-container">
                             <img className="resImg" src={pinnedRestaurant.s3Url} alt="search" />
-                            <img className="bookmark-image2"
-                                 src={pinImage}
-                                 onClick={handleNoPin}
-                                 alt="pin" />
                             <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>{pinnedRestaurant.name}</span>
                         </div>
                     )}
@@ -114,7 +129,7 @@ function ScrapRestaurant() {
                             />
                             <img
                                 className="bookmark-image2"
-                                src={restaurant.pinned ? pin : noPin}
+                                src={noPin}
                                 onClick={() => handlePin(index)}
                                 alt="pin"
                             />

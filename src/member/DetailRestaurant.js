@@ -10,6 +10,7 @@ import triangle from "../img/triangle.png";
 import noScrap from "../img/bookmark-white.png";
 import scrap from "../img/bookmark-black.png";
 import axios from "axios";
+import ProfileSearchHeader from './ProfileSearchHeader';
 
 function DetailRestaurant() {
 
@@ -97,11 +98,7 @@ function DetailRestaurant() {
 
     return (
         <div id="newBody">
-            <header id="newHeader">
-                <img className="headerImg" src={ProfileImage} onClick={() => navigate('/login')} alt="profile"/>
-                <img src={logoImage} onClick={() => navigate('/main')} alt="logo" />
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
-            </header>
+            <ProfileSearchHeader />
             <div id="content">
                 <section id="top">
                     <div id="menuBox">

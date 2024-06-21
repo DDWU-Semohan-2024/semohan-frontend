@@ -5,6 +5,8 @@ import lock from "../img/lock.png";
 import beforeCheck from "../img/free-icon-checkmark-656971.png";
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import LogoHeader from './LogoHeader';
+
 
 axios.defaults.withCredentials = true;  // withCredentials 설정 추가
 
@@ -178,9 +180,7 @@ function Register() {
 
     return (
         <div id="body">
-            <header>
-                <img src={logoImage} alt="logo" />
-            </header>
+            <LogoHeader/>
 
             <form id="updateInfo" method="post" action="" onSubmit={handleSubmit}>
 

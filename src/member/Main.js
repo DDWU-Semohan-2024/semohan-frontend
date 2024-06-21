@@ -11,6 +11,7 @@ import scrap from '../img/bookmark-black.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../img/profile-user.png";
+import ProfileSearchHeader from './ProfileSearchHeader';
 
 function Main() {
     const [address, setAddress] = useState(null);
@@ -155,15 +156,7 @@ function Main() {
 
     return (
         <div id="newBody">
-            <header id="newHeader">
-                {!loggedIn ? (
-                    <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
-                ) : (
-                    <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
-                )}
-                <img src={logoImage} alt="logo"/>
-                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
-            </header>
+            <ProfileSearchHeader />
 
             {/*/!*Pin이 없을 경우*!/*/}
             {/*<div className="pin">*/}

@@ -6,6 +6,7 @@ import logoImage from '../img/semohan-logo.png';
 import noLoginImage from '../img/add.png';
 import profileImg from '../img/profile-user.png';
 import searchImage from '../img/search.png';
+import ProfileSearchHeader from './ProfileSearchHeader';
 
 const Review = ({ nickname, likeRestaurant, likeMenu, content, writeTime }) => (
   <div className="review">
@@ -53,15 +54,7 @@ function RestaurantReview() {
 
   return (
     <div id="body">
-      <header>
-        {!loggedIn ? (
-          <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
-        ) : (
-          <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
-        )}
-        <img src={logoImage} alt="logo"/>
-        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
-      </header>
+        <ProfileSearchHeader />
       <div id="caption">리뷰 {reviews.length}개</div>
       <div className="reviews">
         {reviews.map((review) => (

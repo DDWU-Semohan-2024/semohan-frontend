@@ -5,6 +5,7 @@ import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
 import profileImg from '../img/profile-user.png';
 import searchImage from '../img/search.png';
+import ProfileSearchHeader from './ProfileSearchHeader';
 
 function WriteReview() {
   const navigate = useNavigate();
@@ -49,11 +50,7 @@ function WriteReview() {
 
   return (
     <div className="body">
-      <header>
-        <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
-        <img className="logoImg" src={logoImage} alt="logo" />
-        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
-      </header>
+      <ProfileSearchHeader />
       <div className="review-container">
         <div className="date">
           <span>{todayDate}</span>
