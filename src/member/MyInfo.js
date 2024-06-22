@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Style.css'; // CSS 파일을 import
 import { Link } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
+import LogoHeader from './LogoHeader';
 
 function MyInfoPage() {
     const [memberInfo, setMemberInfo] = useState({
@@ -36,9 +37,13 @@ function MyInfoPage() {
 
     return (
         <div id="body">
+
             <header>
                 <Link to="/main"><img src={logoImage} alt="logo"/></Link>
             </header>
+
+            <LogoHeader/>
+
             <table>
                 <caption id='caption'>나의 정보</caption>
                 <tbody>

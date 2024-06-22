@@ -2,13 +2,12 @@ import React from 'react';
 import './Style.css'; // CSS 파일을 import
 import { Link } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
+import LogoHeader from './LogoHeader';
 
 function GeneratePassword() {
     return (
         <div id="body">
-            <header>
-                <img src={logoImage} alt="logo"/>
-            </header>
+            <LogoHeader/>
             <div id="result">
                 임시 비밀번호가 발급되었습니다.
             </div>

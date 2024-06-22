@@ -3,8 +3,8 @@ import './Style.css'; // CSS 파일을 import
 import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
-import profileImg from '../img/profile-user.png';
-import searchImage from '../img/search.png';
+import LogoHeader from './LogoHeader';
+
 
 const Review = ({ id, nickname, likeRestaurant, likeMenu, content, writeTime, onDelete }) => (
   <div className="review">
@@ -20,7 +20,6 @@ const Review = ({ id, nickname, likeRestaurant, likeMenu, content, writeTime, on
 );
 
 function MyReview() {
-  const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
@@ -52,11 +51,16 @@ function MyReview() {
 
   return (
     <div id="body">
+
       <header>
         <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
           <Link to="/main"><img src={logoImage} alt="logo"/></Link>
         <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
       </header>
+
+        <LogoHeader/>
+
+
       <div id="caption">리뷰 {reviews.length}개</div>
       <div className="reviews">
         {reviews.map((review) => (

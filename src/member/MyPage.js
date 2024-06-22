@@ -3,6 +3,8 @@ import './Style.css'; // CSS 파일을 import
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
+import LogoHeader from './LogoHeader';
+
 
 function MyPage() {
     const navigate = useNavigate();
@@ -21,9 +23,13 @@ function MyPage() {
 
     return (
         <div id="body">
+
             <header>
                 <Link to="/main"><img src={logoImage} alt="logo"/></Link>
             </header>
+
+            <LogoHeader/>
+
             <div id="caption">마이페이지</div>
             <div className="mainLink">
                 <Link className="lemon" to="/myInfo">나의 정보</Link>

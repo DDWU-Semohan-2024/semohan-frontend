@@ -11,6 +11,7 @@ import scrap from '../img/bookmark.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../img/profile-user.png";
+import ProfileSearchHeader from './ProfileSearchHeader';
 
 function Main() {
     const [address, setAddress] = useState(null);
@@ -79,42 +80,76 @@ function Main() {
     };
 
 
-    const alterAddress = useCallback((position) => {
-
-        let x = position.coords.longitude; //테스트를 위해 성북구로 지정 127.04742793253544 ; //
-        let y = position.coords.latitude; //테스트를 위해 성북구로 지정 37.60422583406296; //
-
-        console.log(x,y)
+    const alterAddress = async (position) => {
+        let x = position.coords.longitude; // 테스트를 위해 성북구로 지정 127.04742793253544 ; //
+        let y = position.coords.latitude; // 테스트를 위해 성북구로 지정 37.60422583406296; //
+    
+        console.log(x, y);
         if (x && y) {
-            axios.get(
-                `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
-                { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` }}
-            ).then((result) => {
-                // 행정구역의 구 부분만 가져옵니다'
-                console.log(result)
-                let location = result.data.documents[0].address.region_2depth_name;
-                console.log("location: " + location);
-                setAddress(location);
-                axios.get(`/location/set/${encodeURIComponent(location)}`, {
-                    withCredentials: true
-                }).then(() => {
-                    fetchRestaurants(location); // Fetch restaurants after setting address
-                }).catch(error => {
-                    console.error("There was an error setting the location!", error);
-                });
-            }).catch(error => {
-                console.error("There was an error fetching the address data!", error);
-            });
+            try {
+                const result = await axios.get(
+                    `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+                    {
+                        headers: {
+                            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}`
+                        },
+                        withCredentials: false
+                    }
+                );
+                // 행정구역의 구 부분만 가져옵니다
+                console.log(result);
+                if (result.data.documents && result.data.documents.length > 0) {
+                    let location = result.data.documents[0].address.region_2depth_name;
+                    console.log("location: " + location);
+                    setAddress(location);
+    
+                    try {
+                        await axios.get(`/location/set/${encodeURIComponent(location)}`);
+                        fetchRestaurants(location); // 주소를 설정한 후 레스토랑을 가져옴
+                    } catch (error) {
+                        console.error("위치를 설정하는 중 오류가 발생했습니다!", error);
+                    }
+                } else {
+                    console.error("주소 데이터를 찾을 수 없습니다!");
+                }
+            } catch (error) {
+                console.error("주소 데이터를 가져오는 중 오류가 발생했습니다!", error);
+            }
         }
-    },[]);
-
+    };
+    
     const doSomethingError = (error) => {
         console.log('location error', error);
     }
 
+    const requestLocationPermission = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    alterAddress(position);
+                },
+                (error) => {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        console.error("User denied the request for Geolocation.");
+                        alert("위치 권한이 차단되었습니다. 브라우저 설정에서 위치 권한을 허용해주세요.");
+                    } else {
+                        console.error("Geolocation error: ", error);
+                    }
+                }
+            );
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    };
+    
+    // 페이지 로드 시 위치 권한 요청
+    useEffect(() => {
+        requestLocationPermission();
+    }, []);
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(alterAddress, doSomethingError);
-    }, [alterAddress]);
+    }, []);
     // useEffect(() => {
     //     axios.get("/location/set/", {
     //         withCredentials: true
@@ -155,6 +190,7 @@ function Main() {
 
     return (
         <div id="newBody">
+
             <header id="newHeader">
                 {!loggedIn ? (
                     <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
@@ -165,6 +201,9 @@ function Main() {
                 <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
             </header>
 
+            <ProfileSearchHeader />
+
+
             {/*/!*Pin이 없을 경우*!/*/}
             {/*<div className="pin">*/}
             {/*    단골 식당을 <span>PIN</span> 해주세요*/}
@@ -174,7 +213,7 @@ function Main() {
             {loggedIn && pinnedRestaurant ? (
                 <div id="menu">
                     <div>
-                        {/*{restaurantName}*/}
+                        <b>❤{pinnedRestaurant.restaurantName}❤</b>
                     </div>
                     <span></span>
                     <div className='title'>
