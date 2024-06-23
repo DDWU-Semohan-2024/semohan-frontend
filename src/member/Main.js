@@ -2,12 +2,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import "./Style.css"; // CSS 파일을 import
 import { Link } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
-import noLoginImage from '../img/add.png';
+import noLoginImage from '../img/login.png';
 import searchImage from '../img/search.png';
 import addressImage from '../img/gps.png';
 import example from '../img/buffetjpg.jpg';
 import noScrap from '../img/bookmark-white.png';
-import scrap from '../img/bookmark-black.png';
+import scrap from '../img/bookmark.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../img/profile-user.png";
@@ -190,7 +190,19 @@ function Main() {
 
     return (
         <div id="newBody">
+
+            <header id="newHeader">
+                {!loggedIn ? (
+                    <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
+                ) : (
+                    <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
+                )}
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+                <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
+            </header>
+
             <ProfileSearchHeader />
+
 
             {/*/!*Pin이 없을 경우*!/*/}
             {/*<div className="pin">*/}

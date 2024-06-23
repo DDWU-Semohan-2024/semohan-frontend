@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Style.css'; // CSS 파일을 import
-import { useNavigate, useParams } from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import ProfileSearchHeader from './ProfileSearchHeader';
 
@@ -50,6 +50,13 @@ function WriteReview() {
 
   return (
     <div className="body">
+
+      <header>
+        <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
+        <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
+      </header>
+
       <ProfileSearchHeader />
 
       <div className="review-container">

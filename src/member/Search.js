@@ -129,6 +129,11 @@ function Search() {
     return (
         <div id="newBody">
 
+            <header>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+            </header>
+
+
             <ProfileSearchHeader />
 
 

@@ -37,9 +37,15 @@ function MyInfoPage() {
 
     return (
         <div id="body">
+
+            <header>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+            </header>
+
             <LogoHeader/>
+
             <table>
-                <caption>나의 정보</caption>
+                <caption id='caption'>나의 정보</caption>
                 <tbody>
                 <tr>
                     <th>이름</th>

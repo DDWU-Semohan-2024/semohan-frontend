@@ -46,6 +46,15 @@
         margin-bottom: 20px;
     }
 
+
+    header > a > img {
+        width: 150px;
+        height: fit-content;
+        align-items: center;
+    }
+
+    header > img {
+
     /*header > img {*/
     /*    width: 150px;*/
     /*    height: fit-content;*/
@@ -53,6 +62,7 @@
     /*}*/
 
     header img {
+
         width: 150px;
         height: fit-content;
         align-items: center;
@@ -61,15 +71,6 @@
     .headerImg {
         width: 40px;
         height: fit-content;
-    }
-
-    caption,
-    #caption {
-        text-decoration: underline;
-        font-size: var(--mainfontsize);
-        margin-bottom: 30px;
-        margin-top: 30px;
-        text-align: center;
     }
 
     .blank {
@@ -91,6 +92,7 @@
         text-align: center;
         padding: 15px 30px;
     }
+
 
     form {
         margin-top: 30px;
@@ -181,11 +183,14 @@
         font-size: var(--mainfontsize);
     }
 
-    caption {
+    caption,
+    #caption {
         text-decoration: underline;
         font-size: var(--mainfontsize);
         margin-bottom: 30px;
         margin-top: 30px;
+        caption-side: top;
+        text-align: center;
     }
 
     tr {
@@ -233,7 +238,6 @@
     .certification {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 0;
     }
 
     #phoneNum {
@@ -246,26 +250,33 @@
         border-radius: var(--radius);
     }
 
-    #certiPhone {
-        width: 80%;
-    }
+    /*#certiPhone {*/
+    /*    width: 80%;*/
+    /*}*/
 
-    .find {
-        background-color: var(--lemoncolor);
-        width: var(--mainwidth);
-        height: var(--btnheight);
-        border-radius: var(--radius);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 30px;
-    }
+    /*.find {*/
+    /*    background-color: var(--lemoncolor);*/
+    /*    width: var(--mainwidth);*/
+    /*    height: var(--btnheight);*/
+    /*    border-radius: var(--radius);*/
+    /*    display: flex;*/
+    /*    align-items: center;*/
+    /*    justify-content: center;*/
+    /*    margin-top: 30px;*/
+    /*}*/
 
-    .find > a {
-        color: black;
-        text-decoration: none;
-        font-size: var(--mainfontsize);
+    .find > button {
+        border: none;
         font-weight: bold;
+        font-size: var(--mainfontsize);
+        background-color: var(--lemoncolor);
+        border-radius: var(--radius);
+        margin-top: 30px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        padding: 15px 30px;
+        width: 100%;
     }
 
     .btn {
@@ -599,8 +610,11 @@
     }
 
     #right {
-        width:50%;
-        margin-left: 3%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width:45%;
+        margin-left:5%;
     }
 
     #reviewBox {
@@ -610,8 +624,8 @@
         background-color: var(--lemoncolor);
         border-radius: var(--radius);
         text-align: center;
-        padding: 30px 30px;
-        width: 92%;
+        padding: 30px 10px;
+        width: 80%;
     }
 
     #reviewBox > a {

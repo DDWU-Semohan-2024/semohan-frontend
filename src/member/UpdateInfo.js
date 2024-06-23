@@ -3,8 +3,12 @@ import './Style.css';
 import logoImage from '../img/semohan-logo.png';
 import lock from "../img/lock.png";
 import beforeCheck from "../img/free-icon-checkmark-656971.png";
+
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import LogoHeader from './LogoHeader';
+
 
 function UpdateInfo() {
     const [year, setYear] = useState(2000); // 기본 연도를 2000년으로 설정
@@ -204,6 +208,11 @@ function UpdateInfo() {
 
     return (
         <div id="body">
+
+            <header>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+            </header>
+
             <LogoHeader/>
 
             <form id="updateInfo" method="post" action="" onSubmit={handleSubmit}>

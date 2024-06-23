@@ -7,7 +7,7 @@ import searchBtn from "../img/search.png";
 import searchImage from "../img/search.png";
 import example from "../img/buffetjpg.jpg";
 import noScrap from "../img/bookmark-white.png";
-import scrap from "../img/bookmark-black.png";
+import scrap from "../img/bookmark.png";
 import bookmarkImage from "../img/bookmark-white.png";
 import axios from "axios";
 import qs from "qs";
@@ -125,7 +125,13 @@ function ResultSearch() {
     return (
         <div id="newBody">
 
+            <header>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+            </header>
+
+
             <ProfileSearchHeader />
+
 
             <div id="searchBar">
                 <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>

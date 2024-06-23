@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Style.css';
+
+import {Link, useNavigate} from 'react-router-dom';
+
 import { useNavigate } from 'react-router-dom';
+
 import logoImage from '../img/semohan-logo.png';
 import ProfileImage from "../img/profile-user.png";
 import searchImage from "../img/search.png";
@@ -9,7 +13,11 @@ import pin from "../img/pin.png";
 import noPin from "../img/noPin.png";
 import noScrap from "../img/bookmark-white.png";
 import scrap from "../img/bookmark-black.png";
+
+// import LogoHeader from './LogoHeader';
+
 import LogoHeader from './LogoHeader';
+
 
 function ScrapRestaurant() {
     const navigate = useNavigate();
@@ -49,8 +57,14 @@ function ScrapRestaurant() {
     const handlePin = index => {
         alert("Pin 식당을 수정합니다.");
 
+
         const newPinnedRestaurant = scrappedRestaurants[index];
         console.log(newPinnedRestaurant)
+
+
+        const newPinnedRestaurant = scrappedRestaurants[index];
+        console.log(newPinnedRestaurant)
+
 
         setPinnedRestaurant(newPinnedRestaurant);
         setScrappedRestaurants(prevStates =>
@@ -103,8 +117,15 @@ function ScrapRestaurant() {
 
     return (
         <div id="newBody">
+
+            <header>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+            </header>
+
+
             <LogoHeader/>
             
+
             <div id="main_noLogin">
                 <h4>내가 핀한 식당</h4>
                 <div className="image-grid">
@@ -137,7 +158,11 @@ function ScrapRestaurant() {
                         </div>
                     ))}
                 </div>
+
+                <button className='gray submit' onClick={handleSave}>저장</button>
+
                 <button className='submit gray' onClick={handleSave}>저장</button>
+
             </div>
         </div>
     );

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Style.css'; // CSS 파일을 import
+
+import {Link, useNavigate, useParams} from 'react-router-dom';
+
 import { useParams, useLocation } from 'react-router-dom';
+
 import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
 import ProfileSearchHeader from './ProfileSearchHeader';
@@ -44,11 +48,24 @@ function RestaurantReview() {
   return (
     <div id="body">
 
+      <header>
+        {!loggedIn ? (
+          <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
+        ) : (
+          <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
+        )}
+          <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
+      </header>
+      <div id="caption">리뷰 {reviews.length}개</div>
+
+
         <ProfileSearchHeader />
 
       <div id="caption">리뷰 {reviews.length}개 
         <button onClick={handleWriteReview} className="write-review-button-inline">리뷰 쓰기</button>
       </div>
+
 
       <div className="reviews">
         {reviews.map((review) => (

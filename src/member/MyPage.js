@@ -23,7 +23,13 @@ function MyPage() {
 
     return (
         <div id="body">
+
+            <header>
+                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
+            </header>
+
             <LogoHeader/>
+
             <div id="caption">마이페이지</div>
             <div className="mainLink">
                 <Link className="lemon" to="/myInfo">나의 정보</Link>
