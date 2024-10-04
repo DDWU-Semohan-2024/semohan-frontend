@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import './Style.css';
 
 import {Link, useNavigate} from 'react-router-dom';
 
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import logoImage from '../img/semohan-logo.png';
 import ProfileImage from "../img/profile-user.png";
@@ -17,6 +17,7 @@ import scrap from "../img/bookmark-black.png";
 // import LogoHeader from './LogoHeader';
 
 import LogoHeader from './LogoHeader';
+import ScrapContext from "./ScrapContext";
 
 
 function ScrapRestaurant() {
@@ -26,16 +27,38 @@ function ScrapRestaurant() {
     const [pinnedRestaurant, setPinnedRestaurant] = useState(null);
     const [scrappedRestaurants, setScrappedRestaurants] = useState([]);
 
+    const [restaurants, setRestaurants] = useState([]);
+
+    const { scrapStatus } = useContext(ScrapContext);
+
     useEffect(() => {
         axios.get('/restaurant/scrap-pin')
             .then(response => {
+                console.log("스크랩의내용")
+                console.log(response.data)
                 const data = response.data;
-                setPinnedRestaurant(data.pinnedRestaurnat);
-                setScrappedRestaurants(data.scrappedRestaurnats.map(restaurant => ({
+
+                const pinnedRestaurant = data.pinnedRestaurnat; // 백엔드의 오타 처리
+
+                const scrappedRestaurants = Array.isArray(data.scrappedRestaurnats) ? data.scrappedRestaurnats : [];
+
+                // setPinnedRestaurant(data.pinnedRestaurant);
+                setPinnedRestaurant(pinnedRestaurant);
+                setScrappedRestaurants(scrappedRestaurants.map(restaurant => ({
                     ...restaurant,
                     scrapped: true,
-                    pinned: data.pinnedRestaurnat && data.pinnedRestaurnat.id === restaurant.id
+                    pinned: pinnedRestaurant && pinnedRestaurant.id === restaurant.id // 현재 핀한 식당과 비교
+                    // pinned: data.pinnedRestaurant && data.pinnedRestaurant.id === restaurant.id
                 })));
+                // const scrapList = response.data.scrappedRestaurants || []; // 기본값 설정
+                // if (!Array.isArray(restaurants)) {
+                //     console.error("Restaurants is not an array:", restaurants);
+                //     return; // 추가적인 에러 처리를 수행할 수 있습니다.
+                // }
+                // const updatedScrapImages = restaurants.map(restaurant =>
+                //     scrapList.some(scrap => scrap.id === restaurant.id) ? scrap : noScrap
+                // );
+                // setScrapImages(updatedScrapImages);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -47,11 +70,30 @@ function ScrapRestaurant() {
     };
 
     const handleScrap = index => {
-        setScrappedRestaurants(prevStates =>
-            prevStates.map((restaurant, i) => (
-                i === index ? { ...restaurant, scrapped: !restaurant.scrapped } : restaurant
-            ))
-        );
+
+        const restaurantToScrap = scrappedRestaurants[index];
+
+        // 스크랩 해제 시 데이터베이스에서 삭제
+        if (restaurantToScrap.scrapped) {
+            axios.post(`/restaurant/delete-scrap/${restaurantToScrap.id}`)
+                .then(response => {
+                    console.log('Successfully removed from scrap:', response.data);
+                    // 스크랩한 식당 상태 업데이트
+                    setScrappedRestaurants(prevStates =>
+                        prevStates.filter((_, i) => i !== index) // 해당 인덱스의 식당 제거
+                    );
+                })
+                .catch(error => {
+                    console.error('Error removing from scrap:', error);
+                });
+        } else {
+            // 스크랩 추가
+            setScrappedRestaurants(prevStates =>
+                prevStates.map((restaurant, i) => (
+                    i === index ? { ...restaurant, scrapped: true } : restaurant
+                ))
+            );
+        }
     };
 
     const handlePin = index => {
@@ -62,19 +104,37 @@ function ScrapRestaurant() {
         console.log(newPinnedRestaurant)
 
 
-        const newPinnedRestaurant = scrappedRestaurants[index];
-        console.log(newPinnedRestaurant)
+        // const newPinnedRestaurant = scrappedRestaurants[index];
+        // console.log(newPinnedRestaurant)
 
 
-        setPinnedRestaurant(newPinnedRestaurant);
+        // setPinnedRestaurant(newPinnedRestaurant);
+        // setScrappedRestaurants(prevStates =>
+        //     prevStates.map((restaurant, i) => (
+        //         { ...restaurant, pinned: i === index }
+        //     ))
+        // );
+
+        // 핀 상태를 토글
+        // const isAlreadyPinned = pinnedRestaurant && pinnedRestaurant.id === newPinnedRestaurant.id;
+        //
+        // setPinnedRestaurant(isAlreadyPinned ? null : newPinnedRestaurant);
+        setPinnedRestaurant(prev => (prev && prev.id === newPinnedRestaurant.id ? null : newPinnedRestaurant));
+
         setScrappedRestaurants(prevStates =>
-            prevStates.map((restaurant, i) => (
-                { ...restaurant, pinned: i === index }
-            ))
+            prevStates.map((restaurant, i) => ({
+                ...restaurant,
+                pinned: i === index ? !restaurant.pinned : restaurant.pinned
+            }))
         );
+        // 핀 상태에 따라 이미지 변경
+        setPinImage(prev => (prev === pin ? noPin : pin));
 
         setTimeout(() => {
             const pinnedRestaurantId = newPinnedRestaurant ? newPinnedRestaurant.id : null;
+
+            // const pinnedRestaurantId = isAlreadyPinned ? null : newPinnedRestaurant.id;
+
             const scrappedRestaurantIdList = scrappedRestaurants
                 .filter(restaurant => restaurant.scrapped)
                 .map(restaurant => restaurant.id);
@@ -118,9 +178,9 @@ function ScrapRestaurant() {
     return (
         <div id="newBody">
 
-            <header>
-                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-            </header>
+            {/*<header>*/}
+            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+            {/*</header>*/}
 
 
             <LogoHeader/>
@@ -129,17 +189,21 @@ function ScrapRestaurant() {
             <div id="main_noLogin">
                 <h4>내가 핀한 식당</h4>
                 <div className="image-grid">
-                    {pinnedRestaurant && (
+                    {pinnedRestaurant ? (
                         <div className="image-container">
+                            {/*{console.log(pinnedRestaurant.s3Url)} /!* 여기 추가 *!/*/}
                             <img className="resImg" src={pinnedRestaurant.s3Url} alt="search" />
                             <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>{pinnedRestaurant.name}</span>
                         </div>
+                    ) : (
+                        <p>핀한 식당이 없습니다.</p> // 핀한 식당이 없을 경우 메시지 추가
                     )}
                 </div>
 
                 <h4>내가 스크랩한 식당</h4>
                 <div className="image-grid">
-                    {scrappedRestaurants.map((restaurant, index) => (
+                    {scrappedRestaurants.length > 0 ? (
+                    scrappedRestaurants.map((restaurant, index) => (
                         <div className="image-container" key={restaurant.id}>
                             <img className="resImg" src={restaurant.s3Url} alt="search" />
                             <img
@@ -150,18 +214,21 @@ function ScrapRestaurant() {
                             />
                             <img
                                 className="bookmark-image2"
-                                src={noPin}
+                                src={restaurant.pinned ? pin : noPin} // 핀 상태에 따라 이미지 변경
                                 onClick={() => handlePin(index)}
                                 alt="pin"
                             />
                             <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>{restaurant.name}</span>
                         </div>
-                    ))}
+                    ))
+                    ) : (
+                        <p>스크랩한 식당이 없습니다.</p> // 스크랩한 식당이 없을 경우 메시지 추가
+                    )}
                 </div>
 
                 <button className='gray submit' onClick={handleSave}>저장</button>
 
-                <button className='submit gray' onClick={handleSave}>저장</button>
+                {/*<button className='submit gray' onClick={handleSave}>저장</button>*/}
 
             </div>
         </div>

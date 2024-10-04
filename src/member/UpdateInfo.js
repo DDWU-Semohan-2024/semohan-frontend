@@ -6,7 +6,7 @@ import beforeCheck from "../img/free-icon-checkmark-656971.png";
 
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+// import { useLocation, useNavigate } from 'react-router-dom';
 import LogoHeader from './LogoHeader';
 
 
@@ -209,9 +209,9 @@ function UpdateInfo() {
     return (
         <div id="body">
 
-            <header>
-                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-            </header>
+            {/*<header>*/}
+            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+            {/*</header>*/}
 
             <LogoHeader/>
 

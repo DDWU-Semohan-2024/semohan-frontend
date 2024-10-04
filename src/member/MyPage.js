@@ -24,9 +24,9 @@ function MyPage() {
     return (
         <div id="body">
 
-            <header>
-                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-            </header>
+            {/*<header>*/}
+            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+            {/*</header>*/}
 
             <LogoHeader/>
 

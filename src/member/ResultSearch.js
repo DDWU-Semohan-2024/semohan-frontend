@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './Style.css'; // CSS 파일을 import
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
@@ -12,9 +12,11 @@ import bookmarkImage from "../img/bookmark-white.png";
 import axios from "axios";
 import qs from "qs";
 import ProfileSearchHeader from './ProfileSearchHeader';
+import ScrapContext from './ScrapContext'; // ScrapContext import
 
 function ResultSearch() {
     const navigate = useNavigate();
+    const { scrapStatus, updateScrapStatus } = useContext(ScrapContext); // ScrapContext 사용
 
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState('');
@@ -72,62 +74,25 @@ function ResultSearch() {
             });
 
         console.log('Searching for:', searchTerm);  // 콘솔 로그 추가
-        // navigate('/search', { state: { searchTerm: searchTerm } });
 
 
-        // let params = {};
-        // if (searchType === 'name') {
-        //     params = { name: searchTerm };
-        //     console.log("search type: name")
-        // } else if (searchType === 'location') {
-        //     params = { location: searchTerm };
-        //     console.log("search type: location")
-        // } else if (searchType === 'menu') {
-        //     params = { menu: searchTerm };
-        //     console.log("search type: menu")
-        // } else {
-        //     params = {
-        //         location: searchTerm,
-        //         menu: searchTerm,
-        //         name: searchTerm
-        //     };
-        // }
-        // else {
-        //     params = {
-        //         location: searchTerm,
-        //         menu: searchTerm,
-        //         name: searchTerm
-        //     };
-        // }
-        // axios.defaults.paramsSerializer = params => {
-        //     return qs.stringify(params);
-        // }
-        //
-        // axios.get('/restaurant/search', {params})
-        //     .then(response => {
-        //         console.log('Response Data :', response.data);  // 응답 데이터 로그 추가
-        //         console.log('Response :', response);  // 응답 데이터 로그 추가
-        //         if (response.data && response.data.length > 0) {
-        //             navigate('/resultSearch', { state: { results: response.data } });
-        //         } else {
-        //             console.log('No results found.');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error('There was an error fetching the search data!', error);
-        //     });
     };
 
     const handleImageClick = (restaurantId) => {
         navigate(`/detailRestaurant/${restaurantId}`);
     };
 
+    const handleScrapToggle = (restaurantId, index) => {
+        const isScrapped = scrapStatus[index]; // 현재 스크랩 상태 가져오기
+        updateScrapStatus(restaurantId, !isScrapped); // 스크랩 상태 업데이트
+    };
+
     return (
         <div id="newBody">
 
-            <header>
-                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-            </header>
+            {/*<header>*/}
+            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+            {/*</header>*/}
 
 
             <ProfileSearchHeader />
@@ -153,31 +118,16 @@ function ResultSearch() {
                     <div className="image-container" key={index}>
                         {searchResults.data}
                         <img className="resImg" src={restaurant.s3Url} alt="search"  onClick={() => handleImageClick(restaurant.id)}/>
-                        <img className="bookmark-image2" src={bookmarkImage} onClick={{/*클릭마다 사진 바뀜, 스크랩 등록+취소*/}}/>
+                        <img className="bookmark-image2" src={bookmarkImage}
+                             onClick={() => handleScrapToggle(restaurant.id, index)}
+                             alt="스크랩"/>
                         <span className="image-caption">{restaurant.name}</span>
                     </div>
                         ))
                      ) : (
                         <div>검색 결과가 없습니다.</div>
                     )}
-                    {/*<div className="image-container">*/}
-                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
-                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
-                    {/*    <span className="image-caption">뷔페1</span>*/}
-                    {/*</div>*/}
-                    {/*<div className="image-container">*/}
-                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
-                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
-                    {/*    <span className="image-caption">뷔페1</span>*/}
-                    {/*</div><div className="image-container">*/}
-                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
-                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
-                    {/*    <span className="image-caption">뷔페1</span>*/}
-                    {/*</div><div className="image-container">*/}
-                    {/*    <img className="resImg" src={example/*식당사진*!/ alt="search"/>*/}
-                    {/*    <img className="bookmark-image" src={bookmarkImage} onClick={/!*클릭마다 사진 바뀜, 스크랩 등록+취소*!/}/>*/}
-                    {/*    <span className="image-caption">뷔페1</span>*/}
-                    {/*</div>*/}
+
                 </div>
             </div>
         </div>

@@ -21,10 +21,12 @@ import ComingSoon from "./member/ComingSoon";
 import WriteReview from './member/WriteReview';
 import MyReview from './member/MyReview';
 import RestaurantReview from './member/RestaurantReview';
+import {ScrapProvider} from "./member/ScrapContext"; // 전체 scrap 관리
 
 class App extends Component {
   render() {
     return (
+        <ScrapProvider>
         <Router>
           <Routes>
 
@@ -52,6 +54,7 @@ class App extends Component {
             {/*<Route path="/" element={<Login />} /> /!* 기본적으로 /login으로 이동 *!/*/}
           </Routes>
         </Router>
+        </ScrapProvider>
     );
   }
 }

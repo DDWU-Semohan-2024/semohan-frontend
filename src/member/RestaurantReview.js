@@ -3,12 +3,12 @@ import './Style.css'; // CSS 파일을 import
 
 import {Link, useNavigate, useParams} from 'react-router-dom';
 
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
 import ProfileSearchHeader from './ProfileSearchHeader';
-import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+// import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 
 
 const Review = ({ nickname, likeRestaurant, likeMenu, content, writeTime }) => (
@@ -30,7 +30,7 @@ function RestaurantReview() {
   const [reviews, setReviews] = useState([]);
   const navigate = useNavigate(); // useNavigate 훅 사용
 
-  const handleWriteReview = () => {
+    const handleWriteReview = () => {
     navigate(`/writeReview/${restaurantId}`); // 페이지 이동 함수
   };
 
@@ -46,18 +46,20 @@ function RestaurantReview() {
   }, [restaurantId]);
 
   return (
-    <div id="body">
+    <div id="newBody">
 
-      <header>
-        {!loggedIn ? (
-          <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>
-        ) : (
-          <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>
-        )}
-          <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>
-      </header>
-      <div id="caption">리뷰 {reviews.length}개</div>
+      {/*<header>*/}
+      {/*  {!loggedIn ? (*/}
+      {/*    <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>*/}
+      {/*  ) : (*/}
+      {/*    <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>*/}
+      {/*  )}*/}
+      {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+      {/*  <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>*/}
+      {/*</header>*/}
+
+
+      {/*<div id="caption">리뷰 {reviews.length}개</div>*/}
 
 
         <ProfileSearchHeader />
