@@ -11,7 +11,7 @@ import scrap from "../img/bookmark.png";
 import bookmarkImage from "../img/bookmark-white.png";
 import axios from "axios";
 import qs from "qs";
-import ProfileSearchHeader from './ProfileSearchHeader';
+import ProfileHeader from './ProfileHeader';
 import ScrapContext from './ScrapContext'; // ScrapContext import
 
 function ResultSearch() {
@@ -95,7 +95,7 @@ function ResultSearch() {
             {/*</header>*/}
 
 
-            <ProfileSearchHeader />
+            <ProfileHeader />
 
 
             <div id="searchBar">
