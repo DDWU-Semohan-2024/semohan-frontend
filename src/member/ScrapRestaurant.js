@@ -176,7 +176,7 @@ function ScrapRestaurant() {
     };
 
     return (
-        <div id="newBody">
+        <div id="scrapBody">
 
             {/*<header>*/}
             {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
@@ -184,7 +184,7 @@ function ScrapRestaurant() {
 
 
             <LogoHeader/>
-            
+
 
             <div id="main_noLogin">
                 <h4>내가 핀한 식당</h4>
@@ -192,8 +192,9 @@ function ScrapRestaurant() {
                     {pinnedRestaurant ? (
                         <div className="image-container">
                             {/*{console.log(pinnedRestaurant.s3Url)} /!* 여기 추가 *!/*/}
-                            <img className="resImg" src={pinnedRestaurant.s3Url} alt="search" />
-                            <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>{pinnedRestaurant.name}</span>
+                            <img className="resImg" src={pinnedRestaurant.s3Url} alt="search"/>
+                            <span className="image-caption"
+                                  onClick={() => navigate('/detailRestaurant')}>{pinnedRestaurant.name}</span>
                         </div>
                     ) : (
                         <p>핀한 식당이 없습니다.</p> // 핀한 식당이 없을 경우 메시지 추가
@@ -203,34 +204,36 @@ function ScrapRestaurant() {
                 <h4>내가 스크랩한 식당</h4>
                 <div className="image-grid">
                     {scrappedRestaurants.length > 0 ? (
-                    scrappedRestaurants.map((restaurant, index) => (
-                        <div className="image-container" key={restaurant.id}>
-                            <img className="resImg" src={restaurant.s3Url} alt="search" />
-                            <img
-                                className="bookmark-image1"
-                                src={restaurant.scrapped ? scrap : noScrap}
-                                onClick={() => handleScrap(index)}
-                                alt="scrap"
-                            />
-                            <img
-                                className="bookmark-image2"
-                                src={restaurant.pinned ? pin : noPin} // 핀 상태에 따라 이미지 변경
-                                onClick={() => handlePin(index)}
-                                alt="pin"
-                            />
-                            <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>{restaurant.name}</span>
-                        </div>
-                    ))
+                        scrappedRestaurants.map((restaurant, index) => (
+                            <div className="image-container" key={restaurant.id}>
+                                <img className="resImg" src={restaurant.s3Url} alt="search"/>
+                                <img
+                                    className="bookmark-image1"
+                                    src={restaurant.scrapped ? scrap : noScrap}
+                                    onClick={() => handleScrap(index)}
+                                    alt="scrap"
+                                />
+                                <img
+                                    className="bookmark-image2"
+                                    src={restaurant.pinned ? pin : noPin} // 핀 상태에 따라 이미지 변경
+                                    onClick={() => handlePin(index)}
+                                    alt="pin"
+                                />
+                                <span className="image-caption"
+                                      onClick={() => navigate('/detailRestaurant')}>{restaurant.name}</span>
+                            </div>
+                        ))
                     ) : (
                         <p>스크랩한 식당이 없습니다.</p> // 스크랩한 식당이 없을 경우 메시지 추가
                     )}
                 </div>
 
-                <button className='gray submit' onClick={handleSave}>저장</button>
+                {/*<button className='saveBtn' onClick={handleSave}>저장</button>*/}
 
                 {/*<button className='submit gray' onClick={handleSave}>저장</button>*/}
 
             </div>
+            <button className='saveBtn' onClick={handleSave}>저장</button>
         </div>
     );
 }
