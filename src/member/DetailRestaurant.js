@@ -9,7 +9,7 @@ import like from "../img/like.png";
 import example from "../img/buffetjpg.jpg";
 import triangle from "../img/triangle.png";
 import noScrap from "../img/bookmark-white.png";
-import scrap from "../img/bookmark.png";
+import scrap from "../img/bookmark-black.png";
 import axios from "axios";
 
 // import ProfileSearchHeader from './ProfileSearchHeader';
@@ -67,13 +67,14 @@ function DetailRestaurant() {
             console.error("로그인 상태 확인 중 오류가 발생했습니다!", error);
         });
 
-                console.error("로그인 상태 확인 중 오류가 발생했습니다!", error);
-            });
+            //     console.error("로그인 상태 확인 중 오류가 발생했습니다!", error);
+            // });
 
     }, []);
 
     const fetchMenuData = async (date) => {
         const formattedDate = date.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
+
         try {
             const response = await axios.get(`/menu/${restaurantId}/${formattedDate}`);
             setMenuData(response.data);
@@ -81,7 +82,12 @@ function DetailRestaurant() {
         } catch (error) {
             console.error('메뉴 데이터를 가져오는 중 오류가 발생했습니다:', error);
             if (error.response && error.response.status === 404) { // 404 (메뉴가 없는 경우)
-                alert('메뉴가 준비중입니다.'); // 오류 메시지를 팝업으로 띄우기
+                // alert('메뉴가 준비중입니다.'); // 오류 메시지를 팝업으로 띄우기
+                setMenuData({
+                    mainMenu: [],
+                    subMenu: [],
+                    likesMenu: []
+                })
             }
         }
     };
@@ -97,19 +103,19 @@ function DetailRestaurant() {
         }
     };
 
-    const fetchScrapStatus = async () => {
-        try {
-            const response = await axios.get('/restaurant/scrap-pin', { withCredentials: true });
-            const { scrappedRestaurnats } = response.data;
-            const isScrapped = scrappedRestaurnats.some(rest => rest.id === Number(restaurantId));
-            setScrapStatus(isScrapped);
-            setScrapImage(isScrapped ? scrap : noScrap); // 초기 스크랩 상태 설정
-        } catch (error) {
-
-        } catch (error) {
-            console.error('식당 세부 정보를 가져오는 중 오류가 발생했습니다:', error);
-        }
-    };
+    // const fetchScrapStatus = async () => {
+    //     try {
+    //         const response = await axios.get('/restaurant/scrap-pin', { withCredentials: true });
+    //         const { scrappedRestaurnats } = response.data;
+    //         const isScrapped = scrappedRestaurnats.some(rest => rest.id === Number(restaurantId));
+    //         setScrapStatus(isScrapped);
+    //         setScrapImage(isScrapped ? scrap : noScrap); // 초기 스크랩 상태 설정
+    //     } catch (error) {
+    //
+    //     } catch (error) {
+    //         console.error('식당 세부 정보를 가져오는 중 오류가 발생했습니다:', error);
+    //     }
+    // };
 
     const fetchScrapStatus = async () => {
         try {
@@ -125,6 +131,7 @@ function DetailRestaurant() {
     };
 
     const handlePreviousDay = () => {
+        //
         const previousDate = new Date(currentDate);
         previousDate.setDate(currentDate.getDate() - 1);
         setCurrentDate(previousDate);
@@ -132,6 +139,7 @@ function DetailRestaurant() {
     };
 
     const handleNextDay = () => {
+        //
         const nextDate = new Date(currentDate);
         nextDate.setDate(currentDate.getDate() + 1);
         setCurrentDate(nextDate);
@@ -158,9 +166,9 @@ function DetailRestaurant() {
         <div id="newBody">
 
 
-            <header>
-                <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-            </header>
+            {/*<header>*/}
+            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+            {/*</header>*/}
 
             <ProfileSearchHeader />
 
@@ -174,46 +182,77 @@ function DetailRestaurant() {
                             <img className="next" src={triangle} alt="내일" onClick={handleNextDay}/>
                         </div>
                         <span></span>
+                        {/*{menuData ? (*/}
+                        {/*    <div>*/}
+                        {/*        <div id='meal'>점심</div>*/}
+                        {/*        <div className='title'>*/}
+                        {/*            메인 메뉴*/}
+                        {/*        </div>*/}
+                        {/*        {menuData.mainMenu && menuData.mainMenu.map((item, index) => (*/}
+                        {/*            <div className='menuName' key={index}>*/}
+                        {/*                {item}*/}
+                        {/*            </div>*/}
+                        {/*        ))}*/}
+                        {/*        <div className='title'>*/}
+                        {/*            반찬*/}
+                        {/*            </div>*/}
+                        {/*        {menuData.subMenu.map((item, index) => (*/}
+                        {/*            <div className='menuName' key={index}>*/}
+                        {/*                {item}*/}
+                        {/*            </div>*/}
+                        {/*        ))}*/}
+                        {/*        /!*    <div id='meal'>저녁</div>*!/*/}
+                        {/*        /!*    <div className='title'>*!/*/}
+                        {/*        /!*        메인 메뉴*!/*/}
+                        {/*        /!*    </div>*!/*/}
+                        {/*        /!*    {menuData.mainMenu.map((item, index) => (*!/*/}
+                        {/*        /!*        <div className='menuName' key={index}>*!/*/}
+                        {/*        /!*            {item}*!/*/}
+                        {/*        /!*        </div>*!/*/}
+                        {/*        /!*    ))}*!/*/}
+                        {/*        /!*    <div className='title'>*!/*/}
+                        {/*        /!*        반찬*!/*/}
+                        {/*        /!*    </div>*!/*/}
+                        {/*        /!*    {menuData.subMenu.map((item, index) => (*!/*/}
+                        {/*        /!*        <div className='menuName' key={index}>*!/*/}
+                        {/*        /!*            {item}*!/*/}
+                        {/*        /!*        </div>*!/*/}
+                        {/*        /!*    ))}*!/*/}
+                        {/*    </div>*/}
+                        {/*) : (*/}
+                        {/*    <div>아직 등록된 메뉴가 없습니다.</div>*/}
+                        {/*)}*/}
                         {menuData ? (
                             <div>
-                                <div id='meal'>점심</div>
-                                <div className='title'>
-                                    메인 메뉴
-                                </div>
-                                {menuData.mainMenu && menuData.mainMenu.map((item, index) => (
-                                    <div className='menuName' key={index}>
-                                        {item}
-                                    </div>
-                                ))}
-                                <div className='title'>
-                                    반찬
-                                    </div>
-                                {menuData.subMenu.map((item, index) => (
-                                    <div className='menuName' key={index}>
-                                        {item}
-                                    </div>
-                                ))}
-                                {/*    <div id='meal'>저녁</div>*/}
-                                {/*    <div className='title'>*/}
-                                {/*        메인 메뉴*/}
-                                {/*    </div>*/}
-                                {/*    {menuData.mainMenu.map((item, index) => (*/}
-                                {/*        <div className='menuName' key={index}>*/}
-                                {/*            {item}*/}
-                                {/*        </div>*/}
-                                {/*    ))}*/}
-                                {/*    <div className='title'>*/}
-                                {/*        반찬*/}
-                                {/*    </div>*/}
-                                {/*    {menuData.subMenu.map((item, index) => (*/}
-                                {/*        <div className='menuName' key={index}>*/}
-                                {/*            {item}*/}
-                                {/*        </div>*/}
-                                {/*    ))}*/}
+                                {menuData.mainMenu.length > 0 && (
+                                    <>
+                                        <div id='meal'>점심</div>
+                                        <div className='title'>메인 메뉴</div>
+                                        {menuData.mainMenu.map((item, index) => (
+                                            <div className='menuName' key={index}>
+                                                {item}
+                                            </div>
+                                        ))}
+                                    </>
+                                )}
+                                {menuData.subMenu.length > 0 && (
+                                    <>
+                                        <div className='title'>반찬</div>
+                                        {menuData.subMenu.map((item, index) => (
+                                            <div className='menuName' key={index}>
+                                                {item}
+                                            </div>
+                                        ))}
+                                    </>
+                                )}
+                                {menuData.mainMenu.length === 0 && menuData.subMenu.length === 0 && (
+                                    <div>아직 등록된 메뉴가 없습니다.</div>
+                                )}
                             </div>
                         ) : (
-                            <div>Loading...</div>
+                            <div>로딩 중...</div> // 메뉴 데이터가 없을 때 로딩 상태를 표시
                         )}
+
 
                     </div>
 
@@ -234,7 +273,7 @@ function DetailRestaurant() {
                     <div className="image-grid">
                         <div className="image-container">
                             <img className="resImg" src={example} alt="restaurant" />
-                            <img className="bookmark-image2" src={scrapImage} onClick={handelScrap} alt="bookmark"/>
+                            <img className="bookmark-image2" src={scrap} onClick={handelScrap} alt="bookmark"/>
                         </div>
                         <span>
                              {restaurantDetails ? (

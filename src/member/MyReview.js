@@ -5,6 +5,10 @@ import axios from 'axios';
 import logoImage from '../img/semohan-logo.png';
 import LogoHeader from './LogoHeader';
 
+import profileImg from '../img/profile-user.png'
+import searchImage from '../img/search.png'
+import ProfileSearchHeader from "./ProfileSearchHeader";
+
 
 const Review = ({ id, nickname, likeRestaurant, likeMenu, content, writeTime, onDelete }) => (
   <div className="review">
@@ -21,6 +25,8 @@ const Review = ({ id, nickname, likeRestaurant, likeMenu, content, writeTime, on
 
 function MyReview() {
   const [reviews, setReviews] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('/review/my-reviews', { withCredentials: true })
@@ -49,20 +55,22 @@ function MyReview() {
     }
   };
 
-  return (
-    <div id="body">
+    return (
+    <div id="newBody">
 
-      <header>
-        <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
-          <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
-      </header>
+        <ProfileSearchHeader />
 
-        <LogoHeader/>
+        {/*<header>*/}
+        {/*<img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />*/}
+        {/*  <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+        {/*<img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />*/}
+        {/*</header>*/}
+
+        {/*<LogoHeader/>*/}
 
 
       <div id="caption">리뷰 {reviews.length}개</div>
-      <div className="reviews">
+      <div className="myreview">
         {reviews.map((review) => (
           <Review
             key={review.id}

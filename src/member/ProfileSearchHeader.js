@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import "./Style.css"; // CSS 파일을 import
 import logoImage from '../img/semohan-logo.png';
-import noLoginImage from '../img/add.png';
+import noLoginImage from '../img/login.png'; //
 import searchImage from '../img/search.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +35,7 @@ const ProfileSearchHeader = () => {
             ) : (
                 <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
             )}
-            <img src={logoImage} alt="logo" />
+            <img src={logoImage} alt="logo" onClick={() => navigate('/main')} />
             <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
         </header>
     );

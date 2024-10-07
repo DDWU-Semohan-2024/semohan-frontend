@@ -4,6 +4,9 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import ProfileSearchHeader from './ProfileSearchHeader';
 
+import profileImg from '../img/profile-user.png'
+import searchImage from '../img/search.png'
+import logoImage from '../img/semohan-logo.png';
 
 function WriteReview() {
   const navigate = useNavigate();
@@ -49,17 +52,17 @@ function WriteReview() {
   };
 
   return (
-    <div className="body">
+    <div id="newBody">
 
-      <header>
-        <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
-        <Link to="/main"><img src={logoImage} alt="logo"/></Link>
-        <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />
-      </header>
+      {/*<header>*/}
+      {/*  <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />*/}
+      {/*  <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
+      {/*  <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />*/}
+      {/*</header>*/}
 
       <ProfileSearchHeader />
 
-      <div className="review-container">
+      <div id="review-container">
         <div className="date">
           <span>{todayDate}</span>
           <select value={mealType} onChange={handleMealTypeChange} className="dropdown">
@@ -75,7 +78,7 @@ function WriteReview() {
             onChange={handleContentChange}
           ></textarea>
         </div>
-        <div className="like-buttons">
+        <div id="like-buttons">
           <label>
             <input
               type="checkbox"

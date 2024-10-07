@@ -53,7 +53,7 @@
         align-items: center;
     }
 
-    header > img {
+    /*header > img {*/
 
     /*header > img {*/
     /*    width: 150px;*/
@@ -337,17 +337,26 @@
         flex-direction: column;
         justify-content: center;
         margin: 0;
+        /*padding: 20px; !* 여백 추가 *!*/
     }
 
     .loc {
         display: flex;
         align-items: center;
+        justify-content: space-between; /* 왼쪽과 오른쪽 정렬 */
+
     }
 
     .loc > p {
         font-size: 15px;
         margin-left: 15px;
         width: 220%;
+        margin-top:3%; /*위쪽 여백, 위치설정과 줄맞추기위해*/
+        /*margin-right: auto; !* 오른쪽 여백 자동으로 설정 *!*/
+        /*margin: 0; !* 상하 여백 제거 *!*/
+        /*padding-left: 15px; !* 왼쪽 패딩 추가 *!*/
+        /*text-align: left; !* 왼쪽 정렬 *!*/
+        /*flex: 1; !* 공간을 차지하도록 설정 *!*/
     }
 
     .loc > p > span {
@@ -357,22 +366,26 @@
     }
 
     .setLoc {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         margin: 3%;
-        width: 75%;
+        /*margin: 3% auto 3% 0; !* 왼쪽 여백만 0으로 설정 *!*/
+        width: 100%;
         border: none;
         background-color: var(--lemoncolor);
-
+        /*padding: 5px 10px; !* 버튼 내부 여백 추가 *!*/
+        /*justify-content: flex-end; !* 버튼 오른쪽 정렬 *!*/
     }
 
     .locationText {
         margin-bottom: 0;
+        white-space: nowrap; /* 줄바꿈 방지 */
     }
 
     .locImg {
         width: 20%;
         height: fit-content;
+        margin-left: 10px; /* 이미지 왼쪽 여백 */
     }
 
     .image-grid {
@@ -380,12 +393,14 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        margin-left: 5%;
+        margin-left: 10px; /*5%*/
         margin-top: 4%;
     }
 
     .image-container {
         margin-bottom: 15px;
+        margin-left: 1%; /**/
+        margin-right: 1%; /**/
         padding-top: 4%;
         background-color: white;
         flex: 1 1 calc(50% - 10px); /* 2개씩 한 줄에 배치, 간격 보정 */
@@ -422,15 +437,17 @@
 
     #menu {
         padding: 6%;
-        width: 60%;
+        width: fit-content;
         border-radius: var(--radius);
         background-color: var(--graycolor);
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-bottom: 30px;
-        margin-left: 14%;
+        /*margin-bottom: 30px;*/
+        /*margin-left: 14%;*/
+        align-items: center; /* 세로 중앙 정렬 추가 */
+        margin: 30px auto; /* 가로 중앙 정렬 */
     }
 
     #menu > span {
@@ -660,8 +677,8 @@
     }
 
     #bottom .image-container{
-        margin: 0;
-        padding: 0;
+        margin: 5px;
+        padding: 5px;
     }
 
     .detail {
@@ -708,47 +725,54 @@
 
 
     /*MyReview*/
-    .review {
+    .myreview {
         background-color: #ffffff;
         border: 1px solid #000;
         border-radius: 5px;
         padding: 10px;
-        margin-bottom: 10px;
-      }
-      
-      .review-header {
+        margin: 5%;
+    /*    */
+        width:90%;
+        display: flex;
+        justify-content: center; /* flex-start, flex-end, space-between, space-around */
+        align-items: center; /* flex-start, flex-end, stretch */
+    }
+
+    .review-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
-      }
-      
-      .nickname {
-        font-weight: bold;
+    }
+
+    .nickname {
+        /*font-weight: bold;*/
+        /*margin-right: 10px;*/
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .restaurant {
         margin-right: 10px;
-      }
-      
-      .restaurant {
-        margin-right: 10px;
-      }
-      
-      .menu {
+    }
+
+    .menu {
         color: #888;
-      }
-      
-      .content {
+    }
+
+    .content {
         margin-bottom: 10px;
         padding: 10px;
         background-color: #e0e0e0;
-      }
-      
-      .delete {
+    }
+
+    .delete {
         cursor: pointer;
         color: red;
         text-align: right;
-      }
+    }
 
-      .write-review-button-inline {
+    .write-review-button-inline {
         margin-left: 10px;
         padding: 5px 10px;
         font-size: 14px;
@@ -757,9 +781,26 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-      }
-      
-      .write-review-button-inline:hover {
+    }
+
+    .write-review-button-inline:hover {
         background-color: #0056b3;
-      }
+    }
+
+    /*writeReview*/
+    #review-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /*margin: 20px auto; !* 상하 여백 20px, 좌우 중앙 정렬 *!*/
+        padding: 20px; /* 내부 여백 추가 */
+    }
+    #like-buttons {
+        margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
+        display: flex; /* label 내에서 간격을 조정하기 위해 flex 사용 */
+        align-items: center; /* 체크박스와 텍스트를 수직 정렬 */
+    }
+    #like-buttons label {
+        margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
+    }
 }
