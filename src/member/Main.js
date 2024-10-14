@@ -18,8 +18,6 @@ function Main() {
     const [address, setAddress] = useState(null);
     const [restaurants, setRestaurants] = useState([]);
 
-    // const [scrapStatus, setScrapStatus] = useState([]); // 스크랩 상태 배열 추가
-
     const navigate = useNavigate();
     const [scrapImages, setScrapImages] = useState([noScrap, noScrap]); // 각 핀의 스크랩 이미지를 배열로 관리
 
@@ -29,23 +27,47 @@ function Main() {
 
     const [restaurantName, setRestaurantName] = useState(''); // 핀된 식당 이름 상태
 
+    const [scrappedRestaurants, setScrappedRestaurants] = useState([]);
+    const [scrapImage, setScrapImage] = useState(scrap);
 
-    const { scrapStatus, updateScrapStatus, setContextRestaurants  } = useContext(ScrapContext);
+    const { scrapStatus, setScrapStatus, setContextRestaurants  } = useContext(ScrapContext);
 
+    const fetchScrapStatus = useCallback(async () => {
+        try {
+            const response = await axios.get('/restaurant/scrap-pin', { withCredentials: true });
+            const scrapList = response.data.scrappedRestaurnats || [];
 
-    // 스크랩 상태를 서버에서 받아오는 함수 추가
-    const fetchScrapStatus = () => {
-        axios.get('/restaurant/scrap-pin', { withCredentials: true })
-            .then(response => {
-                const scrapList = response.data.scrappedRestaurants || [];
-                const updatedScrapImages = restaurants.map(restaurant =>
-                    scrapList.some(scrap => scrap.id === restaurant.id) ? scrap : noScrap
-                );
-                setScrapImages(updatedScrapImages); // 스크랩 상태에 따라 이미지 설정
-            }).catch(error => {
+            setRestaurants(prevRestaurants =>
+                prevRestaurants.map(restaurant => ({
+                    ...restaurant,
+                    isScrapped: scrapList.some(scrap => scrap.id === restaurant.id)
+                }))
+            );
+        } catch (error) {
             console.error("There was an error fetching scrap status!", error);
-        });
-    };
+        }
+    }, []);
+
+    const fetchRestaurants = useCallback(async (location) => {
+        try {
+            const response = await axios.get(`/restaurant/nearby`, {
+                withCredentials: true,
+                params: { location: location }
+            });
+            const fetchedRestaurants = response.data;
+
+            // 각 식당의 스크랩 상태를 확인하여 설정
+            const updatedRestaurants = fetchedRestaurants.map((restaurant) => ({
+                ...restaurant,
+                isScrapped: loggedIn ? scrapStatus.find(status => status.id === restaurant.id)?.isScrapped || false : false
+            }));
+
+            setRestaurants(updatedRestaurants); // 업데이트된 식당 리스트 설정
+            fetchScrapStatus();
+        } catch (error) {
+            console.error("There was an error fetching the restaurant data!", error);
+        }
+    }, [loggedIn, scrapStatus]);
 
     const checkLoginStatus = useCallback(() => {
         axios.get('/member/info', { withCredentials: true })
@@ -53,14 +75,16 @@ function Main() {
                 if (response.data) {
                     setLoggedIn(true);
                     fetchPinnedRestaurantMenu ();
+                    // fetchScrapStatus(); // 로그인 시 스크랩 상태 가져오기
+
                 }
             }).catch(error => {
             console.error("There was an error checking login status!", error);
         });
-    }, []);
+    }, [loggedIn]);
 
 
-    const fetchPinnedRestaurantMenu  = () => {
+    const fetchPinnedRestaurantMenu  = useCallback(() => {
         axios.get('/menu/pin', { withCredentials: true })
             .then(response => {
                 console.log(response.data);
@@ -72,12 +96,6 @@ function Main() {
                 if (error.response && error.response.status === 404) {
                     // 404 에러인 경우
                     console.error("Menu not found: 아직 등록된 메뉴가 없습니다");
-
-                    // setPinnedRestaurant(null); // 또는 빈 데이터로 설정
-                    // 핀 설정된 식당의 이름을 가져와서 설정
-                    // const pinnedRestaurantName = pinnedRestaurant ? pinnedRestaurant.restaurantName : "핀된 식당 없음";
-                    // console.log(pinnedRestaurant.restaurantName)
-                    // setPinnedRestaurant(response.data);
                     setPinnedRestaurant({
                         restaurantName: pinnedRestaurantName,
                         mainMenu: [],
@@ -89,9 +107,9 @@ function Main() {
                 }
             });
 
-    };
+    }, [restaurants]);
 
-    const fetchPinnedRestaurantName = () => {
+    const fetchPinnedRestaurantName = useCallback(() => {
         axios.get('/restaurant/scrap-pin', { withCredentials: true })
             .then(response => {
                 console.log(response.data.pinnedRestaurnat.name)
@@ -102,46 +120,69 @@ function Main() {
             .catch(error => {
                 console.error("Error fetching pinned restaurant name!", error);
             });
-    };
+    }, [restaurants]);
 
 // useEffect에서 핀한 식당 이름을 가져오는 함수를 호출합니다.
     useEffect(() => {
         if (loggedIn) {
             fetchPinnedRestaurantMenu(); // 핀한 식당 메뉴 가져오기
             fetchPinnedRestaurantName(); // 핀한 식당 이름 가져오기
+            fetchRestaurants(); // 로그인 시 레스토랑 불러오기
         }
-    }, [loggedIn]);
+    // }, [loggedIn, restaurants]);
+    }, [loggedIn, fetchRestaurants, fetchScrapStatus]);
+
+    useEffect(() => {
+        axios.get('/restaurant/scrap-pin')
+            .then(response => {
+                console.log("스크랩의내용")
+                console.log(response.data)
+                const data = response.data;
+
+                const pinnedRestaurant = data.pinnedRestaurnat; // 백엔드의 오타 처리
+
+                const scrappedRestaurants = Array.isArray(data.scrappedRestaurnats) ? data.scrappedRestaurnats : [];
+
+                // setPinnedRestaurant(data.pinnedRestaurant);
+                setPinnedRestaurant(pinnedRestaurant);
+                setScrappedRestaurants(scrappedRestaurants.map(restaurant => ({
+                    ...restaurant,
+                    scrapped: true,
+                    pinned: pinnedRestaurant && pinnedRestaurant.id === restaurant.id // 현재 핀한 식당과 비교
+                    // pinned: data.pinnedRestaurant && data.pinnedRestaurant.id === restaurant.id
+                })));
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
+    const handleNoScrap = () => {
+        setScrapImage(prevSrc => (prevSrc === scrap ? noScrap : scrap));
+    };
 
     const handleScrap = (restaurantId, isScrapped) => {
-        // const isScrapped = scrapStatus[index];
+        const apiUrl = isScrapped
+            ? `/restaurant/delete-scrap/${restaurantId}`
+            : `/restaurant/scrap/${restaurantId}`;
 
-        if (!restaurantId || restaurantId === 0) {
-            console.error("Invalid restaurantId:", restaurantId);
-            return;
-        }
+        axios.post(apiUrl, {}, { withCredentials: true })
+            .then(() => {
+                setRestaurants(prevRestaurants =>
+                    prevRestaurants.map(restaurant =>
+                        restaurant.id === restaurantId
+                            ? { ...restaurant, isScrapped: !isScrapped } // 스크랩 상태 업데이트
+                            : restaurant
+                    )
+                );
 
-        if (isScrapped) {
-            // 스크랩 해제 API 호출
-            axios.post(`/restaurant/delete-scrap/${restaurantId}`, {}, { withCredentials: true })
-                .then(() => {
-                    updateScrapStatus(restaurantId, false);
-                    alert('스크랩 해제되었습니다.')
-                })
-                .catch(error => {
-                    console.error("Error removing scrap!", error);
-                });
-        } else {
-            // 스크랩 추가 API 호출
-            axios.post(`/restaurant/scrap/${restaurantId}`, {}, { withCredentials: true })
-                .then(() => {
-                    updateScrapStatus(restaurantId, true);
-                    alert('스크랩되었습니다.')
-                })
-                .catch(error => {
-                    console.error("Error adding scrap!", error);
-                });
-        }
+                alert(isScrapped ? '스크랩 해제되었습니다.' : '스크랩되었습니다.');
+            })
+            .catch(error => {
+                console.error(isScrapped ? "Error removing scrap!" : "Error adding scrap!", error);
+            });
     };
+
 
     const updatePinnedScrappedRestaurants = (scrappedRestaurantIdList, pinnedRestaurantId) => {
         const payload = {
@@ -171,7 +212,7 @@ function Main() {
     const alterAddress = async (position) => {
         let x = position.coords.longitude; // 테스트를 위해 성북구로 지정 127.04742793253544 ; //
         let y = position.coords.latitude; // 테스트를 위해 성북구로 지정 37.60422583406296; //
-    
+
         console.log(x, y);
         if (x && y) {
             try {
@@ -190,7 +231,7 @@ function Main() {
                     let location = result.data.documents[0].address.region_2depth_name;
                     console.log("location: " + location);
                     setAddress(location);
-    
+
                     try {
                         await axios.get(`/location/set/${encodeURIComponent(location)}`);
                         fetchRestaurants(location); // 주소를 설정한 후 레스토랑을 가져옴
@@ -205,7 +246,7 @@ function Main() {
             }
         }
     };
-    
+
     const doSomethingError = (error) => {
         console.log('location error', error);
     }
@@ -229,12 +270,12 @@ function Main() {
             console.error("Geolocation is not supported by this browser.");
         }
     };
-    
+
     // 페이지 로드 시 위치 권한 요청
     useEffect(() => {
         requestLocationPermission();
         // updatePinnedScrappedRestaurants();
-        fetchScrapStatus();
+        // fetchScrapStatus();
     }, []);
 
     useEffect(() => {
@@ -242,49 +283,14 @@ function Main() {
     }, []);
 
     useEffect(() => {
-        fetchRestaurants(); // Initially fetch restaurants
+        // fetchRestaurants(); // Initially fetch restaurants
         checkLoginStatus(); // Check login status on component mount
     }, [checkLoginStatus]);
 
-    const fetchRestaurants = (location) => {
-        axios.get(`/restaurant/nearby`, {
-            withCredentials: true,
-            params: { location: location }
-        })
-            .then((response) => {
-                // setRestaurants(response.data);
-                console.log(response.data);
-
-                const fetchedRestaurants = response.data;
-
-                // 각 식당의 스크랩 상태를 확인하여 설정
-                const updatedRestaurants = fetchedRestaurants.map((restaurant, index) => ({
-                    ...restaurant,
-                    isScrapped: loggedIn ? (scrapStatus[index] || false) : false // 로그인 상태에 따라 스크랩 상태 설정
-                }));
-
-                setRestaurants(updatedRestaurants); // 업데이트된 식당 리스트 설정
-            }).catch((error) => {
-            console.error("There was an error fetching the restaurant data!", error);
-        });
-
-
-    };
-
     useEffect(() => {
-        // 서버에서 레스토랑 리스트를 가져와서 setRestaurants로 업데이트
-        const fetchRestaurants = async () => {
-            try {
-                const response = await axios.get('/restaurant/nearby', { withCredentials: true });
-                setRestaurants(response.data);
-            } catch (error) {
-                console.error("There was an error fetching restaurants!", error);
-            }
-        };
-
-        fetchRestaurants();
-    }, [setRestaurants]);
-
+        // fetchRestaurants(); // Initially fetch restaurants
+        fetchScrapStatus(); // Check login status on component mount
+    }, []);
 
     const handleImageClick = (restaurantId) => {
         navigate(`/detailRestaurant/${restaurantId}`);
@@ -297,23 +303,9 @@ function Main() {
     return (
         <div id="newBody">
 
-            {/*<header id="newHeader">*/}
-            {/*    {!loggedIn ? (*/}
-            {/*        <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>*/}
-            {/*    ) : (*/}
-            {/*        <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>*/}
-            {/*    )}*/}
-            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
-            {/*    <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>*/}
-            {/*</header>*/}
-
             <ProfileSearchHeader />
 
-
             {/*/!*Pin이 없을 경우*!/*/}
-            {/*<div className="pin">*/}
-            {/*    단골 식당을 <span>PIN</span> 해주세요*/}
-            {/*</div>*/}
 
             {/*Pin 있을 경우*/}
             {loggedIn && pinnedRestaurant ? (
@@ -371,21 +363,6 @@ function Main() {
                 </div>
 
                 <div className="image-grid">
-                    {/*식당 수만큼*/}
-                    {/*{scrapImages.map((img, index) => (*/}
-                    {/*    <div className="image-container" key={index}>*/}
-                    {/*        <img className="resImg" src={restaurant.s3Url/*식당사진*!/ alt="search"*/}
-                    {/*             onClick={() => handleImageClick(restaurant.id)}/>*/}
-                    {/*        <img*/}
-                    {/*            className="bookmark-image2"*/}
-                    {/*            src={img}*/}
-                    {/*            onClick={() => handleScrap(index)}*/}
-                    {/*            alt="bookmark"*/}
-                    {/*        />*/}
-                    {/*        <span className="image-caption" onClick={() => navigate('/detailRestaurant')}>뷔페{index + 1}</span>*/}
-                    {/*    </div>*/}
-                    {/*))}*/}
-
                     {restaurants.map((restaurant, index) => (
                         <div className="image-container" key={index}>
                             <img className="resImg" src={restaurant.s3Url} alt="search"
