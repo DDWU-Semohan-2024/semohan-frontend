@@ -175,6 +175,10 @@ function ScrapRestaurant() {
             });
     };
 
+    const handleImageClick = (restaurantId) => {
+        navigate(`/detailRestaurant/${restaurantId}`);
+    };
+
     return (
         <div id="scrapBody">
 
@@ -182,7 +186,8 @@ function ScrapRestaurant() {
             {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
             {/*</header>*/}
 
-
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <LogoHeader/>
 
 
@@ -191,10 +196,11 @@ function ScrapRestaurant() {
                 <div className="image-grid">
                     {pinnedRestaurant ? (
                         <div className="image-container">
-                            {/*{console.log(pinnedRestaurant.s3Url)} /!* 여기 추가 *!/*/}
-                            <img className="resImg" src={pinnedRestaurant.s3Url} alt="search"/>
+                            {/*{console.log(pinnedRestaurant.s3Url)} /!* 여기 추가 *!/*/ }
+                            <img className="resImg" src={pinnedRestaurant.s3Url} alt="search"
+                                 onClick={() => handleImageClick(pinnedRestaurant.id)} />
                             <span className="image-caption"
-                                  onClick={() => navigate('/detailRestaurant')}>{pinnedRestaurant.name}</span>
+                                  onClick={() => handleImageClick(pinnedRestaurant.id)}>{pinnedRestaurant.name}</span>
                         </div>
                     ) : (
                         <p>핀한 식당이 없습니다.</p> // 핀한 식당이 없을 경우 메시지 추가
@@ -206,7 +212,8 @@ function ScrapRestaurant() {
                     {scrappedRestaurants.length > 0 ? (
                         scrappedRestaurants.map((restaurant, index) => (
                             <div className="image-container" key={restaurant.id}>
-                                <img className="resImg" src={restaurant.s3Url} alt="search"/>
+                                <img className="resImg" src={restaurant.s3Url} alt="search"
+                                     onClick={() => handleImageClick(restaurant.id)}/>
                                 <img
                                     className="bookmark-image1"
                                     src={restaurant.scrapped ? scrap : noScrap}
@@ -220,7 +227,7 @@ function ScrapRestaurant() {
                                     alt="pin"
                                 />
                                 <span className="image-caption"
-                                      onClick={() => navigate('/detailRestaurant')}>{restaurant.name}</span>
+                                      onClick={() => handleImageClick(restaurant.id)}>{restaurant.name}</span>
                             </div>
                         ))
                     ) : (
@@ -234,6 +241,7 @@ function ScrapRestaurant() {
 
             </div>
             <button className='saveBtn' onClick={handleSave}>저장</button>
+        </div>
         </div>
     );
 }

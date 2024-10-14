@@ -1,835 +1,879 @@
-@media (max-width: 500px) {
-    :root {
-        --lemoncolor: #FFFACDFF;
-        --graycolor: #D3D3D3FF;
-        --maincolor: #8B4513;
-        --mainfontsize: 18px;
-        --mainwidth: 98%;
-        --shortwidth: 70%;
-        --radius: 15px;
-        --btnheight: 50px;
-    }
-
-    #root {
-        display: flex;
-        justify-content: center;
-        margin: 0;
-    }
-
-    #body {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    #newBody {
-        display: flex;
-        flex-direction: column;
-        width: 500px;
-    }
-
-    #scrapBody {
-        display: flex;
-        flex-direction: column;
-        width: 500px;
-        height: 80%;
-    }
-    label {
-        font-size: var(--mainfontsize);
-    }
-
-    header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    #newHeader {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        margin-bottom: 20px;
-    }
-
-    #ProfileHeader {
-        display: flex;
-        align-items: center; /* 수직 가운데 정렬 */
-        justify-content: flex-start; /* 왼쪽 정렬 */
-        gap: 13%; /* 엘리먼트 사이에 간격 추가 */
-        /*padding: 3%;*/
-        padding-left: 6%;
-    }
-
-    header > a > img {
-        width: 150px;
-        height: fit-content;
-        align-items: center;
-    }
-
-    /*header > img {*/
-
-    /*header > img {*/
-    /*    width: 150px;*/
-    /*    height: fit-content;*/
-    /*    align-items: center;*/
-    /*}*/
-
-    header img {
-
-        width: 150px;
-        height: fit-content;
-        align-items: center;
-    }
-
-    .headerImg {
-        width: 40px;
-        height: fit-content;
-    }
-
-    .blank {
-        background-color: var(--graycolor);
-        border: none;
-        width: var(--mainwidth);
-        height: 30px;
-    }
-
-    .submit {
-        border: none;
-        font-weight: bold;
-        font-size: var(--mainfontsize);
-        background-color: var(--lemoncolor);
-        border-radius: var(--radius);
-        margin-top: 30px;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-        padding: 15px 30px;
-    }
-
-    .saveBtn {
-        border: none;
-        font-weight: bold;
-        font-size: var(--mainfontsize);
-        background-color: var(--graycolor);
-        border-radius: var(--radius);
-        margin-top: 30px;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-        padding: 15px 30px;
-
-        width:80%;
-        align-self: center;
-    }
-
-    form {
-        margin-top: 30px;
-    }
-
-    #login, #findId, #resultId,
-    #newPassword, #updateInfo
-    #pinned{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    div, label, input {
-        margin-bottom: 8px;
-    }
-
-    #containImg {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    /*자물쇠, 체크버튼 이미지*/
-    #newPassword > div > img,
-    #updateInfo > div > img{
-        width:fit-content;
-        height:23px;
-        position: absolute;
-        z-index : 1;
-        margin-top: 4px;
-        margin-right: 4px;
-    }
-
-    #phoneNumOriginal {
-        width: var(--mainwidth);
-    }
-
-    select {
-        border: 1px solid black;
-        display: flex;
-        justify-content: space-between;
-        height: 40px;
-        width: 100%;
-    }
-
-    select > option {
-        font-size: 10px;
-    }
-
-    #dateSelect {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    #dateSelect > select {
-        width: 85px;
-    }
-
-    .mainLink {
-        display: flex;
-        flex-direction: column;
-        margin-top: 50px;
-    }
-
-    .mainLink > a {
-        width: var(--mainwidth);
-        color: black;
-        text-decoration: none;
-        font-size: var(--mainfontsize);
-        font-weight: bold;
-        border-radius: var(--radius);
-        height: 60px;
-        margin-bottom: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .gray {
-        background-color: var(--graycolor);
-    }
-
-    .lemon {
-        background-color: var(--lemoncolor);
-    }
-
-    table {
-        border-collapse: collapse; /*이중선 제거*/
-        font-size: var(--mainfontsize);
-    }
-
-    caption,
-    #caption {
-        text-decoration: underline;
-        font-size: var(--mainfontsize);
-        margin-bottom: 30px;
-        margin-top: 30px;
-        caption-side: top;
-        text-align: center;
-    }
-
-    tr {
-        width: var(--mainwidth);
-        height: 40px;
-    }
-
-    td {
-        border-top: 1px solid black;
-        width: 180px;
-        padding-left: 10px;
-    }
-
-    th {
-        border-top: 1px solid black;
-        border-right: 1px solid black;
-    }
-
-    tr:last-child > th,
-    tr:last-child > td {
-        border-bottom: 1px solid black;
-    }
-
-    #result {
-        margin-top: 30px;
-        font-size: 15px;
-        text-align: center;
-        font-weight: bold;
-    }
-
-    #resultId {
-        margin-top: 30px;
-        background-color: var(--graycolor);
-        height: 150px;
-        text-align: left;
-        padding-left: 60px;
-    }
-
-    .btn {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .certification {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    #phoneNum {
-        width: var(--shortwidth);
-    }
-
-    .certi {
-        background-color: var(--lemoncolor);
-        border: none;
-        border-radius: var(--radius);
-    }
-
-    /*#certiPhone {*/
-    /*    width: 80%;*/
-    /*}*/
-
-    /*.find {*/
-    /*    background-color: var(--lemoncolor);*/
-    /*    width: var(--mainwidth);*/
-    /*    height: var(--btnheight);*/
-    /*    border-radius: var(--radius);*/
-    /*    display: flex;*/
-    /*    align-items: center;*/
-    /*    justify-content: center;*/
-    /*    margin-top: 30px;*/
-    /*}*/
-
-    .find > button {
-        border: none;
-        font-weight: bold;
-        font-size: var(--mainfontsize);
-        background-color: var(--lemoncolor);
-        border-radius: var(--radius);
-        margin-top: 30px;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-        padding: 15px 30px;
-        width: 100%;
-    }
-
-    .btn {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .btn > a {
-        padding : 10px;
-        border-radius: var(--radius);
-        color: black;
-        text-decoration: none;
-        font-size: var(--mainfontsize);
-        background-color: var(--lemoncolor);
-        text-align: center;
-    }
-
-    .btn > a:first-child {
-        width:70px;
-    }
-
-    .loginLink {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-    .loginLink > a {
-        color: black;
-        font-size: 13px;
-    }
-
-    .pin {
-        font-size: var(--mainfontsize);
-        border: none;
-        background-color: var(--graycolor);
-        border-radius: var(--radius);
-        margin-top: 30px;
-        margin-bottom: 30px;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-        width: 60%;
-        padding: 10px 10px;
-        margin-left: 18%;
-    }
-
-    .pin > span {
-        color: var(--maincolor);
-        font-weight: bold;
-    }
-
-    /*main CSS*/
-    #main_noLogin {
-        background-color: var(--lemoncolor);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0;
-        /*padding: 20px; !* 여백 추가 *!*/
-    }
-
-    .loc {
-        display: flex;
-        align-items: center;
-        justify-content: space-between; /* 왼쪽과 오른쪽 정렬 */
-
-    }
-
-    .loc > p {
-        font-size: 15px;
-        margin-left: 15px;
-        width: 220%;
-        margin-top:3%; /*위쪽 여백, 위치설정과 줄맞추기위해*/
-        /*margin-right: auto; !* 오른쪽 여백 자동으로 설정 *!*/
-        /*margin: 0; !* 상하 여백 제거 *!*/
-        /*padding-left: 15px; !* 왼쪽 패딩 추가 *!*/
-        /*text-align: left; !* 왼쪽 정렬 *!*/
-        /*flex: 1; !* 공간을 차지하도록 설정 *!*/
-    }
-
-    .loc > p > span {
-        color: var(--maincolor);
-        font-size: var(--mainfontsize);
-        font-weight: bold;
-    }
-
-    .setLoc {
-        display: inline-flex;
-        align-items: center;
-        margin: 3%;
-        /*margin: 3% auto 3% 0; !* 왼쪽 여백만 0으로 설정 *!*/
-        width: 100%;
-        border: none;
-        background-color: var(--lemoncolor);
-        /*padding: 5px 10px; !* 버튼 내부 여백 추가 *!*/
-        /*justify-content: flex-end; !* 버튼 오른쪽 정렬 *!*/
-    }
-
-    .locationText {
-        margin-bottom: 0;
-        white-space: nowrap; /* 줄바꿈 방지 */
-    }
-
-    .locImg {
-        width: 20%;
-        height: fit-content;
-        margin-left: 10px; /* 이미지 왼쪽 여백 */
-    }
-
-    .image-grid {
-        width: 90%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-left: 10px; /*5%*/
-        margin-top: 4%;
-    }
-
-    .image-container {
-        margin-bottom: 15px;
-        margin-left: 1%; /**/
-        margin-right: 1%; /**/
-        padding-top: 4%;
-        background-color: white;
-        flex: 1 1 calc(50% - 10px); /* 2개씩 한 줄에 배치, 간격 보정 */
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative; /* 북마크 아이콘 위치 조정을 위해 필요 */
-        flex-grow: unset;
-    }
-
-    .resImg {
-        width: 130px;
-        height: auto;
-    }
-
-    .bookmark-image1 {
-        width: 10%;
-        position: absolute;
-        top: 17px; /* 원하는 위치로 조정 */
-        right: 40px; /* 원하는 위치로 조정 */
-    }
-
-    .bookmark-image2 {
-        width: 15%;
-        position: absolute;
-        top: 15px; /* 원하는 위치로 조정 */
-        right: 15px; /* 원하는 위치로 조정 */
-    }
-
-    .image-caption {
-        margin: 5px 0;
-    }
-
-    #menu {
-        padding: 6%;
-        width: fit-content;
-        border-radius: var(--radius);
-        background-color: var(--graycolor);
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        /*margin-bottom: 30px;*/
-        /*margin-left: 14%;*/
-        align-items: center; /* 세로 중앙 정렬 추가 */
-        margin: 30px auto; /* 가로 중앙 정렬 */
-    }
-
-    #menu > span {
-        border: 1px solid black;
-        width: 84%;
-        margin-left: 8%;
-        margin-bottom: 10px;
-    }
-
-    .title {
-        color: var(--maincolor);
-    }
-
-    /*search CSS*/
-    #searchBar {
-        width: 80%;
-        margin-left: 10%;
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px solid black;
-        padding-bottom: 5px;
-    }
-
-    #searchBar > img {
-        width: 10%;
-    }
-
-    #searchBar > img:first-child {
-        rotate: 180deg;
-    }
-
-    .search {
-        border: none;
-        margin: 1px;
-        width: 100%;
-        font-size: var(--mainfontsize);
-    }
-
-    .search-options {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        margin-left: 10%;
-        margin-top: 15px;
-    }
-
-    .search-options div {
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .search-option {
-        width: 45%;
-        padding: 13px 20px;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .recent-searches {
-        border-top: 1px solid #ccc;
-        padding-top: 20px;
-        width: 80%;
-        margin-left: 10%;
-    }
-
-    .recent-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-
-    .clear-all {
-        border: none;
-        background: none;
-        cursor: pointer;
-        color: dimgray;
-    }
-
-    .recent-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .recent-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid #eee;
-    }
-
-    .recent-item div {
-        display: flex;
-        gap: 5px;
-    }
-
-    .date, .clear-item {
-        color: dimgray;
-    }
-
-    .recent-item img {
-        width: 7%;
-    }
-
-    .clear-item {
-        border: none;
-        background: none;
-        cursor: pointer;
-    }
-
-    /*scrapRestaurant CSS*/
-    h4 {
-        margin-left: 20px;
-    }
-
-    /*detailRestaurant CSS*/
-    #content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    #top {
-        display: flex;
-        height: fit-content;
-        justify-content: space-around;
-
-    }
-
-    #meal {
-        font-weight: bold;
-    }
-
-    #menuBox {
-        padding: 3%;
-        width: 50%;
-        border-radius: var(--radius);
-        background-color: var(--graycolor);
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-bottom: 10px;
-        margin-left: 6%;
-    }
-
-    #menuBox > div:first-child {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #menuBox > div:first-child > div {
-        margin: 0 15px;
-    }
-
-    .last {
-        width: 15px;
-        height: 15px;
-        rotate: 270deg;
-    }
-
-    .next {
-        width: 15px;
-        height: 15px;
-        rotate: 90deg;
-    }
-
-
-    #menuBox > span {
-        border: 1px solid black;
-        width: 84%;
-        margin-left: 8%;
-        margin-bottom: 10px;
-    }
-
-    #right {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width:45%;
-        margin-left:5%;
-    }
-
-    #reviewBox {
-        border: none;
-        font-weight: bold;
-        font-size: var(--mainfontsize);
-        background-color: var(--lemoncolor);
-        border-radius: var(--radius);
-        text-align: center;
-        padding: 30px 10px;
-        width: 80%;
-    }
-
-    #reviewBox > a {
-        text-decoration: none;
-        color: black;
-    }
-
-    #likeBox {
-        text-align: left;
-        padding: 30px 10px;
-        border-radius: var(--radius);
-        margin-top: 15px;
-        width: 80%;
-        background-color: var(--graycolor);
-    }
-
-    p {
-        margin: 0;
-    }
-
-    p > img {
-        width: 13%;
-        height: 13%;
-    }
-
-    #bottom > .image-grid {
-        flex-wrap: nowrap;
-        align-items: center;
-        background-color: var(--graycolor);
-        border-radius: var(--radius);
-        padding-bottom: 3%;
-    }
-
-    #bottom .image-container{
-        margin: 5px;
-        padding: 5px;
-    }
-
-    .detail {
-        font-weight: bold;
-    }
-
-    /*hotMenu*/
-    #hot {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        margin-top: 250px;
-        text-align: center;
-        height: 130px;
-        padding: 10px;
-        width: 100%;
-    }
-
-    #hot > p {
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    #hot > hr {
-        color: black;
-    }
-
-    #hot div {
-        font-size: var(--mainfontsize);
-    }
-
-    #hot img {
-        width: 25px;
-        height: 25px;
-    }
-
-    #hot button {
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+:root {
+    --lemoncolor: #FFFACDFF;
+    --graycolor: #D3D3D3FF;
+    --maincolor: #8B4513;
+    --mainfontsize: 18px;
+    --mainwidth: 98%;
+    --shortwidth: 70%;
+    --radius: 15px;
+    --btnheight: 50px;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    height: 100vh;
+
+}
+
+#body {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+#newBody {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+#scrapBody {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 80%;
+}
+
+/*모바일 사이즈가 아닐 때*/
+@media (min-width : 600px) {
+    .mobile {
         display: none;
     }
 
-    #hot > h5 {
-        margin-top: 20px;
-    }
-
-
-    /*MyReview*/
-    .myreview {
-        background-color: #ffffff;
-        border: 1px solid #000;
-        border-radius: 5px;
-        padding: 10px;
-        margin: 5%;
-    /*    */
-        width:90%;
+    .no-mobile {
         display: flex;
-        justify-content: center; /* flex-start, flex-end, space-between, space-around */
-        align-items: center; /* flex-start, flex-end, stretch */
-    }
-
-    .review-header {
-        display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .nickname {
-        /*font-weight: bold;*/
-        /*margin-right: 10px;*/
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .restaurant {
-        margin-right: 10px;
-    }
-
-    .menu {
-        color: #888;
-    }
-
-    .content {
-        margin-bottom: 10px;
-        padding: 10px;
-        background-color: #e0e0e0;
-    }
-
-    .delete {
-        cursor: pointer;
-        color: red;
-        text-align: right;
-    }
-
-    .write-review-button-inline {
-        margin-left: 10px;
-        padding: 5px 10px;
-        font-size: 14px;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .write-review-button-inline:hover {
-        background-color: #0056b3;
-    }
-
-    /*writeReview*/
-    #review-container {
-        display: flex;
-        flex-direction: column;
         justify-content: center;
-        /*margin: 20px auto; !* 상하 여백 20px, 좌우 중앙 정렬 *!*/
-        padding: 20px; /* 내부 여백 추가 */
+        height: 500px;
+        font-size: 30px;
+        font-weight: bold;
     }
-    #like-buttons {
-        margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
-        display: flex; /* label 내에서 간격을 조정하기 위해 flex 사용 */
-        align-items: center; /* 체크박스와 텍스트를 수직 정렬 */
+}
+
+@media (max-width: 500px) {
+
+    .no-mobile {
+        display: none;
     }
-    #like-buttons label {
-        margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
+
+    .mobile {
+        label {
+            font-size: var(--mainfontsize);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #newHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        #ProfileHeader {
+            display: flex;
+            align-items: center; /* 수직 가운데 정렬 */
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            gap: 13%; /* 엘리먼트 사이에 간격 추가 */
+            /*padding: 3%;*/
+            padding-left: 6%;
+        }
+
+        header > a > img {
+            width: 150px;
+            height: fit-content;
+            align-items: center;
+        }
+
+        /*header > img {*/
+
+        /*header > img {*/
+        /*    width: 150px;*/
+        /*    height: fit-content;*/
+        /*    align-items: center;*/
+        /*}*/
+
+        header > img {
+
+            /*width: 150px;*/
+            height: fit-content;
+            align-items: center;
+        }
+
+        .headerImg {
+            /*width: 40px;*/
+            height: fit-content;
+        }
+
+        .headerImg1 {
+            width: 40px;
+        }
+        .blank {
+            background-color: var(--graycolor);
+            border: none;
+            width: var(--mainwidth);
+            height: 30px;
+        }
+
+        .submit {
+            border: none;
+            font-weight: bold;
+            font-size: var(--mainfontsize);
+            background-color: var(--lemoncolor);
+            border-radius: var(--radius);
+            margin-top: 30px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+            padding: 15px 30px;
+        }
+
+        .saveBtn {
+            border: none;
+            font-weight: bold;
+            font-size: var(--mainfontsize);
+            background-color: var(--graycolor);
+            border-radius: var(--radius);
+            margin-top: 30px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+            padding: 15px 30px;
+
+            width: 80%;
+            align-self: center;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        #login, #findId, #resultId,
+        #newPassword, #updateInfo
+        #pinned {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        div, label, input {
+            margin-bottom: 8px;
+        }
+
+        #containImg {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /*자물쇠, 체크버튼 이미지*/
+
+        #newPassword > div > img,
+        #updateInfo > div > img {
+            width: fit-content;
+            height: 23px;
+            position: absolute;
+            z-index: 1;
+            margin-top: 4px;
+            margin-right: 4px;
+        }
+
+        #phoneNumOriginal {
+            width: var(--mainwidth);
+        }
+
+        select {
+            border: 1px solid black;
+            display: flex;
+            justify-content: space-between;
+            height: 40px;
+            width: 100%;
+        }
+
+        select > option {
+            font-size: 10px;
+        }
+
+        #dateSelect {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #dateSelect > select {
+            width: 85px;
+        }
+
+        .mainLink {
+            display: flex;
+            flex-direction: column;
+            margin-top: 50px;
+        }
+
+        .mainLink > a {
+            width: var(--mainwidth);
+            color: black;
+            text-decoration: none;
+            font-size: var(--mainfontsize);
+            font-weight: bold;
+            border-radius: var(--radius);
+            height: 60px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gray {
+            background-color: var(--graycolor);
+        }
+
+        .lemon {
+            background-color: var(--lemoncolor);
+        }
+
+        table {
+            border-collapse: collapse; /*이중선 제거*/
+            font-size: var(--mainfontsize);
+        }
+
+        caption,
+        #caption {
+            text-decoration: underline;
+            font-size: var(--mainfontsize);
+            margin-bottom: 30px;
+            margin-top: 30px;
+            caption-side: top;
+            text-align: center;
+        }
+
+        tr {
+            width: var(--mainwidth);
+            height: 40px;
+        }
+
+        td {
+            border-top: 1px solid black;
+            width: 180px;
+            padding-left: 10px;
+        }
+
+        th {
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+        tr:last-child > th,
+        tr:last-child > td {
+            border-bottom: 1px solid black;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #resultId {
+            margin-top: 30px;
+            background-color: var(--graycolor);
+            height: 150px;
+            text-align: left;
+            padding-left: 60px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .certification {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #phoneNum {
+            width: var(--shortwidth);
+        }
+
+        .certi {
+            background-color: var(--lemoncolor);
+            border: none;
+            border-radius: var(--radius);
+        }
+
+        /*#certiPhone {*/
+        /*    width: 80%;*/
+        /*}*/
+
+        /*.find {*/
+        /*    background-color: var(--lemoncolor);*/
+        /*    width: var(--mainwidth);*/
+        /*    height: var(--btnheight);*/
+        /*    border-radius: var(--radius);*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: center;*/
+        /*    margin-top: 30px;*/
+        /*}*/
+
+        .find > button {
+            border: none;
+            font-weight: bold;
+            font-size: var(--mainfontsize);
+            background-color: var(--lemoncolor);
+            border-radius: var(--radius);
+            margin-top: 30px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+            padding: 15px 30px;
+            width: 100%;
+        }
+
+        .btn {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .btn > a {
+            padding: 10px;
+            border-radius: var(--radius);
+            color: black;
+            text-decoration: none;
+            font-size: var(--mainfontsize);
+            background-color: var(--lemoncolor);
+            text-align: center;
+        }
+
+        .btn > a:first-child {
+            width: 70px;
+        }
+
+        .loginLink {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .loginLink > a {
+            color: black;
+            font-size: 13px;
+        }
+
+        .pin {
+            font-size: var(--mainfontsize);
+            border: none;
+            background-color: var(--graycolor);
+            border-radius: var(--radius);
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+            width: 60%;
+            padding: 10px 10px;
+            margin-left: 18%;
+        }
+
+        .pin > span {
+            color: var(--maincolor);
+            font-weight: bold;
+        }
+
+        /*main CSS*/
+
+        #main_noLogin {
+            background-color: var(--lemoncolor);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0;
+            /*padding: 20px; !* 여백 추가 *!*/
+        }
+
+        .loc {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* 왼쪽과 오른쪽 정렬 */
+
+        }
+
+        .loc > p {
+            font-size: 15px;
+            margin-left: 15px;
+            width: 220%;
+            margin-top: 3%; /*위쪽 여백, 위치설정과 줄맞추기위해*/
+            /*margin-right: auto; !* 오른쪽 여백 자동으로 설정 *!*/
+            /*margin: 0; !* 상하 여백 제거 *!*/
+            /*padding-left: 15px; !* 왼쪽 패딩 추가 *!*/
+            /*text-align: left; !* 왼쪽 정렬 *!*/
+            /*flex: 1; !* 공간을 차지하도록 설정 *!*/
+        }
+
+        .loc > p > span {
+            color: var(--maincolor);
+            font-size: var(--mainfontsize);
+            font-weight: bold;
+        }
+
+        .setLoc {
+            display: inline-flex;
+            align-items: center;
+            margin: 3%;
+            /*margin: 3% auto 3% 0; !* 왼쪽 여백만 0으로 설정 *!*/
+            width: 100%;
+            border: none;
+            background-color: var(--lemoncolor);
+            /*padding: 5px 10px; !* 버튼 내부 여백 추가 *!*/
+            /*justify-content: flex-end; !* 버튼 오른쪽 정렬 *!*/
+        }
+
+        .locationText {
+            margin-bottom: 0;
+            white-space: nowrap; /* 줄바꿈 방지 */
+        }
+
+        .locImg {
+            width: 20%;
+            height: fit-content;
+            margin-left: 10px; /* 이미지 왼쪽 여백 */
+        }
+
+        .image-grid {
+            width: 90%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-left: 10px; /*5%*/
+            margin-top: 4%;
+        }
+
+        .image-container {
+            margin-bottom: 15px;
+            margin-left: 1%; /**/
+            margin-right: 1%; /**/
+            padding-top: 4%;
+            background-color: white;
+            flex: 1 1 calc(50% - 10px); /* 2개씩 한 줄에 배치, 간격 보정 */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* 북마크 아이콘 위치 조정을 위해 필요 */
+            flex-grow: unset;
+        }
+
+        .resImg {
+            width: 130px;
+            height: auto;
+        }
+
+        .bookmark-image1 {
+            width: 10%;
+            position: absolute;
+            top: 17px; /* 원하는 위치로 조정 */
+            right: 40px; /* 원하는 위치로 조정 */
+        }
+
+        .bookmark-image2 {
+            width: 15%;
+            position: absolute;
+            top: 15px; /* 원하는 위치로 조정 */
+            right: 15px; /* 원하는 위치로 조정 */
+        }
+
+        .image-caption {
+            margin: 5px 0;
+        }
+
+        #menu {
+            padding: 6%;
+            width: fit-content;
+            border-radius: var(--radius);
+            background-color: var(--graycolor);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /*margin-bottom: 30px;*/
+            /*margin-left: 14%;*/
+            align-items: center; /* 세로 중앙 정렬 추가 */
+            margin: 30px auto; /* 가로 중앙 정렬 */
+        }
+
+        #menu > span {
+            border: 1px solid black;
+            width: 84%;
+            margin-left: 8%;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            color: var(--maincolor);
+        }
+
+        /*search CSS*/
+
+        #searchBar {
+            width: 80%;
+            margin-left: 10%;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid black;
+            padding-bottom: 5px;
+        }
+
+        #searchBar > img {
+            width: 10%;
+        }
+
+        #searchBar > img:first-child {
+            rotate: 180deg;
+        }
+
+        .search {
+            border: none;
+            margin: 1px;
+            width: 100%;
+            font-size: var(--mainfontsize);
+        }
+
+        .search-options {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 10%;
+            margin-top: 15px;
+        }
+
+        .search-options div {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .search-option {
+            width: 45%;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .recent-searches {
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .recent-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .clear-all {
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: dimgray;
+        }
+
+        .recent-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .recent-item div {
+            display: flex;
+            gap: 5px;
+        }
+
+        .date, .clear-item {
+            color: dimgray;
+        }
+
+        .recent-item img {
+            width: 7%;
+        }
+
+        .clear-item {
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        /*scrapRestaurant CSS*/
+
+        h4 {
+            margin-left: 20px;
+        }
+
+        /*detailRestaurant CSS*/
+
+        #content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #top {
+            display: flex;
+            height: fit-content;
+            justify-content: space-around;
+
+        }
+
+        #meal {
+            font-weight: bold;
+        }
+
+        #menuBox {
+            padding: 3%;
+            width: 50%;
+            border-radius: var(--radius);
+            background-color: var(--graycolor);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 10px;
+            margin-left: 6%;
+        }
+
+        #menuBox > div:first-child {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #menuBox > div:first-child > div {
+            margin: 0 15px;
+        }
+
+        .last {
+            width: 15px;
+            height: 15px;
+            rotate: 270deg;
+        }
+
+        .next {
+            width: 15px;
+            height: 15px;
+            rotate: 90deg;
+        }
+
+
+        #menuBox > span {
+            border: 1px solid black;
+            width: 84%;
+            margin-left: 8%;
+            margin-bottom: 10px;
+        }
+
+        #right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 45%;
+            margin-left: 5%;
+        }
+
+        #reviewBox {
+            border: none;
+            font-weight: bold;
+            font-size: var(--mainfontsize);
+            background-color: var(--lemoncolor);
+            border-radius: var(--radius);
+            text-align: center;
+            padding: 30px 10px;
+            width: 80%;
+        }
+
+        #reviewBox > a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #likeBox {
+            text-align: left;
+            padding: 30px 10px;
+            border-radius: var(--radius);
+            margin-top: 15px;
+            width: 80%;
+            background-color: var(--graycolor);
+        }
+
+        p {
+            margin: 0;
+        }
+
+        p > img {
+            width: 13%;
+            height: 13%;
+        }
+
+        #bottom > .image-grid {
+            flex-wrap: nowrap;
+            align-items: center;
+            background-color: var(--graycolor);
+            border-radius: var(--radius);
+            padding-bottom: 3%;
+        }
+
+        #bottom .image-container {
+            margin: 5px;
+            padding: 5px;
+        }
+
+        .detail {
+            font-weight: bold;
+        }
+
+        /*hotMenu*/
+
+        #hot {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-top: 250px;
+            text-align: center;
+            height: 130px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        #hot > p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #hot > hr {
+            color: black;
+        }
+
+        #hot div {
+            font-size: var(--mainfontsize);
+        }
+
+        #hot img {
+            width: 25px;
+            height: 25px;
+        }
+
+        #hot button {
+            display: none;
+        }
+
+        #hot > h5 {
+            margin-top: 20px;
+        }
+
+
+        /*MyReview*/
+
+        .myreview {
+            background-color: #ffffff;
+            border: 1px solid #000;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5%;
+            /*    */
+            width: 90%;
+            display: flex;
+            justify-content: center; /* flex-start, flex-end, space-between, space-around */
+            align-items: center; /* flex-start, flex-end, stretch */
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .nickname {
+            /*font-weight: bold;*/
+            /*margin-right: 10px;*/
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .restaurant {
+            margin-right: 10px;
+        }
+
+        .menu {
+            color: #888;
+        }
+
+        .content {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e0e0e0;
+        }
+
+        .delete {
+            cursor: pointer;
+            color: red;
+            text-align: right;
+        }
+
+        .write-review-button-inline {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .write-review-button-inline:hover {
+            background-color: #0056b3;
+        }
+
+        /*writeReview*/
+
+        #review-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /*margin: 20px auto; !* 상하 여백 20px, 좌우 중앙 정렬 *!*/
+            padding: 20px; /* 내부 여백 추가 */
+        }
+
+        #like-buttons {
+            margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
+            display: flex; /* label 내에서 간격을 조정하기 위해 flex 사용 */
+            align-items: center; /* 체크박스와 텍스트를 수직 정렬 */
+        }
+
+        #like-buttons label {
+            margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
+        }
     }
 }

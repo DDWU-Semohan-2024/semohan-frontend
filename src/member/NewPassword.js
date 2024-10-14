@@ -76,6 +76,8 @@ function NewPassword() {
 
     return (
         <div id="body">
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <LogoHeader/>
 
             <form id="newPassword" onSubmit={handleSubmit}>
@@ -118,6 +120,7 @@ function NewPassword() {
                 </div>
                 <input className="submit" type="submit" value="임시 비밀번호 발급"/>
             </form>
+        </div>
         </div>
     );
 }

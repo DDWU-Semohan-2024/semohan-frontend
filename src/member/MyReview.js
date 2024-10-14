@@ -58,6 +58,8 @@ function MyReview() {
     return (
     <div id="newBody">
 
+        <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+        <div className="mobile">
         <ProfileSearchHeader />
 
         {/*<header>*/}
@@ -88,6 +90,7 @@ function MyReview() {
           />
         ))}
       </div>
+    </div>
     </div>
   );
 }

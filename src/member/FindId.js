@@ -58,6 +58,8 @@ function FindId() {
 
     return (
         <div id="body">
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <header>
                 <img src={logoImage} alt="logo" />
             </header>
@@ -79,6 +81,7 @@ function FindId() {
                     <button type="button" onClick={handleFindId}>아이디 찾기</button>
                 </div>
             </form>
+        </div>
         </div>
     );
 }

@@ -42,6 +42,8 @@ function MyInfoPage() {
             {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
             {/*</header>*/}
 
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <LogoHeader/>
 
             <table>
@@ -74,6 +76,7 @@ function MyInfoPage() {
                 </tbody>
             </table>
             <Link className="submit" to="/updateInfo">정보 수정</Link>
+        </div>
         </div>
     );
 }
