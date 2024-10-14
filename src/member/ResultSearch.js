@@ -238,7 +238,8 @@ function ResultSearch() {
             {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
             {/*</header>*/}
 
-
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <ProfileHeader />
 
 
@@ -273,6 +274,7 @@ function ResultSearch() {
                         <div>검색 결과가 없습니다.</div>
                     )}
 
+                    </div>
                 </div>
             </div>
         </div>

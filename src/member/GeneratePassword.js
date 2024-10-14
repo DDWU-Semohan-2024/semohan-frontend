@@ -7,6 +7,8 @@ import LogoHeader from './LogoHeader';
 function GeneratePassword() {
     return (
         <div id="body">
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <LogoHeader/>
             <div id="result">
                 임시 비밀번호가 발급되었습니다.
@@ -14,6 +16,7 @@ function GeneratePassword() {
             <div className="btn">
                 <Link to="/login">확인</Link>
             </div>
+        </div>
         </div>
     );
 }

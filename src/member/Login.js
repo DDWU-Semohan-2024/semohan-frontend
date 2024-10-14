@@ -60,6 +60,8 @@ function Login() {
 
     return (
         <div id="body">
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <header>
                 <img src={logoImage} alt="logo"/>
             </header>
@@ -78,6 +80,7 @@ function Login() {
                     <Link to="/register">회원가입</Link>
                 </div>
             </form>
+        </div>
         </div>
     );
 }

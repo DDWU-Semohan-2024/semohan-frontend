@@ -118,7 +118,7 @@ function DetailRestaurant() {
 
             // setScrapStatus(newScrapStatus);
             setScrapImage(newScrapStatus ? scrap : noScrap);
-            alert(newScrapStatus ? '스크랩 해제되었습니다.' : '스크랩되었습니다.');
+            alert(newScrapStatus ? '스크랩되었습니다.' : '스크랩 해제되었습니다.');
 
             // 상태 업데이트 후 스크랩 상태 재확인 (최신 상태 반영)
             // await fetchScrapStatus();
@@ -216,6 +216,8 @@ function DetailRestaurant() {
             {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
             {/*</header>*/}
 
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <ProfileSearchHeader />
 
 
@@ -305,6 +307,7 @@ function DetailRestaurant() {
                     </div>
                 </section>
             </div>
+        </div>
         </div>
     );
 }

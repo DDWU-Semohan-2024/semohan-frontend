@@ -301,8 +301,9 @@ function Main() {
     }
 
     return (
-        <div id="newBody">
-
+        <div id="body">
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
             <ProfileSearchHeader />
 
             {/*/!*Pin이 없을 경우*!/*/}
@@ -376,6 +377,7 @@ function Main() {
 
                 </div>
             </div>
+        </div>
         </div>
     )
 
