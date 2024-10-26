@@ -218,96 +218,95 @@ function DetailRestaurant() {
 
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <ProfileSearchHeader />
+                <ProfileSearchHeader />
 
-
-            <div id="content">
-                <section id="top">
-                    <div id="menuBox">
-                        <div>
-                            <img className="last" src={triangle} alt="어제" onClick={handlePreviousDay}/>
-                            <div>{formattedDate}</div>
-                            <img className="next" src={triangle} alt="내일" onClick={handleNextDay}/>
-                        </div>
-                        <span></span>
-                        {menuData ? (
+                <div id="content">
+                    <section id="top">
+                        <div id="menuBox">
                             <div>
-                                {menuData.mainMenu.length > 0 && (
-                                    <>
-                                        <div id='meal'>점심</div>
-                                        <div className='title'>메인 메뉴</div>
-                                        {menuData.mainMenu.map((item, index) => (
-                                            <div className='menuName' key={index}>
-                                                {item}
-                                            </div>
-                                        ))}
-                                    </>
-                                )}
-                                {menuData.subMenu.length > 0 && (
-                                    <>
-                                        <div className='title'>반찬</div>
-                                        {menuData.subMenu.map((item, index) => (
-                                            <div className='menuName' key={index}>
-                                                {item}
-                                            </div>
-                                        ))}
-                                    </>
-                                )}
-                                {menuData.mainMenu.length === 0 && menuData.subMenu.length === 0 && (
-                                    <div>아직 등록된 메뉴가 없습니다.</div>
-                                )}
+                                <img className="last" src={triangle} alt="어제" onClick={handlePreviousDay}/>
+                                <div>{formattedDate}</div>
+                                <img className="next" src={triangle} alt="내일" onClick={handleNextDay}/>
                             </div>
-                        ) : (
-                            <div>로딩 중...</div> // 메뉴 데이터가 없을 때 로딩 상태를 표시
-                        )}
-
-
-                    </div>
-
-                    <div id="right">
-                        <button id="reviewBox">
-                            <Link to={{
-                                pathname: `/restaurantReview/${restaurantId}`,
-                                state: { restaurantDetails }
-                            }}>리뷰</Link>
-                        </button>
-                        <article id="likeBox">
-                            <p>식당 <img src={like} alt="like" /> {restaurantDetails ? restaurantDetails.likesRestaurant : '0'}개</p>
-                            <p>오늘 메뉴 <img src={like} alt="like" /> {menuData ? menuData.likesMenu : '0'}개</p>
-                        </article>
-                    </div>
-                </section>
-                <section id="bottom">
-                    <div className="image-grid">
-                        <div className="image-container">
-                            {/*<img className="resImg" src={restaurantDetails.s3Url} alt="restaurant" />*/}
-                            {restaurantDetails && restaurantDetails.s3Url ? (
-                                <img className="resImg" src={restaurantDetails.s3Url} alt="restaurant" />
+                            <span></span>
+                            {menuData ? (
+                                <div>
+                                    {menuData.mainMenu.length > 0 && (
+                                        <>
+                                            <div id='meal'>점심</div>
+                                            <div className='title'>메인 메뉴</div>
+                                            {menuData.mainMenu.map((item, index) => (
+                                                <div className='menuName' key={index}>
+                                                    {item}
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
+                                    {menuData.subMenu.length > 0 && (
+                                        <>
+                                            <div className='title'>반찬</div>
+                                            {menuData.subMenu.map((item, index) => (
+                                                <div className='menuName' key={index}>
+                                                    {item}
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
+                                    {menuData.mainMenu.length === 0 && menuData.subMenu.length === 0 && (
+                                        <div>아직 등록된 메뉴가 없습니다.</div>
+                                    )}
+                                </div>
                             ) : (
-                                <div>이미지를 불러오는 중...</div>
+                                <div>로딩 중...</div> // 메뉴 데이터가 없을 때 로딩 상태를 표시
                             )}
-                            <img className="bookmark-image2" src={scrapImage} onClick={handleScrap} alt="bookmark"/>
+
+
                         </div>
-                        <span>
-                             {restaurantDetails ? (
-                                 <>
-                                     <div className="detail">{restaurantDetails.name}</div>
-                                     주소 : {restaurantDetails.address}
-                                     <br/>
-                                     전화번호 : {restaurantDetails.phoneNum}
-                                     <br/>
-                                     영업 시간 : {restaurantDetails.businessHours}
-                                     <br/>
-                                     가격 : {restaurantDetails.price}
-                                 </>
-                             ) : (
-                                 <div>Loading...</div>
-                             )}
-                        </span>
-                    </div>
-                </section>
+
+                        <div id="right">
+                            <button id="reviewBox">
+                                <Link to={{
+                                    pathname: `/restaurantReview/${restaurantId}`,
+                                    state: { restaurantDetails }
+                                }}>리뷰</Link>
+                            </button>
+                            <article id="likeBox">
+                                <p>식당 <img src={like} alt="like" /> {restaurantDetails ? restaurantDetails.likesRestaurant : '0'}개</p>
+                                <p>오늘 메뉴 <img src={like} alt="like" /> {menuData ? menuData.likesMenu : '0'}개</p>
+                            </article>
+                        </div>
+                    </section>
+                    <section id="bottom">
+                        <div className="image-grid">
+                            <div className="image-container">
+                                {/*<img className="resImg" src={restaurantDetails.s3Url} alt="restaurant" />*/}
+                                {restaurantDetails && restaurantDetails.s3Url ? (
+                                    <img className="resImg" src={restaurantDetails.s3Url} alt="restaurant" />
+                                ) : (
+                                    <div>이미지를 불러오는 중...</div>
+                                )}
+                                <img className="bookmark-image2" src={scrapImage} onClick={handleScrap} alt="bookmark"/>
+                            </div>
+                            <span>
+                                 {restaurantDetails ? (
+                                     <>
+                                         <div className="detail">{restaurantDetails.name}</div>
+                                         주소 : {restaurantDetails.address}
+                                         <br/>
+                                         전화번호 : {restaurantDetails.phoneNum}
+                                         <br/>
+                                         영업 시간 : {restaurantDetails.businessHours}
+                                         <br/>
+                                         가격 : {restaurantDetails.price}
+                                     </>
+                                 ) : (
+                                     <div>Loading...</div>
+                                 )}
+                            </span>
+                        </div>
+                    </section>
+                </div>
             </div>
-        </div>
         </div>
     );
 }

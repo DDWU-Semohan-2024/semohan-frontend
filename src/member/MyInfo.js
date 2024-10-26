@@ -44,39 +44,41 @@ function MyInfoPage() {
 
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <LogoHeader/>
+                <LogoHeader/>
 
-            <table>
-                <caption id='caption'>나의 정보</caption>
-                <tbody>
-                <tr>
-                    <th>이름</th>
-                    <td>{memberInfo.name}</td>
-                </tr>
-                <tr>
-                    <th>아이디</th>
-                    <td>{memberInfo.username}</td>
-                </tr>
-                <tr>
-                    <th>생년월일</th>
-                    <td>{new Date(memberInfo.birthday).toLocaleDateString()}</td>
-                </tr>
-                <tr>
-                    <th>전화번호</th>
-                    <td>{memberInfo.phoneNumber}</td>
-                </tr>
-                <tr>
-                    <th>닉네임</th>
-                    <td>{memberInfo.nickname}</td>
-                </tr>
-                <tr>
-                    <th>포인트</th>
-                    <td>{memberInfo.point}</td>
-                </tr>
-                </tbody>
-            </table>
-            <Link className="submit" to="/updateInfo">정보 수정</Link>
-        </div>
+                <table>
+                    <caption id='caption'>나의 정보</caption>
+                    <tbody>
+                    <tr>
+                        <th>이름</th>
+                        <td>{memberInfo.name}</td>
+                    </tr>
+                    <tr>
+                        <th>아이디</th>
+                        <td>{memberInfo.username}</td>
+                    </tr>
+                    <tr>
+                        <th>생년월일</th>
+                        <td>{new Date(memberInfo.birthday).toLocaleDateString()}</td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td>{memberInfo.phoneNumber}</td>
+                    </tr>
+                    <tr>
+                        <th>닉네임</th>
+                        <td>{memberInfo.nickname}</td>
+                    </tr>
+                    <tr>
+                        <th>포인트</th>
+                        <td>{memberInfo.point}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <Link className="submit1" to="/updateInfo">정보 수정</Link>
+
+            </div>
         </div>
     );
 }

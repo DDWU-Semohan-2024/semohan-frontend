@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import './Style.css';
 
-const LogoHeader = () => {
+function LogoHeader() {
     return (
         <header>
             <Link to="/main">
-                <img
-                    src={logoImage}
-                    alt="logo"
-                    style={{ cursor: 'pointer' }} // 클릭 가능한 커서로 변경
-                />
+                <img src={logoImage} alt="logo" style={{cursor: 'pointer'}}/>
             </Link>
         </header>
     );

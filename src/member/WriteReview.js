@@ -53,13 +53,6 @@ function WriteReview() {
 
   return (
     <div id="newBody">
-
-      {/*<header>*/}
-      {/*  <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />*/}
-      {/*  <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
-      {/*  <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search" />*/}
-      {/*</header>*/}
-
       <ProfileSearchHeader />
 
       <div id="review-container">

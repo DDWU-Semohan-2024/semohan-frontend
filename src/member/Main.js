@@ -304,80 +304,80 @@ function Main() {
         <div id="body">
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <ProfileSearchHeader />
+                <ProfileSearchHeader />
 
-            {/*/!*Pin이 없을 경우*!/*/}
+                {/*/!*Pin이 없을 경우*!/*/}
 
-            {/*Pin 있을 경우*/}
-            {loggedIn && pinnedRestaurant ? (
-                <div id="menu">
-                    <div>
-                        <b>❤{pinnedRestaurantName}❤</b>
-                    </div>
-                    <span></span>
-
-                    {/* 메인 메뉴와 반찬이 모두 없을 경우 */}
-                    {(
-                        (!Array.isArray(pinnedRestaurant.mainMenu) || pinnedRestaurant.mainMenu.length === 0) &&
-                        (!Array.isArray(pinnedRestaurant.subMenu) || pinnedRestaurant.subMenu.length === 0)
-                    ) ? (
-                        <div>아직 등록된 메뉴가 없습니다.</div>
-                    ) : (
-                        <>
-                            {/* 메인 메뉴가 있을 경우에만 메뉴 표시 */}
-                            {Array.isArray(pinnedRestaurant.mainMenu) && pinnedRestaurant.mainMenu.length > 0 && (
-                                pinnedRestaurant.mainMenu.map((menu, idx) => (
-                                    <div className='menuName' key={idx}>
-                                        {menu}
-                                    </div>
-                                ))
-                            )}
-                            {/* 반찬이 있을 경우에만 반찬 표시 */}
-                            {Array.isArray(pinnedRestaurant.subMenu) && pinnedRestaurant.subMenu.length > 0 && (
-                                pinnedRestaurant.subMenu.map((menu, idx) => (
-                                    <div className='menuName' key={idx}>
-                                        {menu}
-                                    </div>
-                                ))
-                            )}
-                        </>
-                    )}
-                </div>
-            ) : (
-                loggedIn && (
-                    <div className="pin">
-                        단골 식당을 <span>PIN</span> 해주세요
-                    </div>
-                )
-            )}
-
-
-            {/*로그인 안했s을 경우 + 기본*/}
-            <div id="main_noLogin">
-                <div className="loc">
-                    <p><span>{address}</span> 인근 한식 뷔페</p>
-                    {/*위치권한 물어보기*/}
-                    <button className="setLoc" onClick={handleLocationSetting}>
-                        <div className="locationText">위치 설정</div>
-                        <img className="locImg" src={addressImage} alt="search"/>
-                    </button>
-                </div>
-
-                <div className="image-grid">
-                    {restaurants.map((restaurant, index) => (
-                        <div className="image-container" key={index}>
-                            <img className="resImg" src={restaurant.s3Url} alt="search"
-                                 onClick={() => handleImageClick(restaurant.id)}/>
-                            <img className="bookmark-image2" src={restaurant.isScrapped ? scrap : noScrap}
-                                 onClick={() => handleScrap(restaurant.id, restaurant.isScrapped)}
-                                 alt="bookmark"/>
-                            <span className="image-caption">{restaurant.name}</span>
+                {/*Pin 있을 경우*/}
+                {loggedIn && pinnedRestaurant ? (
+                    <div id="menu">
+                        <div>
+                            <b>❤{pinnedRestaurantName}❤</b>
                         </div>
-                    ))}
+                        <span></span>
 
+                        {/* 메인 메뉴와 반찬이 모두 없을 경우 */}
+                        {(
+                            (!Array.isArray(pinnedRestaurant.mainMenu) || pinnedRestaurant.mainMenu.length === 0) &&
+                            (!Array.isArray(pinnedRestaurant.subMenu) || pinnedRestaurant.subMenu.length === 0)
+                        ) ? (
+                            <div>아직 등록된 메뉴가 없습니다.</div>
+                        ) : (
+                            <>
+                                {/* 메인 메뉴가 있을 경우에만 메뉴 표시 */}
+                                {Array.isArray(pinnedRestaurant.mainMenu) && pinnedRestaurant.mainMenu.length > 0 && (
+                                    pinnedRestaurant.mainMenu.map((menu, idx) => (
+                                        <div className='menuName' key={idx}>
+                                            {menu}
+                                        </div>
+                                    ))
+                                )}
+                                {/* 반찬이 있을 경우에만 반찬 표시 */}
+                                {Array.isArray(pinnedRestaurant.subMenu) && pinnedRestaurant.subMenu.length > 0 && (
+                                    pinnedRestaurant.subMenu.map((menu, idx) => (
+                                        <div className='menuName' key={idx}>
+                                            {menu}
+                                        </div>
+                                    ))
+                                )}
+                            </>
+                        )}
+                    </div>
+                ) : (
+                    loggedIn && (
+                        <div className="pin">
+                            단골 식당을 <span>PIN</span> 해주세요
+                        </div>
+                    )
+                )}
+
+
+                {/*로그인 안했s을 경우 + 기본*/}
+                <div id="main_noLogin">
+                    <div className="loc">
+                        <p><span>{address}</span> 인근 한식 뷔페</p>
+                        {/*위치권한 물어보기*/}
+                        <button className="setLoc" onClick={handleLocationSetting}>
+                            <div className="locationText">위치 설정</div>
+                            <img className="locImg" src={addressImage} alt="search"/>
+                        </button>
+                    </div>
+
+                    <div className="image-grid">
+                        {restaurants.map((restaurant, index) => (
+                            <div className="image-container" key={index}>
+                                <img className="resImg" src={restaurant.s3Url} alt="search"
+                                     onClick={() => handleImageClick(restaurant.id)}/>
+                                <img className="bookmark-image2" src={restaurant.isScrapped ? scrap : noScrap}
+                                     onClick={() => handleScrap(restaurant.id, restaurant.isScrapped)}
+                                     alt="bookmark"/>
+                                <span className="image-caption">{restaurant.name}</span>
+                            </div>
+                        ))}
+
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     )
 

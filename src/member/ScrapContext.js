@@ -53,7 +53,7 @@ export const ScrapProvider = ({ children }) => {
 
         setScrapStatus(prevStatus =>
             prevStatus.map((status, index) =>
-                restaurant[index].id === restaurantId ? isScrapped : status
+                restaurants[index].id === restaurantId ? isScrapped : status
             )
         );
     };

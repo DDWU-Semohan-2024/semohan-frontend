@@ -60,8 +60,6 @@ function RestaurantReview() {
 
 
       {/*<div id="caption">리뷰 {reviews.length}개</div>*/}
-
-
         <ProfileSearchHeader />
 
       <div id="caption">리뷰 {reviews.length}개 

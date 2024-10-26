@@ -128,15 +128,7 @@ function Search() {
 
     return (
         <div id="newBody">
-
-            {/*<header>*/}
-            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
-            {/*</header>*/}
-
-
             <ProfileHeader />
-
-
             <div id="searchBar">
                 <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
                 <input type="text"

@@ -78,49 +78,49 @@ function NewPassword() {
         <div id="body">
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <LogoHeader/>
+                <LogoHeader/>
 
-            <form id="newPassword" onSubmit={handleSubmit}>
+                <form id="newPassword" onSubmit={handleSubmit}>
 
-                <label htmlFor="username">아이디</label>
-                <input
-                    className="blank"
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-
-                <label htmlFor="phoneNumber">휴대전화</label>
-                <div className="certification">
-                    <input 
-                        className="blank" 
-                        type="tel" 
-                        name="phoneNumber" 
-                        id="phoneNumber" 
-                        autoComplete="tel"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                    <label htmlFor="username">아이디</label>
+                    <input
+                        className="blank"
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
-                    <input className="certi" type="button" value="인증번호 요청" onClick={handleCertificationRequest} />
-                </div>
-                <div className="certification">
-                    <input 
-                        className="blank" 
-                        type="number" 
-                        name="certificationNum"
-                        placeholder="인증번호를 입력하세요" 
-                        id="certiPhone"
-                        value={certificationNum}
-                        onChange={(e) => setCertificationNum(e.target.value)}
-                        required
-                    />
-                </div>
-                <input className="submit" type="submit" value="임시 비밀번호 발급"/>
-            </form>
-        </div>
+
+                    <label htmlFor="phoneNumber">휴대전화</label>
+                    <div className="certification">
+                        <input
+                            className="blank"
+                            type="tel"
+                            name="phoneNumber"
+                            id="certiPhone1"
+                            autoComplete="tel"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            required
+                        />
+                        <input className="certi" type="button" value="인증번호 요청" onClick={handleCertificationRequest} />
+                    </div>
+                    <div className="certification">
+                        <input
+                            className="blank"
+                            type="number"
+                            name="certificationNum"
+                            placeholder="인증번호를 입력하세요"
+                            id="certiPhone1"
+                            value={certificationNum}
+                            onChange={(e) => setCertificationNum(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <input className="submit" type="submit" value="임시 비밀번호 발급"/>
+                </form>
+            </div>
         </div>
     );
 }
