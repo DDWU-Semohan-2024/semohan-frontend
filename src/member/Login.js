@@ -3,6 +3,8 @@ import "./Style.css"; // CSS 파일을 import
 import { Link } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
 import axios from "axios";
+import LogoHeader from "./LogoHeader";
+import HeaderBFLogin from "./HeaderBFLogin";
 
 function Login() {
 
@@ -62,25 +64,23 @@ function Login() {
         <div id="body">
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <header>
-                <img src={logoImage} alt="logo"/>
-            </header>
+                <HeaderBFLogin/>
 
-            <form id="login" onSubmit={handleSubmit}>
-                <label htmlFor="username">아이디</label>
-                <input className="blank" onChange={handleUsernameChange} type="text" id="username"
-                       value={username}/>
-                <label htmlFor="password">비밀번호</label>
-                <input className="blank" onChange={handlePasswordChange} type="password" id="password"
-                       value={password}/>
-                <input className="submit" type="submit" value="로그인"/>
-                <div className="loginLink">
-                    <Link to="/findId">아이디 찾기</Link>
-                    <Link to="/newPassword">비밀번호 재설정</Link>
-                    <Link to="/register">회원가입</Link>
-                </div>
-            </form>
-        </div>
+                <form id="login" onSubmit={handleSubmit}>
+                    <label htmlFor="username">아이디</label>
+                    <input className="blank" onChange={handleUsernameChange} type="text" id="username"
+                           value={username}/>
+                    <label htmlFor="password">비밀번호</label>
+                    <input className="blank" onChange={handlePasswordChange} type="password" id="password"
+                           value={password}/>
+                    <input className="submit" type="submit" value="로그인"/>
+                    <div className="loginLink">
+                        <Link to="/findId">아이디 찾기</Link>
+                        <Link to="/newPassword">비밀번호 재설정</Link>
+                        <Link to="/register">회원가입</Link>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }

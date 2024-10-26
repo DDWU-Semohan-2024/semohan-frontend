@@ -2,6 +2,8 @@ import React from 'react';
 import './Style.css'; // CSS 파일을 import
 import { Link, useLocation } from 'react-router-dom';
 import logoImage from '../img/semohan-logo.png';
+import LogoHeader from "./LogoHeader";
+import HeaderBFLogin from "./HeaderBFLogin";
 
 function FindIdResult() {
     const location = useLocation();
@@ -9,9 +11,7 @@ function FindIdResult() {
 
     return (
         <div id="body">
-            <header>
-                <img src={logoImage} alt="logo"/>
-            </header>
+            <HeaderBFLogin/>
             <div id="result">
                 휴대폰 번호와 일치하는 아이디입니다.
             </div>

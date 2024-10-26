@@ -30,16 +30,16 @@ function MyPage() {
 
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <LogoHeader/>
+                <LogoHeader/>
 
-            <div id="caption">마이페이지</div>
-            <div className="mainLink">
-                <Link className="lemon" to="/myInfo">나의 정보</Link>
-                <Link className="lemon" to="/myReview">리뷰</Link>
-                <Link className="lemon" to="/scrapRestaurant">식당 핀/스크랩</Link>
-                <Link className="lemon" onClick={handleLogout}>로그아웃</Link>
+                <div id="caption">마이페이지</div>
+                <div className="mainLink">
+                    <Link className="lemon" to="/myInfo">나의 정보</Link>
+                    <Link className="lemon" to="/myReview">리뷰</Link>
+                    <Link className="lemon" to="/scrapRestaurant">식당 핀/스크랩</Link>
+                    <Link className="lemon" onClick={handleLogout}>로그아웃</Link>
+                </div>
             </div>
-        </div>
         </div>
     );
 }

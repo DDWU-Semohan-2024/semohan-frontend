@@ -1,13 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 :root {
-    --lemoncolor: #FFFACDFF;
-    --graycolor: #D3D3D3FF;
+    --orangecolor: #FF9C2C;
+    --blankcolor: #FBCF9D;
     --maincolor: #8B4513;
+    --background: #FAEDDE;
     --mainfontsize: 18px;
     --mainwidth: 98%;
     --shortwidth: 70%;
     --radius: 15px;
     --btnheight: 50px;
+}
+
+* {
+    box-sizing: unset;
 }
 
 #root {
@@ -17,8 +22,8 @@
     font-family: "Jua", sans-serif;
     font-weight: 400;
     font-style: normal;
-    height: 100vh;
-
+    background-color: var(--background);
+    height: 120vh;
 }
 
 #body {
@@ -70,25 +75,10 @@
         header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        #newHeader {
-            display: flex;
-            align-items: center;
             justify-content: space-around;
             margin-bottom: 20px;
         }
 
-        #ProfileHeader {
-            display: flex;
-            align-items: center; /* 수직 가운데 정렬 */
-            justify-content: flex-start; /* 왼쪽 정렬 */
-            gap: 13%; /* 엘리먼트 사이에 간격 추가 */
-            /*padding: 3%;*/
-            padding-left: 6%;
-        }
 
         header > a > img {
             width: 150px;
@@ -96,17 +86,8 @@
             align-items: center;
         }
 
-        /*header > img {*/
-
-        /*header > img {*/
-        /*    width: 150px;*/
-        /*    height: fit-content;*/
-        /*    align-items: center;*/
-        /*}*/
-
         header > img {
-
-            /*width: 150px;*/
+            width: 150px;
             height: fit-content;
             align-items: center;
         }
@@ -119,18 +100,20 @@
         .headerImg1 {
             width: 40px;
         }
+
         .blank {
-            background-color: var(--graycolor);
+            background-color: var(--blankcolor);
             border: none;
             width: var(--mainwidth);
             height: 30px;
+            border-radius: var(--radius);
         }
 
-        .submit {
+        .submit, .submit1 {
             border: none;
             font-weight: bold;
             font-size: var(--mainfontsize);
-            background-color: var(--lemoncolor);
+            background-color: var(--orangecolor);
             border-radius: var(--radius);
             margin-top: 30px;
             text-decoration: none;
@@ -139,11 +122,16 @@
             padding: 15px 30px;
         }
 
+        .submit1 {
+            display: flex;
+            justify-content: center;
+        }
+
         .saveBtn {
             border: none;
             font-weight: bold;
             font-size: var(--mainfontsize);
-            background-color: var(--graycolor);
+            background-color: var(--orangecolor);
             border-radius: var(--radius);
             margin-top: 30px;
             text-decoration: none;
@@ -173,7 +161,7 @@
 
         #containImg {
             display: flex;
-            justify-content: flex-end;
+            justify-content: right;
         }
 
         /*자물쇠, 체크버튼 이미지*/
@@ -181,7 +169,7 @@
         #newPassword > div > img,
         #updateInfo > div > img {
             width: fit-content;
-            height: 23px;
+            height: 22px;
             position: absolute;
             z-index: 1;
             margin-top: 4px;
@@ -233,17 +221,18 @@
             align-items: center;
         }
 
-        .gray {
-            background-color: var(--graycolor);
-        }
+        /*.gray {*/
+        /*    background-color: var(--blankcolor);*/
+        /*}*/
 
         .lemon {
-            background-color: var(--lemoncolor);
+            background-color: var(--blankcolor);
         }
 
         table {
             border-collapse: collapse; /*이중선 제거*/
             font-size: var(--mainfontsize);
+            width: var(--mainwidth);
         }
 
         caption,
@@ -268,6 +257,7 @@
         }
 
         th {
+            text-align: center;
             border-top: 1px solid black;
             border-right: 1px solid black;
         }
@@ -286,7 +276,7 @@
 
         #resultId {
             margin-top: 30px;
-            background-color: var(--graycolor);
+            background-color: var(--blankcolor);
             height: 150px;
             text-align: left;
             padding-left: 60px;
@@ -308,9 +298,13 @@
         }
 
         .certi {
-            background-color: var(--lemoncolor);
+            background-color: var(--orangecolor);
             border: none;
             border-radius: var(--radius);
+        }
+
+        #certiPhone1 {
+            width: 65%;
         }
 
         /*#certiPhone {*/
@@ -318,7 +312,7 @@
         /*}*/
 
         /*.find {*/
-        /*    background-color: var(--lemoncolor);*/
+        /*    background-color: var(--orangecolor);*/
         /*    width: var(--mainwidth);*/
         /*    height: var(--btnheight);*/
         /*    border-radius: var(--radius);*/
@@ -332,7 +326,7 @@
             border: none;
             font-weight: bold;
             font-size: var(--mainfontsize);
-            background-color: var(--lemoncolor);
+            background-color: var(--orangecolor);
             border-radius: var(--radius);
             margin-top: 30px;
             text-decoration: none;
@@ -354,7 +348,7 @@
             color: black;
             text-decoration: none;
             font-size: var(--mainfontsize);
-            background-color: var(--lemoncolor);
+            background-color: var(--orangecolor);
             text-align: center;
         }
 
@@ -376,7 +370,7 @@
         .pin {
             font-size: var(--mainfontsize);
             border: none;
-            background-color: var(--graycolor);
+            background-color: var(--blankcolor);
             border-radius: var(--radius);
             margin-top: 30px;
             margin-bottom: 30px;
@@ -396,7 +390,7 @@
         /*main CSS*/
 
         #main_noLogin {
-            background-color: var(--lemoncolor);
+            background-color: var(--blankcolor);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -412,7 +406,7 @@
         }
 
         .loc > p {
-            font-size: 15px;
+            font-size: 13px;
             margin-left: 15px;
             width: 220%;
             margin-top: 3%; /*위쪽 여백, 위치설정과 줄맞추기위해*/
@@ -430,13 +424,14 @@
         }
 
         .setLoc {
+            border-radius: var(--radius);
             display: inline-flex;
             align-items: center;
             margin: 3%;
             /*margin: 3% auto 3% 0; !* 왼쪽 여백만 0으로 설정 *!*/
             width: 100%;
             border: none;
-            background-color: var(--lemoncolor);
+            background-color: var(--orangecolor);
             /*padding: 5px 10px; !* 버튼 내부 여백 추가 *!*/
             /*justify-content: flex-end; !* 버튼 오른쪽 정렬 *!*/
         }
@@ -449,7 +444,7 @@
         .locImg {
             width: 20%;
             height: fit-content;
-            margin-left: 10px; /* 이미지 왼쪽 여백 */
+            margin-left: 5px; /* 이미지 왼쪽 여백 */
         }
 
         .image-grid {
@@ -503,7 +498,7 @@
             padding: 6%;
             width: fit-content;
             border-radius: var(--radius);
-            background-color: var(--graycolor);
+            background-color: var(--blankcolor);
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -549,6 +544,7 @@
             margin: 1px;
             width: 100%;
             font-size: var(--mainfontsize);
+            background-color: var(--background);
         }
 
         .search-options {
@@ -654,7 +650,7 @@
             padding: 3%;
             width: 50%;
             border-radius: var(--radius);
-            background-color: var(--graycolor);
+            background-color: var(--blankcolor);
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -705,7 +701,7 @@
             border: none;
             font-weight: bold;
             font-size: var(--mainfontsize);
-            background-color: var(--lemoncolor);
+            background-color: var(--orangecolor);
             border-radius: var(--radius);
             text-align: center;
             padding: 30px 10px;
@@ -723,7 +719,7 @@
             border-radius: var(--radius);
             margin-top: 15px;
             width: 80%;
-            background-color: var(--graycolor);
+            background-color: var(--blankcolor);
         }
 
         p {
@@ -738,7 +734,7 @@
         #bottom > .image-grid {
             flex-wrap: nowrap;
             align-items: center;
-            background-color: var(--graycolor);
+            background-color: var(--blankcolor);
             border-radius: var(--radius);
             padding-bottom: 3%;
         }
@@ -832,7 +828,7 @@
         .content {
             margin-bottom: 10px;
             padding: 10px;
-            background-color: #e0e0e0;
+            background-color: var(--blankcolor);
         }
 
         .delete {

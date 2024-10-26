@@ -33,9 +33,9 @@ const ProfileSearchHeader = () => {
             {!loggedIn ? (
                 <img className="headerImg1" src={noLoginImage} onClick={() => navigate('/login')} alt="profile" />
             ) : (
-                <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
+                <img className="headerImg1" src={profileImg} onClick={() => navigate('/myPage')} alt="profile" />
             )}
-            <img src={logoImage} alt="logo" onClick={() => navigate('/main')} />
+            <img className="headerImg" src={logoImage} alt="logo" onClick={() => navigate('/main')} />
             <img className="headerImg1" src={searchImage} onClick={() => navigate('/search')} alt="search" />
         </header>
     );

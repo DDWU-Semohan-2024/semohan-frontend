@@ -208,92 +208,90 @@ function UpdateInfo() {
 
     return (
         <div id="body">
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
+                <LogoHeader/>
 
-            {/*<header>*/}
-            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
-            {/*</header>*/}
-
-            <LogoHeader/>
-
-            <form id="updateInfo" method="post" action="" onSubmit={handleSubmit}>
-                <label htmlFor="nickname">닉네임</label>
-                <input
-                    className="blank"
-                    type="text"
-                    name="nickname"
-                    id="nickname"
-                    value={formData.nickname}
-                    placeholder="닉네임"
-                    onChange={handleChange}
-                />
-
-                <label htmlFor="password">비밀번호</label>
-                <div id="containImg">
+                <form id="updateInfo" method="post" action="" onSubmit={handleSubmit}>
+                    <label htmlFor="nickname">닉네임</label>
                     <input
                         className="blank"
-                        type="password"
-                        name="password"
-                        id="password"
-                        value={formData.password}
+                        type="text"
+                        name="nickname"
+                        id="nickname"
+                        value={formData.nickname}
+                        placeholder="닉네임"
                         onChange={handleChange}
-                        required
                     />
-                    <img src={lock} alt="lock"/>
-                </div>
 
-                <label htmlFor="passwordCheck">비밀번호 재확인</label>
-                <div id="containImg">
+                    <label htmlFor="password">비밀번호</label>
+                    <div id="containImg">
+                        <input
+                            className="blank"
+                            type="password"
+                            name="password"
+                            id="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                        <img src={lock} alt="lock"/>
+                    </div>
+
+                    <label htmlFor="passwordCheck">비밀번호 재확인</label>
+                    <div id="containImg">
+                        <input
+                            className="blank"
+                            type="password"
+                            name="passwordCheck"
+                            id="passwordCheck"
+                            value={passwordCheck}
+                            onChange={handleChange}
+                            required
+                        />
+                        <img src={beforeCheck} alt="beforeCheck"/>
+                    </div>
+
+                    <label htmlFor="dateSelect">생년월일</label>
+                    <div id="dateSelect">
+                        <select id="year" value={year} onChange={handleYearChange}>
+                            {yearOptions.map((y) => (
+                                <option key={y} value={y}>
+                                    {y}년
+                                </option>
+                            ))}
+                        </select>
+
+                        <select id="month" value={month} onChange={handleMonthChange}>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                                <option key={m} value={m}>
+                                    {m}월
+                                </option>
+                            ))}
+                        </select>
+
+                        <select id="date" value={date} onChange={handleDateChange}>
+                            {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                                <option key={d} value={d}>
+                                    {d}일
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <label htmlFor="phoneNumber">휴대전화</label>
                     <input
                         className="blank"
-                        type="password"
-                        name="passwordCheck"
-                        id="passwordCheck"
-                        value={passwordCheck}
+                        type="text"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        value={formData.phoneNumber}
+                        placeholder="휴대전화"
                         onChange={handleChange}
-                        required
                     />
-                    <img src={beforeCheck} alt="beforeCheck"/>
-                </div>
 
-                <label htmlFor="dateSelect">생년월일</label>
-                <div id="dateSelect">
-                    <select id="year" value={year} onChange={handleYearChange}>
-                        {yearOptions.map((y) => (
-                            <option key={y} value={y}>
-                                {y}년
-                            </option>
-                        ))}
-                    </select>
-
-                    <select id="month" value={month} onChange={handleMonthChange}>
-                        {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                            <option key={m} value={m}>
-                                {m}월
-                            </option>
-                        ))}
-                    </select>
-
-                    <select id="date" value={date} onChange={handleDateChange}>
-                        {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
-                            <option key={d} value={d}>
-                                {d}일
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <label htmlFor="phoneNumber">휴대전화</label>
-                <input
-                    className="blank"
-                    type="text"
-                    name="phoneNumber"
-                    id="phoneNumber"
-                    value={formData.phoneNumber}
-                    placeholder="휴대전화"
-                    onChange={handleChange}
-                />
-
-                <input className="submit" type="submit" value="저장"/>
-            </form>
+                    <input className="submit" type="submit" value="저장"/>
+                </form>
+            </div>
         </div>
     );
 }

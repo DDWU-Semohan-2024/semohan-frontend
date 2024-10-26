@@ -233,46 +233,41 @@ function ResultSearch() {
     }, []);
     return (
         <div id="newBody">
-
-            {/*<header>*/}
-            {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
-            {/*</header>*/}
-
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <ProfileHeader />
+                <ProfileHeader />
 
 
-            <div id="searchBar">
-                <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
-                <input type="text"
-                       name="search"
-                       className="search"
-                       // value={검색어}
-                       value={searchTerm}
-                       onChange={handleSearchChange}
-                />
-                <img className="headerImg" src={searchImage} onClick={handleSearchClick} alt="search"/>
-            </div>
+                <div id="searchBar">
+                    <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
+                    <input type="text"
+                           name="search"
+                           className="search"
+                           // value={검색어}
+                           value={searchTerm}
+                           onChange={handleSearchChange}
+                    />
+                    <img className="headerImg" src={searchImage} onClick={handleSearchClick} alt="search"/>
+                </div>
 
-            <div id="main_noLogin">
-                <div className="image-grid">
-                    {searchResults.length > 0 ? (
-                            searchResults.map((restaurant, index) => (
+                <div id="main_noLogin">
+                    <div className="image-grid">
+                        {searchResults.length > 0 ? (
+                                searchResults.map((restaurant, index) => (
 
-                                <div className="image-container" key={index}>
-                                    {searchResults.data}
-                                    <img className="resImg" src={restaurant.s3Url} alt="search"
-                                         onClick={() => handleImageClick(restaurant.id)}/>
-                                    <img className="bookmark-image2" src={restaurant.isScrapped ? scrap : noScrap}
-                                         onClick={() => handleScrap(restaurant.id, restaurant.isScrapped)}
-                                         alt="bookmark"/>
-                                    <span className="image-caption">{restaurant.name}</span>
-                                </div>
-                            ))
-                    ) : (
-                        <div>검색 결과가 없습니다.</div>
-                    )}
+                                    <div className="image-container" key={index}>
+                                        {searchResults.data}
+                                        <img className="resImg" src={restaurant.s3Url} alt="search"
+                                             onClick={() => handleImageClick(restaurant.id)}/>
+                                        <img className="bookmark-image2" src={restaurant.isScrapped ? scrap : noScrap}
+                                             onClick={() => handleScrap(restaurant.id, restaurant.isScrapped)}
+                                             alt="bookmark"/>
+                                        <span className="image-caption">{restaurant.name}</span>
+                                    </div>
+                                ))
+                        ) : (
+                            <div>검색 결과가 없습니다.</div>
+                        )}
 
                     </div>
                 </div>
