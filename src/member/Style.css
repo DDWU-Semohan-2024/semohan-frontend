@@ -101,12 +101,15 @@
             width: 40px;
         }
 
-        #profileHeader {
+        #profileHeader,
+        #newHeader{
             justify-content: left;
             padding-left: 10%;
         }
 
-        #profileHeader > img:last-child {
+        #profileHeader > img:last-child,
+        #newHeader > .headerImg,
+        #newHeader > .headerImg1:last-child {
             padding-left: 10%;
         }
 
@@ -241,9 +244,13 @@
             align-items: center;
         }
 
-        /*.gray {*/
-        /*    background-color: var(--blankcolor);*/
-        /*}*/
+        .orange {
+            background-color: var(--orangecolor);
+        }
+
+        .gray {
+            background-color: var(--blankcolor);
+        }
 
         .lemon {
             background-color: var(--blankcolor);
@@ -582,7 +589,8 @@
         }
 
         .search-option {
-            width: 45%;
+            width: 40%;
+            margin-left: 5px;
             padding: 13px 20px;
             border: none;
             border-radius: 20px;
@@ -660,8 +668,7 @@
         #top {
             display: flex;
             height: fit-content;
-            justify-content: space-around;
-
+            justify-content: space-between;
         }
 
         #meal {
@@ -678,7 +685,7 @@
             flex-direction: column;
             justify-content: center;
             margin-bottom: 10px;
-            margin-left: 6%;
+            margin-left: 4%;
         }
 
         #menuBox > div:first-child {
@@ -716,7 +723,7 @@
             flex-direction: column;
             justify-content: center;
             width: 45%;
-            margin-left: 5%;
+            margin-left: 3%;
         }
 
         #reviewBox {
@@ -759,6 +766,7 @@
             background-color: var(--blankcolor);
             border-radius: var(--radius);
             padding-bottom: 3%;
+            margin-left: 5%;
         }
 
         #bottom .image-container {
@@ -884,6 +892,16 @@
             padding: 20px; /* 내부 여백 추가 */
         }
 
+        #drop-down {
+            border-radius: var(--radius);
+            width: 20%;
+        }
+
+        textarea {
+            width: 95%;
+            border: 2px double black;
+        }
+
         #like-buttons {
             margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
             display: flex; /* label 내에서 간격을 조정하기 위해 flex 사용 */
@@ -893,5 +911,20 @@
         #like-buttons label {
             margin-right: 20px; /* label 사이에 20px의 오른쪽 여백 추가 */
         }
+
+        .submit-button {
+            width: 100%;
+            display: flex;
+            justify-content: right;
+        }
+
+        .submit-button > button {
+            border: none;
+            padding: 13px;
+            border-radius: var(--radius);
+
+        }
+
+
     }
 }

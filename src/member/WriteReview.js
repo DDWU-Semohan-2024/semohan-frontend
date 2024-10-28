@@ -53,44 +53,47 @@ function WriteReview() {
 
   return (
     <div id="newBody">
-      <ProfileSearchHeader />
+      <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+      <div className="mobile">
+        <ProfileSearchHeader />
 
-      <div id="review-container">
-        <div className="date">
-          <span>{todayDate}</span>
-          <select value={mealType} onChange={handleMealTypeChange} className="dropdown">
-            <option value={0}>올데이</option>
-            <option value={1}>점심</option>
-            <option value={2}>저녁</option>
-          </select>
-        </div>
-        <div className="review-content">
-          <textarea
-            placeholder="리뷰 내용"
-            value={reviewContent}
-            onChange={handleContentChange}
-          ></textarea>
-        </div>
-        <div id="like-buttons">
-          <label>
-            <input
-              type="checkbox"
-              checked={likeRestaurant}
-              onChange={() => setLikeRestaurant(!likeRestaurant)}
-            />
-            식당 좋아요
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={likeMenu}
-              onChange={() => setLikeMenu(!likeMenu)}
-            />
-            메뉴 좋아요
-          </label>
-        </div>
-        <div className="submit-button">
-          <button onClick={handleSubmit}>등록하기</button>
+        <div id="review-container">
+          <div className="date">
+            <span>{todayDate}</span>
+            <select id="drop-down" value={mealType} onChange={handleMealTypeChange} className="dropdown">
+              <option value={0}>올데이</option>
+              <option value={1}>점심</option>
+              <option value={2}>저녁</option>
+            </select>
+          </div>
+          <div className="review-content">
+            <textarea
+              placeholder="리뷰 내용"
+              value={reviewContent}
+              onChange={handleContentChange}
+            ></textarea>
+          </div>
+          <div id="like-buttons">
+            <label>
+              <input
+                type="checkbox"
+                checked={likeRestaurant}
+                onChange={() => setLikeRestaurant(!likeRestaurant)}
+              />
+              식당 좋아요
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={likeMenu}
+                onChange={() => setLikeMenu(!likeMenu)}
+              />
+              메뉴 좋아요
+            </label>
+          </div>
+          <div className="submit-button">
+            <button className="lemon" onClick={handleSubmit}>등록하기</button>
+          </div>
         </div>
       </div>
     </div>
