@@ -128,87 +128,90 @@ function Search() {
 
     return (
         <div id="newBody">
-            <ProfileHeader />
-            <div id="searchBar">
-                <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
-                <input type="text"
-                       name="search"
-                       className="search"
-                       placeholder="지역, 음식 또는 식당 입력"
-                       value={searchTerm}
-                       onChange={handleSearchChange}
-                />
-                {/*<img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>*/}
+            <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+            <div className="mobile">
+                <ProfileHeader />
+                <div id="searchBar">
+                    <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
+                    <input type="text"
+                           name="search"
+                           className="search"
+                           placeholder="지역, 음식 또는 식당 입력"
+                           value={searchTerm}
+                           onChange={handleSearchChange}
+                    />
+                    {/*<img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>*/}
 
-                <img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>
+                    <img className="headerImg" src={searchBtn} onClick={() => handleSearchClick()} alt="search"/>
 
-            </div>
-            <div className="search-options">
-                <div>
-                    <button className={`search-option ${activeButton === 1 ? 'lemon' : 'gray'}`}
-                            onClick={() =>
-                                setSearchTypeAndDate('menu', todayDate, 1)
-                        }>오늘 메뉴 검색
-                    </button>
-                    <button className={`search-option ${activeButton === 2 ? 'lemon' : 'gray'}`}
-                            onClick={() =>
-                                setSearchTypeAndDate('menu', tomorrowDate, 2)
-                            }>내일 메뉴 검색
-                    </button>
                 </div>
-                <div>
-                    <button className={`search-option ${activeButton === 3 ? 'lemon' : 'gray'}`}
-                            onClick={() => setSearchTypeAndDate('location', null, 3)}
-                    >지역명 검색
-                    </button>
-                    <button className={`search-option ${activeButton === 4 ? 'lemon' : 'gray'}`}
-                            onClick={() => {
-                                setSearchTypeAndDate('name', null, 4)
-                            }}>식당명 검색
-                    </button>
+                <div className="search-options">
+                    <div>
+                        <button className={`search-option ${activeButton === 1 ? 'lemon' : 'gray'}`}
+                                onClick={() =>
+                                    setSearchTypeAndDate('menu', todayDate, 1)
+                            }>오늘 메뉴 검색
+                        </button>
+                        <button className={`search-option ${activeButton === 2 ? 'lemon' : 'gray'}`}
+                                onClick={() =>
+                                    setSearchTypeAndDate('menu', tomorrowDate, 2)
+                                }>내일 메뉴 검색
+                        </button>
+                    </div>
+                    <div>
+                        <button className={`search-option ${activeButton === 3 ? 'lemon' : 'gray'}`}
+                                onClick={() => setSearchTypeAndDate('location', null, 3)}
+                        >지역명 검색
+                        </button>
+                        <button className={`search-option ${activeButton === 4 ? 'lemon' : 'gray'}`}
+                                onClick={() => {
+                                    setSearchTypeAndDate('name', null, 4)
+                                }}>식당명 검색
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div id="hot">
-                <hr/>
-                <p>오늘의 Hot 한 메뉴</p>
-                <Carousel interval={2000}> {/* interval은 슬라이드 전환 간격을 밀리초 단위로 설정 */}
-                    {hotMenus.length > 0 ? (
-                        hotMenus.map((menu, index) => (
-                            <Carousel.Item key={index}>
-                                <img src={index === 0 ? one : index === 1 ? two : three} alt={`Menu ${index + 1}`}/>
-                                <div className="d-block w-100">{menu}</div>
+                <div id="hot">
+                    <hr/>
+                    <p>오늘의 Hot 한 메뉴</p>
+                    <Carousel interval={2000}> {/* interval은 슬라이드 전환 간격을 밀리초 단위로 설정 */}
+                        {hotMenus.length > 0 ? (
+                            hotMenus.map((menu, index) => (
+                                <Carousel.Item key={index}>
+                                    <img src={index === 0 ? one : index === 1 ? two : three} alt={`Menu ${index + 1}`}/>
+                                    <div className="d-block w-100">{menu}</div>
+                                </Carousel.Item>
+                            ))
+                        ) : (
+                            <Carousel.Item>
+                                <img src={one} alt="Placeholder"/>
+                                <div className="d-block w-100">데이터 없음</div>
                             </Carousel.Item>
-                        ))
-                    ) : (
-                        <Carousel.Item>
-                            <img src={one} alt="Placeholder"/>
-                            <div className="d-block w-100">데이터 없음</div>
-                        </Carousel.Item>
-                    )}
-                </Carousel>
+                        )}
+                    </Carousel>
+                </div>
+
+
+                {/*/!*검색어 있을 경우*!/*/}
+                {/*<section className="recent-searches">*/}
+                {/*    <div className="recent-header">*/}
+                {/*        <span>최근 검색어</span>*/}
+                {/*        <button className="clear-all">모두 지우기</button> /!*누르면 전체 검색어 지워짐*!/*/}
+                {/*    </div>*/}
+                {/*    <ul className="recent-list">*/}
+                {/*        <li className="recent-item">/!*검색한 개수만큼*!/*/}
+                {/*            <div>*/}
+                {/*                <img src={searchBtn}/>*/}
+                {/*                <span>최근 검색어/!*최근 검색어*!/</span>*/}
+                {/*            </div>*/}
+                {/*            <div>*/}
+                {/*                <span className="date">00.00/!*날짜*!/</span>*/}
+                {/*                <button className="clear-item">X</button> /!*누르면 해당 검색어 지워짐*!/*/}
+                {/*            </div>*/}
+                {/*        </li>*/}
+                {/*    </ul>*/}
+                {/*</section>*/}
             </div>
-
-
-            {/*/!*검색어 있을 경우*!/*/}
-            {/*<section className="recent-searches">*/}
-            {/*    <div className="recent-header">*/}
-            {/*        <span>최근 검색어</span>*/}
-            {/*        <button className="clear-all">모두 지우기</button> /!*누르면 전체 검색어 지워짐*!/*/}
-            {/*    </div>*/}
-            {/*    <ul className="recent-list">*/}
-            {/*        <li className="recent-item">/!*검색한 개수만큼*!/*/}
-            {/*            <div>*/}
-            {/*                <img src={searchBtn}/>*/}
-            {/*                <span>최근 검색어/!*최근 검색어*!/</span>*/}
-            {/*            </div>*/}
-            {/*            <div>*/}
-            {/*                <span className="date">00.00/!*날짜*!/</span>*/}
-            {/*                <button className="clear-item">X</button> /!*누르면 해당 검색어 지워짐*!/*/}
-            {/*            </div>*/}
-            {/*        </li>*/}
-            {/*    </ul>*/}
-            {/*</section>*/}
         </div>
     );
 }

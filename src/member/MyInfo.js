@@ -76,7 +76,10 @@ function MyInfoPage() {
                     </tbody>
 
                 </table>
-                <Link className="submit1" to="/updateInfo">정보 수정</Link>
+                <div id="btn-container">
+                    <Link className="submit" to="/updateInfo">정보 수정</Link>
+                </div>
+
 
             </div>
         </div>
