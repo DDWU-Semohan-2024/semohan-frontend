@@ -263,7 +263,7 @@ function UpdateInfo() {
                         </select>
 
                         <select id="month" value={month} onChange={handleMonthChange}>
-                            {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                            {Array.from({length: 12}, (_, i) => i + 1).map((m) => (
                                 <option key={m} value={m}>
                                     {m}월
                                 </option>
@@ -271,7 +271,7 @@ function UpdateInfo() {
                         </select>
 
                         <select id="date" value={date} onChange={handleDateChange}>
-                            {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                            {Array.from({length: 31}, (_, i) => i + 1).map((d) => (
                                 <option key={d} value={d}>
                                     {d}일
                                 </option>

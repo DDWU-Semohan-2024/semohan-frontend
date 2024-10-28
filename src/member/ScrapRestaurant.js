@@ -183,28 +183,26 @@ function ScrapRestaurant() {
         <div id="scrapBody">
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-            <LogoHeader/>
+                <LogoHeader/>
+                <div id="main_noLogin">
+                    <h4>내가 핀한 식당</h4>
+                    <div className="image-grid">
+                        {pinnedRestaurant ? (
+                            <div className="image-container">
+                                {/*{console.log(pinnedRestaurant.s3Url)} /!* 여기 추가 *!/*/}
+                                <img className="resImg" src={pinnedRestaurant.s3Url} alt="search"
+                                     onClick={() => handleImageClick(pinnedRestaurant.id)}/>
+                                <span className="image-caption"
+                                      onClick={() => handleImageClick(pinnedRestaurant.id)}>{pinnedRestaurant.name}</span>
+                            </div>
+                        ) : (
+                            <p>핀한 식당이 없습니다.</p> // 핀한 식당이 없을 경우 메시지 추가
+                        )}
+                    </div>
 
-
-            <div id="main_noLogin">
-                <h4>내가 핀한 식당</h4>
-                <div className="image-grid">
-                    {pinnedRestaurant ? (
-                        <div className="image-container">
-                            {/*{console.log(pinnedRestaurant.s3Url)} /!* 여기 추가 *!/*/ }
-                            <img className="resImg" src={pinnedRestaurant.s3Url} alt="search"
-                                 onClick={() => handleImageClick(pinnedRestaurant.id)} />
-                            <span className="image-caption"
-                                  onClick={() => handleImageClick(pinnedRestaurant.id)}>{pinnedRestaurant.name}</span>
-                        </div>
-                    ) : (
-                        <p>핀한 식당이 없습니다.</p> // 핀한 식당이 없을 경우 메시지 추가
-                    )}
-                </div>
-
-                <h4>내가 스크랩한 식당</h4>
-                <div className="image-grid">
-                    {scrappedRestaurants.length > 0 ? (
+                    <h4>내가 스크랩한 식당</h4>
+                    <div className="image-grid">
+                        {scrappedRestaurants.length > 0 ? (
                             scrappedRestaurants.map((restaurant, index) => (
                                 <div className="image-container" key={restaurant.id}>
                                     <img className="resImg" src={restaurant.s3Url} alt="search"
@@ -233,9 +231,10 @@ function ScrapRestaurant() {
                     {/*<button className='saveBtn' onClick={handleSave}>저장</button>*/}
 
                     {/*<button className='submit gray' onClick={handleSave}>저장</button>*/}
-
                 </div>
-                <button className='submit' onClick={handleSave}>저장</button>
+                <div id="btn-container">
+                    <button className='submit1' onClick={handleSave}>저장</button>
+                </div>
             </div>
         </div>
     );
