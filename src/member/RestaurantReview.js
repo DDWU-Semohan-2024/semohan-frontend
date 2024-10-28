@@ -47,42 +47,32 @@ function RestaurantReview() {
 
   return (
     <div id="newBody">
+        <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
+        <div className="mobile">
+           <ProfileSearchHeader />
 
-      {/*<header>*/}
-      {/*  {!loggedIn ? (*/}
-      {/*    <img className="headerImg" src={noLoginImage} onClick={() => navigate('/login')} alt="profile"/>*/}
-      {/*  ) : (*/}
-      {/*    <img className="headerImg" src={profileImg} onClick={() => navigate('/myPage')} alt="profile"/>*/}
-      {/*  )}*/}
-      {/*    <Link to="/main"><img src={logoImage} alt="logo"/></Link>*/}
-      {/*  <img className="headerImg" src={searchImage} onClick={() => navigate('/search')} alt="search"/>*/}
-      {/*</header>*/}
+          <div id="caption">리뷰 {reviews.length}개
+            <button onClick={handleWriteReview} className="write-review-button-inline">리뷰 쓰기</button>
+          </div>
 
 
-      {/*<div id="caption">리뷰 {reviews.length}개</div>*/}
-        <ProfileSearchHeader />
-
-      <div id="caption">리뷰 {reviews.length}개 
-        <button onClick={handleWriteReview} className="write-review-button-inline">리뷰 쓰기</button>
-      </div>
-
-
-      <div className="reviews">
-        {reviews.map((review) => (
-          <Review
-            key={review.id}
-            nickname={review.nickname}
-            likeRestaurant={review.likeRestaurant}
-            likeMenu={review.likeMenu}
-            content={review.content}
-            writeTime={new Date(review.writeTime).toLocaleDateString('ko-KR', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit'
-            })}
-          />
-        ))}
-      </div>
+          <div className="reviews">
+            {reviews.map((review) => (
+              <Review
+                key={review.id}
+                nickname={review.nickname}
+                likeRestaurant={review.likeRestaurant}
+                likeMenu={review.likeMenu}
+                content={review.content}
+                writeTime={new Date(review.writeTime).toLocaleDateString('ko-KR', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit'
+                })}
+              />
+            ))}
+          </div>
+        </div>
     </div>
   );
 }

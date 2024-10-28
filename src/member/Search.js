@@ -147,23 +147,23 @@ function Search() {
                 </div>
                 <div className="search-options">
                     <div>
-                        <button className={`search-option ${activeButton === 1 ? 'lemon' : 'gray'}`}
+                        <button className={`search-option ${activeButton === 1 ? 'orange' : 'gray'}`}
                                 onClick={() =>
                                     setSearchTypeAndDate('menu', todayDate, 1)
                             }>오늘 메뉴 검색
                         </button>
-                        <button className={`search-option ${activeButton === 2 ? 'lemon' : 'gray'}`}
+                        <button className={`search-option ${activeButton === 2 ? 'orange' : 'gray'}`}
                                 onClick={() =>
                                     setSearchTypeAndDate('menu', tomorrowDate, 2)
                                 }>내일 메뉴 검색
                         </button>
                     </div>
                     <div>
-                        <button className={`search-option ${activeButton === 3 ? 'lemon' : 'gray'}`}
+                        <button className={`search-option ${activeButton === 3 ? 'orange' : 'gray'}`}
                                 onClick={() => setSearchTypeAndDate('location', null, 3)}
                         >지역명 검색
                         </button>
-                        <button className={`search-option ${activeButton === 4 ? 'lemon' : 'gray'}`}
+                        <button className={`search-option ${activeButton === 4 ? 'orange' : 'gray'}`}
                                 onClick={() => {
                                     setSearchTypeAndDate('name', null, 4)
                                 }}>식당명 검색
