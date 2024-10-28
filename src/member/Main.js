@@ -11,7 +11,7 @@ import scrap from '../img/bookmark-black.png';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../img/profile-user.png";
-import ProfileSearchHeader from './ProfileSearchHeader';
+import MainHeader from './MainHeader';
 import ScrapContext from "./ScrapContext";
 
 function Main() {
@@ -304,7 +304,7 @@ function Main() {
         <div id="body">
             <div className="no-mobile">모바일 버전으로 변경해주세요.</div>
             <div className="mobile">
-                <ProfileSearchHeader />
+                <MainHeader />
 
                 {/*/!*Pin이 없을 경우*!/*/}
 
@@ -352,7 +352,7 @@ function Main() {
                 )}
 
 
-                {/*로그인 안했s을 경우 + 기본*/}
+                {/*로그인 안했을 경우 + 기본*/}
                 <div id="main_noLogin">
                     <div className="loc">
                         <p><span>{address}</span> 인근 한식 뷔페</p>
