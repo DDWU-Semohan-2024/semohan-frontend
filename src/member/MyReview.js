@@ -72,24 +72,45 @@ function MyReview() {
 
 
           <div id="caption">리뷰 {reviews.length}개</div>
-          <div className="myreview">
-            {reviews.map((review) => (
-              <Review
-                key={review.id}
-                id={review.id}
-                nickname={review.nickname}
-                likeRestaurant={review.likeRestaurant}
-                likeMenu={review.likeMenu}
-                content={review.content}
-                writeTime={new Date(review.writeTime).toLocaleDateString('ko-KR', {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit'
-                })}
-                onDelete={handleDelete}
-              />
-            ))}
-          </div>
+          {/*<div className="myreview">*/}
+            {/*{reviews.map((review) => (*/}
+            {/*  <Review*/}
+            {/*    key={review.id}*/}
+            {/*    id={review.id}*/}
+            {/*    nickname={review.nickname}*/}
+            {/*    likeRestaurant={review.likeRestaurant}*/}
+            {/*    likeMenu={review.likeMenu}*/}
+            {/*    content={review.content}*/}
+            {/*    writeTime={new Date(review.writeTime).toLocaleDateString('ko-KR', {*/}
+            {/*      year: 'numeric',*/}
+            {/*      month: '2-digit',*/}
+            {/*      day: '2-digit'*/}
+            {/*    })}*/}
+            {/*    onDelete={handleDelete}*/}
+            {/*  />*/}
+            {/*))}*/}
+              {reviews.length > 0 && (
+                  <div className="myreview">
+                      {reviews.map((review) => (
+                          <Review
+                              key={review.id}
+                              id={review.id}
+                              nickname={review.nickname}
+                              likeRestaurant={review.likeRestaurant}
+                              likeMenu={review.likeMenu}
+                              content={review.content}
+                              writeTime={new Date(review.writeTime).toLocaleDateString('ko-KR', {
+                                  year: 'numeric',
+                                  month: '2-digit',
+                                  day: '2-digit'
+                              })}
+                              onDelete={handleDelete}
+                          />
+                      ))}
+                  </div>
+              )}
+
+          {/*</div>*/}
         </div>
     </div>
   );
