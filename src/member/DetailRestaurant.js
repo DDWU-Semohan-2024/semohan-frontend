@@ -293,7 +293,7 @@ function DetailRestaurant() {
                                          <div className="detail">{restaurantDetails.name}</div>
                                          주소 : {restaurantDetails.address}
                                          <br/>
-                                         전화번호 : {restaurantDetails.phoneNum}
+                                         전화번호 : {restaurantDetails.phoneNumber}
                                          <br/>
                                          영업 시간 : {restaurantDetails.businessHours}
                                          <br/>

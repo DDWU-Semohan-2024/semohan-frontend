@@ -23,9 +23,14 @@ export const ScrapProvider = ({ children }) => {
                 const scrapList = response.data.scrappedRestaurnats || [];
 
                 // 받아온 데이터와 현재 레스토랑 리스트를 비교하여 스크랩 상태 업데이트
-                const updatedScrapStatus = restaurants.map(restaurant =>
-                    scrapList.some(scrap => scrap.id === restaurant.id)
-                );
+                // const updatedScrapStatus = restaurants.map(restaurant =>
+                //     scrapList.some(scrap => scrap.id === restaurant.id)
+                // );
+
+                const updatedScrapStatus = {};
+                scrapList.forEach(scrap => {
+                    updatedScrapStatus[scrap.id] = true; // 스크랩된 상태는 true로 설정
+                });
 
                 setScrapStatus(updatedScrapStatus); // 스크랩 상태 설정
             } catch (error) {
@@ -37,7 +42,7 @@ export const ScrapProvider = ({ children }) => {
         };
 
         fetchScrapStatus();
-    }, []);
+    }, [restaurants]); // 의존성 배열에 restaurants 추가
 
     // 스크랩 상태 업데이트 함수
     const updateScrapStatus = (restaurantId, isScrapped) => {
@@ -51,11 +56,15 @@ export const ScrapProvider = ({ children }) => {
         //     })
         // );
 
-        setScrapStatus(prevStatus =>
-            prevStatus.map((status, index) =>
-                restaurants[index].id === restaurantId ? isScrapped : status
-            )
-        );
+        // setScrapStatus(prevStatus =>
+        //     prevStatus.map((status, index) =>
+        //         restaurants[index].id === restaurantId ? isScrapped : status
+        //     )
+        // );
+        setScrapStatus(prevStatus => ({
+            ...prevStatus,
+            [restaurantId]: isScrapped,
+        }));
     };
 
     return (

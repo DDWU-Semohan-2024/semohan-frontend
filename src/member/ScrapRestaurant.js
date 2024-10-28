@@ -69,89 +69,137 @@ function ScrapRestaurant() {
         setScrapImage(prevSrc => (prevSrc === scrap ? noScrap : scrap));
     };
 
-    const handleScrap = index => {
+    // const handleScrap = index => {
+    //
+    //     const restaurantToScrap = scrappedRestaurants[index];
+    //
+    //     // 스크랩 해제 시 데이터베이스에서 삭제
+    //     if (restaurantToScrap.scrapped) {
+    //         axios.post(`/restaurant/delete-scrap/${restaurantToScrap.id}`)
+    //             .then(response => {
+    //                 console.log('Successfully removed from scrap:', response.data);
+    //                 // 스크랩한 식당 상태 업데이트
+    //                 setScrappedRestaurants(prevStates =>
+    //                     prevStates.filter((_, i) => i !== index) // 해당 인덱스의 식당 제거
+    //                 );
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error removing from scrap:', error);
+    //             });
+    //     } else {
+    //         // 스크랩 추가
+    //         setScrappedRestaurants(prevStates =>
+    //             prevStates.map((restaurant, i) => (
+    //                 i === index ? { ...restaurant, scrapped: true } : restaurant
+    //             ))
+    //         );
+    //     }
+    // };
 
+    const handleScrap = async (index) => {
         const restaurantToScrap = scrappedRestaurants[index];
 
-        // 스크랩 해제 시 데이터베이스에서 삭제
         if (restaurantToScrap.scrapped) {
-            axios.post(`/restaurant/delete-scrap/${restaurantToScrap.id}`)
-                .then(response => {
-                    console.log('Successfully removed from scrap:', response.data);
-                    // 스크랩한 식당 상태 업데이트
-                    setScrappedRestaurants(prevStates =>
-                        prevStates.filter((_, i) => i !== index) // 해당 인덱스의 식당 제거
-                    );
-                })
-                .catch(error => {
-                    console.error('Error removing from scrap:', error);
-                });
+            try {
+                const response = await axios.post(`/restaurant/delete-scrap/${restaurantToScrap.id}`);
+                console.log('Successfully removed from scrap and pin:', response.data);
+
+                // 스크랩 해제된 식당을 목록에서 제거
+                setScrappedRestaurants(prevStates =>
+                    prevStates.filter((_, i) => i !== index)
+                );
+
+                // 현재 핀된 식당이 해제된 스크랩 식당과 같다면 pinnedRestaurant도 null로 설정
+                if (pinnedRestaurant && pinnedRestaurant.id === restaurantToScrap.id) {
+                    setPinnedRestaurant(null);
+                }
+            } catch (error) {
+                console.error('Error removing from scrap and pin:', error);
+            }
         } else {
-            // 스크랩 추가
             setScrappedRestaurants(prevStates =>
-                prevStates.map((restaurant, i) => (
+                prevStates.map((restaurant, i) =>
                     i === index ? { ...restaurant, scrapped: true } : restaurant
-                ))
+                )
             );
         }
     };
 
-    const handlePin = index => {
+
+
+    // const handlePin = index => {
+    //     alert("Pin 식당을 수정합니다.");
+    //
+    //     const newPinnedRestaurant = scrappedRestaurants[index];
+    //     console.log(newPinnedRestaurant)
+    //
+    //     setPinnedRestaurant(prev => (prev && prev.id === newPinnedRestaurant.id ? null : newPinnedRestaurant));
+    //
+    //     setScrappedRestaurants(prevStates =>
+    //         prevStates.map((restaurant, i) => ({
+    //             ...restaurant,
+    //             pinned: i === index ? !restaurant.pinned : restaurant.pinned
+    //         }))
+    //     );
+    //     // 핀 상태에 따라 이미지 변경
+    //     setPinImage(prev => (prev === pin ? noPin : pin));
+    //
+    //     setTimeout(() => {
+    //         const pinnedRestaurantId = newPinnedRestaurant ? newPinnedRestaurant.id : null;
+    //
+    //         // const pinnedRestaurantId = isAlreadyPinned ? null : newPinnedRestaurant.id;
+    //
+    //         const scrappedRestaurantIdList = scrappedRestaurants
+    //             .filter(restaurant => restaurant.scrapped)
+    //             .map(restaurant => restaurant.id);
+    //
+    //         const requestData = {
+    //             pinnedRestaurantId,
+    //             scrappedRestaurantIdList
+    //         };
+    //
+    //         axios.post('/restaurant/scrap-pin/update', requestData)
+    //             .then(response => {
+    //                 console.log('Update successful:', response.data);
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error updating data:', error);
+    //             });
+    //     }, 0);
+    // };
+
+    const handlePin = (index) => {
         alert("Pin 식당을 수정합니다.");
 
-
         const newPinnedRestaurant = scrappedRestaurants[index];
-        console.log(newPinnedRestaurant)
 
-
-        // const newPinnedRestaurant = scrappedRestaurants[index];
-        // console.log(newPinnedRestaurant)
-
-
-        // setPinnedRestaurant(newPinnedRestaurant);
-        // setScrappedRestaurants(prevStates =>
-        //     prevStates.map((restaurant, i) => (
-        //         { ...restaurant, pinned: i === index }
-        //     ))
-        // );
-
-        // 핀 상태를 토글
-        // const isAlreadyPinned = pinnedRestaurant && pinnedRestaurant.id === newPinnedRestaurant.id;
-        //
-        // setPinnedRestaurant(isAlreadyPinned ? null : newPinnedRestaurant);
-        setPinnedRestaurant(prev => (prev && prev.id === newPinnedRestaurant.id ? null : newPinnedRestaurant));
+        if (pinnedRestaurant && pinnedRestaurant.id === newPinnedRestaurant.id) {
+            setPinnedRestaurant(null);  // 동일한 식당을 다시 누르면 핀 해제
+        } else {
+            setPinnedRestaurant(newPinnedRestaurant);  // 새로운 핀 설정
+        }
 
         setScrappedRestaurants(prevStates =>
             prevStates.map((restaurant, i) => ({
                 ...restaurant,
-                pinned: i === index ? !restaurant.pinned : restaurant.pinned
+                pinned: i === index  // 선택한 식당만 핀 상태 유지
             }))
         );
-        // 핀 상태에 따라 이미지 변경
-        setPinImage(prev => (prev === pin ? noPin : pin));
 
-        setTimeout(() => {
-            const pinnedRestaurantId = newPinnedRestaurant ? newPinnedRestaurant.id : null;
-
-            // const pinnedRestaurantId = isAlreadyPinned ? null : newPinnedRestaurant.id;
-
-            const scrappedRestaurantIdList = scrappedRestaurants
+        const requestData = {
+            pinnedRestaurantId: newPinnedRestaurant.id,
+            scrappedRestaurantIdList: scrappedRestaurants
                 .filter(restaurant => restaurant.scrapped)
-                .map(restaurant => restaurant.id);
+                .map(restaurant => restaurant.id)
+        };
 
-            const requestData = {
-                pinnedRestaurantId,
-                scrappedRestaurantIdList
-            };
-
-            axios.post('/restaurant/scrap-pin/update', requestData)
-                .then(response => {
-                    console.log('Update successful:', response.data);
-                })
-                .catch(error => {
-                    console.error('Error updating data:', error);
-                });
-        }, 0);
+        axios.post('/restaurant/scrap-pin/update', requestData)
+            .then(response => {
+                console.log('Update successful:', response.data);
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
     };
 
     const handleSave = () => {
