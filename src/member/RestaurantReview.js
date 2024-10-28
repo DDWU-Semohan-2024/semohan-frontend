@@ -55,23 +55,25 @@ function RestaurantReview() {
             <button onClick={handleWriteReview} className="write-review-button-inline">리뷰 쓰기</button>
           </div>
 
+            <div  className="reviews">
+                <div className="review1">
+                    {reviews.map((review) => (
+                        <Review
+                            key={review.id}
+                            nickname={review.nickname}
+                            likeRestaurant={review.likeRestaurant}
+                            likeMenu={review.likeMenu}
+                            content={review.content}
+                            writeTime={new Date(review.writeTime).toLocaleDateString('ko-KR', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit'
+                            })}
+                        />
+                    ))}
+                </div>
+            </div>
 
-          <div className="reviews">
-            {reviews.map((review) => (
-              <Review
-                key={review.id}
-                nickname={review.nickname}
-                likeRestaurant={review.likeRestaurant}
-                likeMenu={review.likeMenu}
-                content={review.content}
-                writeTime={new Date(review.writeTime).toLocaleDateString('ko-KR', {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit'
-                })}
-              />
-            ))}
-          </div>
         </div>
     </div>
   );
