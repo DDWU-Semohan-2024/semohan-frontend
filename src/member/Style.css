@@ -23,7 +23,7 @@
     font-weight: 400;
     font-style: normal;
     background-color: var(--background);
-    height: 120vh;
+    height: 150vh;
 }
 
 #body {
@@ -749,6 +749,10 @@
             margin-top: 15px;
             width: 80%;
             background-color: var(--blankcolor);
+        }
+
+        .review {
+            margin-bottom: 30px;
         }
 
         p {
