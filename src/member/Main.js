@@ -363,7 +363,7 @@ function Main() {
                         </button>
                     </div>
 
-                    <div className="image-grid">
+                    <div className="image-grid1">
                         {restaurants.map((restaurant, index) => (
                             <div className="image-container" key={index}>
                                 <img className="resImg" src={restaurant.s3Url} alt="search"
