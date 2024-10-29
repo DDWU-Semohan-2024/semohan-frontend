@@ -15,6 +15,10 @@
     box-sizing: unset;
 }
 
+html {
+    background-color: var(--background);
+}
+
 #root {
     display: flex;
     justify-content: center;
@@ -23,7 +27,7 @@
     font-weight: 400;
     font-style: normal;
     background-color: var(--background);
-    height: 150vh;
+    /*height: 300vh;*/
 }
 
 #body {
@@ -422,6 +426,7 @@
             flex-direction: column;
             justify-content: center;
             margin: 0;
+            margin-bottom: 30px;
             border-radius: var(--radius);
             /*padding: 20px; !* 여백 추가 *!*/
         }
@@ -480,7 +485,16 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            margin-left: 10px; /*5%*/
+            margin-left: 6px; /*5%*/
+            margin-top: 4%;
+        }
+
+        .image-grid1 {
+            width: 96%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-left: 6px; /*5%*/
             margin-top: 4%;
         }
 
@@ -508,14 +522,14 @@
             width: 22%;
             position: absolute;
             top: 15px; /* 원하는 위치로 조정 */
-            right: 35px; /* 원하는 위치로 조정 */
+            right: 37px; /* 원하는 위치로 조정 */
         }
 
         .bookmark-image2 {
             width: 20%;
             position: absolute;
             top: 15px; /* 원하는 위치로 조정 */
-            right: 10px; /* 원하는 위치로 조정 */
+            right: 13px; /* 원하는 위치로 조정 */
         }
 
         .image-caption {
@@ -524,9 +538,9 @@
 
         #menu {
             padding: 6%;
-            width: fit-content;
+            width: 60%;
             border-radius: var(--radius);
-            background-color: var(--blankcolor);
+            background-color: wheat;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -833,6 +847,7 @@
             /*    */
             width: 85%;
             display: flex;
+            flex-direction: column;
             justify-content: center; /* flex-start, flex-end, space-between, space-around */
             align-items: center; /* flex-start, flex-end, stretch */
         }
@@ -841,7 +856,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            padding: 1px;
         }
 
         .nickname {
