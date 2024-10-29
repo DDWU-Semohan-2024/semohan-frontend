@@ -12,7 +12,7 @@ function WriteReview() {
   const navigate = useNavigate();
   const { restaurantId } = useParams(); // URL 파라미터에서 restaurantId를 가져옴
   const [reviewContent, setReviewContent] = useState('');
-  const [mealType, setMealType] = useState(1); // 기본값을 점심으로 설정
+  const [mealType, setMealType] = useState(0); // 기본값을 점심으로 설정
   const [likeRestaurant, setLikeRestaurant] = useState(false);
   const [likeMenu, setLikeMenu] = useState(false);
   const [error, setError] = useState('');
@@ -61,9 +61,8 @@ function WriteReview() {
           <div className="date">
             <span>{todayDate}</span>
             <select id="drop-down" value={mealType} onChange={handleMealTypeChange} className="dropdown">
-              <option value={0}>올데이</option>
-              <option value={1}>점심</option>
-              <option value={2}>저녁</option>
+              <option value={0}>점심</option>
+              <option value={1}>저녁</option>
             </select>
           </div>
           <div className="review-content">
