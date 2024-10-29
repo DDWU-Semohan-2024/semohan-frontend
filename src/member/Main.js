@@ -230,7 +230,8 @@ function Main() {
                 if (result.data.documents && result.data.documents.length > 0) {
                     let location = result.data.documents[0].address.region_2depth_name;
                     console.log("location: " + location);
-                    setAddress(location);
+                    // setAddress(location);
+                    setAddress("성북구");
 
                     try {
                         await axios.get(`/location/set/${encodeURIComponent(location)}`);
