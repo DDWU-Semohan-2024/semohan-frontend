@@ -239,7 +239,7 @@ function ResultSearch() {
 
 
                 <div id="searchBar">
-                    <img src={toMain} alt="toSearch" onClick={() => navigate('/search')}/>
+                    <img src={toMain} alt="toMain" onClick={() => navigate('/main')}/>
                     <input type="text"
                            name="search"
                            className="search"
